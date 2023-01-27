@@ -1,16 +1,24 @@
-# field_companion
+# Field Companion
 
-A new Flutter project.
+## Features
+### Set goals for yourself
 
-## Getting Started
+With FieldCompanion, you can set hourly targets for each month and the whole year and constantly track your progress.
 
-This project is a starting point for a Flutter application.
+### Report your service
 
-A few resources to get you started if this is your first Flutter project:
+The monthly view shows you what you have reported for each day and gives you the possibility to add new reports and edit previous ones at any time.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Send your monthly report
+
+At the end of the month, everything is automatically added up and made available to you as a report that you can simply send.
+
+
+### Your territories - always there
+
+If your territory servant uses Territory Offline, they can send you your territory so that you can import it into Field Companion. This allows you to view your territories on the map at any time and manage non-visiting addresses.
+
+![alt text](./assets/fc-iphone-title.jpeg)
+
+https://www.territory-offline.com/
