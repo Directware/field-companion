@@ -1,6 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:nanoid/nanoid.dart';
 
+part "entity.g.dart";
+
 @HiveType(typeId: 0)
 class Entity extends HiveObject {
   Entity()
