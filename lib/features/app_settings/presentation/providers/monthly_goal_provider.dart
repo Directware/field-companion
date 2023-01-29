@@ -11,13 +11,13 @@ class MonthlyGoal extends _$MonthlyGoal {
   late final SharedPreferences _preferences;
 
   @override
-  Future<int> build() async {
-    _preferences = await ref.watch(sharedPreferencesProvider.future);
+  int build() {
+    _preferences = ref.watch(sharedPreferencesProvider);
     return _preferences.getInt(sharedPreferenesKey) ?? 0;
   }
 
   void set(int newValue) {
-    state = AsyncValue.data(newValue);
+    state = newValue;
     _preferences.setInt(sharedPreferenesKey, newValue);
   }
 }

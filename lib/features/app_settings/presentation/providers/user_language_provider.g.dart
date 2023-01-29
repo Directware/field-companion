@@ -29,19 +29,18 @@ class _SystemHash {
   }
 }
 
-String _$UserLanguageHash() => r'f8e9030d906cd9e6a5cda14824603dcbe580022a';
+String _$UserLanguageHash() => r'a8999a8fcae64ec14d5abdfaf9b60619065c6d9b';
 
 /// See also [UserLanguage].
-final userLanguageProvider =
-    AutoDisposeAsyncNotifierProvider<UserLanguage, String>(
+final userLanguageProvider = AutoDisposeNotifierProvider<UserLanguage, String>(
   UserLanguage.new,
   name: r'userLanguageProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$UserLanguageHash,
 );
-typedef UserLanguageRef = AutoDisposeAsyncNotifierProviderRef<String>;
+typedef UserLanguageRef = AutoDisposeNotifierProviderRef<String>;
 
-abstract class _$UserLanguage extends AutoDisposeAsyncNotifier<String> {
+abstract class _$UserLanguage extends AutoDisposeNotifier<String> {
   @override
-  FutureOr<String> build();
+  String build();
 }

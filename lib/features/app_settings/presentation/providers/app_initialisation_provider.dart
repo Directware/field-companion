@@ -11,13 +11,13 @@ class AppInitialisation extends _$AppInitialisation {
   late final SharedPreferences _preferences;
 
   @override
-  Future<bool> build() async {
-    _preferences = await ref.watch(sharedPreferencesProvider.future);
+  bool build() {
+    _preferences = ref.watch(sharedPreferencesProvider);
     return _preferences.getBool(sharedPreferenesKey) ?? false;
   }
 
   void set() {
-    state = const AsyncValue.data(true);
+    state = true;
     _preferences.setBool(sharedPreferenesKey, true);
   }
 }

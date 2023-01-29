@@ -29,19 +29,18 @@ class _SystemHash {
   }
 }
 
-String _$DurationStepHash() => r'36496e80843b3c861c2683bbab85f8d84d461164';
+String _$DurationStepHash() => r'b3c75dc3b10365db5d1740e560dcbfc89fdd0052';
 
 /// See also [DurationStep].
-final durationStepProvider =
-    AutoDisposeAsyncNotifierProvider<DurationStep, int>(
+final durationStepProvider = AutoDisposeNotifierProvider<DurationStep, int>(
   DurationStep.new,
   name: r'durationStepProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$DurationStepHash,
 );
-typedef DurationStepRef = AutoDisposeAsyncNotifierProviderRef<int>;
+typedef DurationStepRef = AutoDisposeNotifierProviderRef<int>;
 
-abstract class _$DurationStep extends AutoDisposeAsyncNotifier<int> {
+abstract class _$DurationStep extends AutoDisposeNotifier<int> {
   @override
-  FutureOr<int> build();
+  int build();
 }

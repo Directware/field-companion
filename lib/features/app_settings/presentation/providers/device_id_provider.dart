@@ -11,13 +11,13 @@ class DeviceId extends _$DeviceId {
   late final SharedPreferences _preferences;
 
   @override
-  Future<String> build() async {
-    _preferences = await ref.watch(sharedPreferencesProvider.future);
+  String build() {
+    _preferences = ref.watch(sharedPreferencesProvider);
     return _preferences.getString(sharedPreferenesKey) ?? "-";
   }
 
   void set(String newValue) {
-    state = AsyncValue.data(newValue);
+    state = newValue;
     _preferences.setString(sharedPreferenesKey, newValue);
   }
 }

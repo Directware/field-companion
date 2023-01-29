@@ -29,18 +29,18 @@ class _SystemHash {
   }
 }
 
-String _$MonthlyGoalHash() => r'64f910cc74fb7f437557171b95aca2c726d98cb0';
+String _$MonthlyGoalHash() => r'f1f09f2a6d5eee28a8baada5e532afd49032c470';
 
 /// See also [MonthlyGoal].
-final monthlyGoalProvider = AutoDisposeAsyncNotifierProvider<MonthlyGoal, int>(
+final monthlyGoalProvider = AutoDisposeNotifierProvider<MonthlyGoal, int>(
   MonthlyGoal.new,
   name: r'monthlyGoalProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$MonthlyGoalHash,
 );
-typedef MonthlyGoalRef = AutoDisposeAsyncNotifierProviderRef<int>;
+typedef MonthlyGoalRef = AutoDisposeNotifierProviderRef<int>;
 
-abstract class _$MonthlyGoal extends AutoDisposeAsyncNotifier<int> {
+abstract class _$MonthlyGoal extends AutoDisposeNotifier<int> {
   @override
-  FutureOr<int> build();
+  int build();
 }

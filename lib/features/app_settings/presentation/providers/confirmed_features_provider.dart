@@ -11,16 +11,16 @@ class ConfirmedFeatures extends _$ConfirmedFeatures {
   late final SharedPreferences _preferences;
 
   @override
-  Future<List<String>> build() async {
-    _preferences = await ref.watch(sharedPreferencesProvider.future);
+  List<String> build() {
+    _preferences = ref.watch(sharedPreferencesProvider);
     return _preferences.getStringList(sharedPreferenesKey) ?? [];
   }
 
-  void set(String confirmedFeatureName) async {
-    final currentValue = state.value ?? [];
+  void set(String confirmedFeatureName) {
+    final currentValue = state;
     final newValue = [...currentValue, confirmedFeatureName];
 
-    state = AsyncValue.data(newValue);
+    state = newValue;
     _preferences.setStringList(sharedPreferenesKey, newValue);
   }
 }

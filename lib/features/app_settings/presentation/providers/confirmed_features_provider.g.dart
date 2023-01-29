@@ -29,22 +29,20 @@ class _SystemHash {
   }
 }
 
-String _$ConfirmedFeaturesHash() => r'4f9371299de33963756a33c6c140b9d625373d86';
+String _$ConfirmedFeaturesHash() => r'72d0ac9eb4b2748ce7a5f45b581d1479f8262039';
 
 /// See also [ConfirmedFeatures].
 final confirmedFeaturesProvider =
-    AutoDisposeAsyncNotifierProvider<ConfirmedFeatures, List<String>>(
+    AutoDisposeNotifierProvider<ConfirmedFeatures, List<String>>(
   ConfirmedFeatures.new,
   name: r'confirmedFeaturesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$ConfirmedFeaturesHash,
 );
-typedef ConfirmedFeaturesRef
-    = AutoDisposeAsyncNotifierProviderRef<List<String>>;
+typedef ConfirmedFeaturesRef = AutoDisposeNotifierProviderRef<List<String>>;
 
-abstract class _$ConfirmedFeatures
-    extends AutoDisposeAsyncNotifier<List<String>> {
+abstract class _$ConfirmedFeatures extends AutoDisposeNotifier<List<String>> {
   @override
-  FutureOr<List<String>> build();
+  List<String> build();
 }

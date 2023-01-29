@@ -11,13 +11,13 @@ class MonthlyReminder extends _$MonthlyReminder {
   late final SharedPreferences _preferences;
 
   @override
-  Future<bool> build() async {
-    _preferences = await ref.watch(sharedPreferencesProvider.future);
+  bool build() {
+    _preferences = ref.watch(sharedPreferencesProvider);
     return _preferences.getBool(sharedPreferenesKey) ?? false;
   }
 
   void set(bool newValue) {
-    state = AsyncValue.data(newValue);
+    state = newValue;
     _preferences.setBool(sharedPreferenesKey, newValue);
   }
 }

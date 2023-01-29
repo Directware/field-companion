@@ -29,20 +29,20 @@ class _SystemHash {
   }
 }
 
-String _$AppInitialisationHash() => r'898dc9d533da6eb92f75f22e5832fff14df0a33f';
+String _$AppInitialisationHash() => r'fb7f4fdca1e3099a948462304fa8b42a929b1ec7';
 
 /// See also [AppInitialisation].
 final appInitialisationProvider =
-    AutoDisposeAsyncNotifierProvider<AppInitialisation, bool>(
+    AutoDisposeNotifierProvider<AppInitialisation, bool>(
   AppInitialisation.new,
   name: r'appInitialisationProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$AppInitialisationHash,
 );
-typedef AppInitialisationRef = AutoDisposeAsyncNotifierProviderRef<bool>;
+typedef AppInitialisationRef = AutoDisposeNotifierProviderRef<bool>;
 
-abstract class _$AppInitialisation extends AutoDisposeAsyncNotifier<bool> {
+abstract class _$AppInitialisation extends AutoDisposeNotifier<bool> {
   @override
-  FutureOr<bool> build();
+  bool build();
 }

@@ -1,5 +1,6 @@
 import 'package:field_companion/routing/router.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class FieldCompanion extends StatelessWidget {
   const FieldCompanion({super.key});
@@ -21,6 +22,9 @@ class FieldCompanion extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       routerConfig: router,
     );
   }

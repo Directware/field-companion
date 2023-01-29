@@ -29,18 +29,18 @@ class _SystemHash {
   }
 }
 
-String _$YearlyGoalHash() => r'99d276991abbe8c26c9c10298902d328892e10be';
+String _$YearlyGoalHash() => r'ea42d6ea805a87499960c922988b6c93d67f1e68';
 
 /// See also [YearlyGoal].
-final yearlyGoalProvider = AutoDisposeAsyncNotifierProvider<YearlyGoal, int>(
+final yearlyGoalProvider = AutoDisposeNotifierProvider<YearlyGoal, int>(
   YearlyGoal.new,
   name: r'yearlyGoalProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$YearlyGoalHash,
 );
-typedef YearlyGoalRef = AutoDisposeAsyncNotifierProviderRef<int>;
+typedef YearlyGoalRef = AutoDisposeNotifierProviderRef<int>;
 
-abstract class _$YearlyGoal extends AutoDisposeAsyncNotifier<int> {
+abstract class _$YearlyGoal extends AutoDisposeNotifier<int> {
   @override
-  FutureOr<int> build();
+  int build();
 }

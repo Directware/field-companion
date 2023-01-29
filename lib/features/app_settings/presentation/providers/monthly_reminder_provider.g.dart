@@ -29,20 +29,20 @@ class _SystemHash {
   }
 }
 
-String _$MonthlyReminderHash() => r'621c7b4dce48030a2e20a26412d09e5054f42701';
+String _$MonthlyReminderHash() => r'60c87bb0928281be72c1545eeb65e8497bb082e1';
 
 /// See also [MonthlyReminder].
 final monthlyReminderProvider =
-    AutoDisposeAsyncNotifierProvider<MonthlyReminder, bool>(
+    AutoDisposeNotifierProvider<MonthlyReminder, bool>(
   MonthlyReminder.new,
   name: r'monthlyReminderProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$MonthlyReminderHash,
 );
-typedef MonthlyReminderRef = AutoDisposeAsyncNotifierProviderRef<bool>;
+typedef MonthlyReminderRef = AutoDisposeNotifierProviderRef<bool>;
 
-abstract class _$MonthlyReminder extends AutoDisposeAsyncNotifier<bool> {
+abstract class _$MonthlyReminder extends AutoDisposeNotifier<bool> {
   @override
-  FutureOr<bool> build();
+  bool build();
 }
