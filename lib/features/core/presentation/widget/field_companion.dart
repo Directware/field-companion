@@ -22,9 +22,9 @@ class FieldCompanion extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
           fontFamily: "Heebo"),
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: context.locale,
       routerConfig: router,
     );
   }

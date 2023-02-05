@@ -28,6 +28,7 @@ class Welcome extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
+            key: Key("welcome:title"),
             "title",
             style: TextStyle(color: Colors.white, fontSize: 42),
           ).tr(),
@@ -35,6 +36,7 @@ class Welcome extends ConsumerWidget {
             height: 4,
           ),
           const Text(
+            key: Key("welcome:origin"),
             "welcome.origin",
             style: TextStyle(color: Colors.white, fontSize: 24),
           ).tr(),
@@ -49,15 +51,15 @@ class Welcome extends ConsumerWidget {
                     color: Color.fromARGB(24, 173, 177, 184),
                     borderRadius: BorderRadius.all(Radius.circular(500)),
                   ),
-                  padding: EdgeInsets.all(13),
-                  margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                  child: Icon(
+                  padding: const EdgeInsets.all(13),
+                  margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                  child: const Icon(
                       color: Color(0xFFadb1b8), size: 24, FeatherIcons.clock)
                   // ,
                   ),
               Container(
                   width: 240,
-                  child: const Text(
+                  child: Text(
                     "welcome.feature1",
                     style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
                   ).tr())
