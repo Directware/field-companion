@@ -6,8 +6,11 @@ import 'package:field_companion/features/app_settings/presentation/providers/mon
 import 'package:field_companion/features/app_settings/presentation/providers/monthly_reminder_provider.dart';
 import 'package:field_companion/features/app_settings/presentation/providers/user_language_provider.dart';
 import 'package:field_companion/features/app_settings/presentation/providers/yearly_goal_provider.dart';
+import 'package:field_companion/features/field_service/presentation/widget/field_service.dart';
+import 'package:field_companion/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -167,6 +170,7 @@ class Welcome extends ConsumerWidget {
 
     Logger().i({"deviceId": id, "language": context.locale.languageCode},
         "Initilize Field Companion");
+
     // appInitialisationProv.set();
     // deviceIdProv.set(id);
     // userLanguageProv.set(context.locale.languageCode);
@@ -174,5 +178,7 @@ class Welcome extends ConsumerWidget {
     // yearlyGoalProv.set(0);
     // monthlyGoalProv.set(0);
     // monthlyReminderProv.set(false);
+
+    context.go(AppLocations.fieldService.href);
   }
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'confirmed_features_provider.dart';
+part of 'router_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -29,20 +29,13 @@ class _SystemHash {
   }
 }
 
-String _$ConfirmedFeaturesHash() => r'13f2e4fb1d6f5598015da9e8d61acf0e1a180c8b';
+String _$routerHash() => r'549529a73f8355af5ac0be1719401a306c114ede';
 
-/// See also [ConfirmedFeatures].
-final confirmedFeaturesProvider =
-    AutoDisposeNotifierProvider<ConfirmedFeatures, List<String>>(
-  ConfirmedFeatures.new,
-  name: r'confirmedFeaturesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$ConfirmedFeaturesHash,
+/// See also [router].
+final routerProvider = Provider<GoRouter>(
+  router,
+  name: r'routerProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$routerHash,
 );
-typedef ConfirmedFeaturesRef = AutoDisposeNotifierProviderRef<List<String>>;
-
-abstract class _$ConfirmedFeatures extends AutoDisposeNotifier<List<String>> {
-  @override
-  List<String> build();
-}
+typedef RouterRef = ProviderRef<GoRouter>;
