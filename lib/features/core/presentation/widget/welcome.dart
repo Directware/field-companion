@@ -8,7 +8,9 @@ import 'package:field_companion/features/app_settings/presentation/providers/use
 import 'package:field_companion/features/app_settings/presentation/providers/yearly_goal_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:nanoid/nanoid.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class Welcome extends ConsumerWidget {
   const Welcome({super.key});
@@ -16,17 +18,140 @@ class Welcome extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-        body: Column(
-      children: [
-        const Text("welcome.feature1").tr(),
-        TextButton(
-            onPressed: () => presscher(context, ref),
-            child: const Text("actions.continue").tr())
-      ],
-    ));
+        body: Stack(fit: StackFit.expand, children: [
+      const Positioned.fill(
+          child: Image(
+        fit: BoxFit.cover,
+        image: AssetImage("assets/images/background-map.jpeg"),
+      )),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            "title",
+            style: TextStyle(color: Colors.white, fontSize: 42),
+          ).tr(),
+          Container(
+            height: 4,
+          ),
+          const Text(
+            "welcome.origin",
+            style: TextStyle(color: Colors.white, fontSize: 24),
+          ).tr(),
+          Container(
+            height: 85,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(24, 173, 177, 184),
+                    borderRadius: BorderRadius.all(Radius.circular(500)),
+                  ),
+                  padding: EdgeInsets.all(13),
+                  margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
+                  child: Icon(
+                      color: Color(0xFFadb1b8), size: 24, FeatherIcons.clock)
+                  // ,
+                  ),
+              Container(
+                  width: 240,
+                  child: const Text(
+                    "welcome.feature1",
+                    style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
+                  ).tr())
+            ],
+          ),
+          Container(
+            height: 32,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(24, 173, 177, 184),
+                    borderRadius: BorderRadius.all(Radius.circular(500)),
+                  ),
+                  padding: EdgeInsets.all(13),
+                  margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
+                  child: Icon(
+                      color: Color(0xFFadb1b8), size: 24, FeatherIcons.award)
+                  // ,
+                  ),
+              Container(
+                  width: 240,
+                  child: const Text(
+                    "welcome.feature2",
+                    style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
+                  ).tr())
+            ],
+          ),
+          Container(
+            height: 32,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(24, 173, 177, 184),
+                    borderRadius: BorderRadius.all(Radius.circular(500)),
+                  ),
+                  padding: EdgeInsets.all(13),
+                  margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
+                  child: Icon(
+                      color: Color(0xFFadb1b8), size: 24, FeatherIcons.mail)
+                  // ,
+                  ),
+              Container(
+                  width: 240,
+                  child: const Text(
+                    "welcome.feature3",
+                    style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
+                  ).tr())
+            ],
+          ),
+          Container(
+            height: 32,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(24, 173, 177, 184),
+                    borderRadius: BorderRadius.all(Radius.circular(500)),
+                  ),
+                  padding: EdgeInsets.all(13),
+                  margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
+                  child: Icon(
+                      color: Color(0xFFadb1b8), size: 24, FeatherIcons.map)),
+              Container(
+                  width: 240,
+                  child: const Text(
+                    "welcome.feature4",
+                    style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
+                  ).tr())
+            ],
+          ),
+          Container(
+            height: 86,
+          ),
+          ElevatedButton(
+              style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(Size.fromWidth(310))),
+              onPressed: () => initializeFieldCompanion(context, ref),
+              child: const Text("actions.continue").tr())
+        ],
+      )
+    ]));
   }
 
-  void presscher(BuildContext context, WidgetRef ref) {
+  void initializeFieldCompanion(BuildContext context, WidgetRef ref) {
+    Logger().d("Initilize Field Companion");
+
     final appInitialisationProv = ref.read(appInitialisationProvider.notifier);
     final deviceIdProv = ref.read(deviceIdProvider.notifier);
     final userLanguageProv = ref.read(userLanguageProvider.notifier);
@@ -38,12 +163,14 @@ class Welcome extends ConsumerWidget {
     final id = customAlphabet(
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", 36);
 
-    appInitialisationProv.set();
-    deviceIdProv.set(id);
-    userLanguageProv.set(context.locale.languageCode);
-    durationStepProv.set(30);
-    yearlyGoalProv.set(0);
-    monthlyGoalProv.set(0);
-    monthlyReminderProv.set(false);
+    Logger().i({"deviceId": id, "language": context.locale.languageCode},
+        "Initilize Field Companion");
+    // appInitialisationProv.set();
+    // deviceIdProv.set(id);
+    // userLanguageProv.set(context.locale.languageCode);
+    // durationStepProv.set(30);
+    // yearlyGoalProv.set(0);
+    // monthlyGoalProv.set(0);
+    // monthlyReminderProv.set(false);
   }
 }
