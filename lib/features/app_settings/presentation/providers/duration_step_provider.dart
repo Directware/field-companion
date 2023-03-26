@@ -13,7 +13,7 @@ class DurationStep extends _$DurationStep {
   @override
   int build() {
     _preferences = ref.watch(sharedPreferencesProvider);
-    return _preferences.getInt(sharedPreferenesKey) ?? 0;
+    return _preferences.getInt(sharedPreferenesKey) ?? 30;
   }
 
   void set(int newValue) {

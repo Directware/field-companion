@@ -19,30 +19,33 @@ void main() async {
   // await _initDatabase();
 
   final Widget easyLocalization = EasyLocalization(
-      supportedLocales: const [
-        Locale('en', 'US'),
-        Locale('de', 'DE'),
-        Locale('pl', 'PL')
-      ],
-      path: 'assets/i18n',
-      saveLocale: false,
-      useFallbackTranslations: true,
-      useOnlyLangCode: true,
-      fallbackLocale: const Locale('en', 'US'),
-      child: const FieldCompanion());
+    supportedLocales: const [
+      Locale('en', 'US'),
+      Locale('de', 'DE'),
+      Locale('pl', 'PL')
+    ],
+    path: 'assets/i18n',
+    saveLocale: false,
+    useFallbackTranslations: true,
+    useOnlyLangCode: true,
+    fallbackLocale: const Locale('en', 'US'),
+    child: const FieldCompanion(),
+  );
 
   // For widgets to be able to read providers, we need to wrap the entire
   // application in a "ProviderScope" widget.
   // This is where the state of our providers will be stored.
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  runApp(ProviderScope(
-    overrides: [
-      sharedPreferencesProvider.overrideWith((ref) => sharedPreferences)
-    ],
-    observers: [],
-    child: easyLocalization,
-  ));
+  runApp(
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWith((ref) => sharedPreferences)
+      ],
+      observers: [],
+      child: easyLocalization,
+    ),
+  );
 }
 
 /// Um die Adapter zu generieren muss folgender Befehl ausgeführt werden: flutter packages pub run build_runner build

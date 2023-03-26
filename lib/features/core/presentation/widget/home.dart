@@ -16,16 +16,18 @@ class Home extends StatelessWidget {
         extendBody: true,
         body: Container(
           decoration: const BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/background-map.jpeg"))),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage("assets/images/background-map.jpeg"),
+            ),
+          ),
           child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: child,
-              )),
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              padding: const EdgeInsets.only(top: 16, bottom: 72.0),
+              child: child,
+            ),
+          ),
         ),
       ),
     );
