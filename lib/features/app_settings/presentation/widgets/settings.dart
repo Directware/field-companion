@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:field_companion/color-palette.dart';
+import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/section.dart';
 import 'package:field_companion/common_widgets/section_item.dart';
 import 'package:field_companion/common_widgets/section_item_styles.dart';
@@ -8,7 +8,7 @@ import 'package:field_companion/features/app_settings/presentation/providers/dev
 import 'package:field_companion/features/app_settings/presentation/providers/duration_step_provider.dart';
 import 'package:field_companion/features/app_settings/presentation/providers/monthly_reminder_provider.dart';
 import 'package:field_companion/features/app_settings/presentation/providers/user_language_provider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show CupertinoSwitch;
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,9 +42,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.language'.tr(),
+                          'settings.language',
                           style: SectionItemStyles.whiteKey,
-                        ),
+                        ).tr(),
                         Text(
                           userLanguage,
                           style: SectionItemStyles.value,
@@ -55,9 +55,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.yourId'.tr(),
+                          'settings.yourId',
                           style: SectionItemStyles.whiteKey,
-                        ),
+                        ).tr(),
                         SizedBox(
                           width: 120,
                           child: Text(
@@ -81,9 +81,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.changeDurationStep'.tr(),
+                          'settings.changeDurationStep',
                           style: SectionItemStyles.whiteKey,
-                        ),
+                        ).tr(),
                         Text(
                           "$durationStep min",
                           style: SectionItemStyles.value,
@@ -98,15 +98,15 @@ class Settings extends ConsumerWidget {
                       ),
                       children: [
                         Text(
-                          'settings.monthlyReminder'.tr(),
+                          'settings.monthlyReminder',
                           style: SectionItemStyles.whiteKey,
-                        ),
+                        ).tr(),
                         CupertinoSwitch(
                           value: monthlyReminderValue,
                           onChanged: (bool newValue) {
                             ref
                                 .read(monthlyReminderProvider.notifier)
-                                .set(newValue);
+                                .set(value: newValue);
                           },
                         ),
                       ],
@@ -123,9 +123,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.actions.exportBackup'.tr(),
+                          'settings.actions.exportBackup',
                           style: SectionItemStyles.blueKey,
-                        ),
+                        ).tr(),
                         const Icon(
                           color: ColorPalette.blue,
                           FeatherIcons.upload,
@@ -137,9 +137,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.actions.importBackup'.tr(),
+                          'settings.actions.importBackup',
                           style: SectionItemStyles.blueKey,
-                        ),
+                        ).tr(),
                         const Icon(
                           color: ColorPalette.blue,
                           FeatherIcons.download,
@@ -151,9 +151,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.actions.resetApp'.tr(),
+                          'settings.actions.resetApp',
                           style: SectionItemStyles.redKey,
-                        ),
+                        ).tr(),
                         const Icon(
                           color: ColorPalette.red,
                           FeatherIcons.trash,
@@ -173,9 +173,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.actions.bugReport'.tr(),
+                          'settings.actions.bugReport',
                           style: SectionItemStyles.blueKey,
-                        ),
+                        ).tr(),
                         const Icon(
                           color: ColorPalette.blue,
                           FeatherIcons.messageSquare,
@@ -187,9 +187,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.actions.territoryOffline'.tr(),
+                          'settings.actions.territoryOffline',
                           style: SectionItemStyles.blueKey,
-                        ),
+                        ).tr(),
                         const Icon(
                           color: ColorPalette.blue,
                           FeatherIcons.externalLink,
@@ -201,9 +201,9 @@ class Settings extends ConsumerWidget {
                       onTap: () {},
                       children: [
                         Text(
-                          'settings.actions.about'.tr(),
+                          'settings.actions.about',
                           style: SectionItemStyles.blueKey,
-                        ),
+                        ).tr(),
                         const Icon(
                           color: ColorPalette.blue,
                           FeatherIcons.info,
@@ -213,7 +213,7 @@ class Settings extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 32.0),
+                const SizedBox(height: 16.0),
               ],
             ),
           ),

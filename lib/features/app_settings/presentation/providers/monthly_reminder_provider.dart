@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:field_companion/providers/shared_preferences_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,8 +16,8 @@ class MonthlyReminder extends _$MonthlyReminder {
     return _preferences.getBool(sharedPreferenesKey) ?? false;
   }
 
-  void set(bool newValue) {
-    state = newValue;
-    _preferences.setBool(sharedPreferenesKey, newValue);
+  void set({required bool value}) {
+    state = value;
+    _preferences.setBool(sharedPreferenesKey, value);
   }
 }

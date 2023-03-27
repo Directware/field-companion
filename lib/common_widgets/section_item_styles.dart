@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:field_companion/color-palette.dart';
+import 'package:field_companion/color_palette.dart';
 import 'package:flutter/material.dart';
 
 class SectionItemStyles {
