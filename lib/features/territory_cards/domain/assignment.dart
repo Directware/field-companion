@@ -1,7 +1,6 @@
-import 'package:field_companion/models/entity.dart';
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:field_companion/features/territory_cards/domain/publisher.dart';
+import 'package:field_companion/models/entity.dart';
+import 'package:hive/hive.dart';
 
 part 'assignment.g.dart';
 

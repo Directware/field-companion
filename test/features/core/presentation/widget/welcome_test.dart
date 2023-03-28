@@ -1,6 +1,6 @@
+import 'package:field_companion/features/core/presentation/widget/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:field_companion/features/core/presentation/widget/welcome.dart';
 import '../../../../utils/utils.dart';
 
 void main() async {

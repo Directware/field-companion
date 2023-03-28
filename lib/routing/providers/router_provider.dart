@@ -14,8 +14,9 @@ GoRouter router(Ref ref) {
   final notifier = ref.watch(routerNotifierProvider.notifier);
 
   return GoRouter(
-      navigatorKey: _key,
-      refreshListenable: notifier,
-      routes: appRoutes,
-      initialLocation: AppLocations.welcome.href);
+    navigatorKey: _key,
+    refreshListenable: notifier,
+    routes: appRoutes,
+    initialLocation: AppLocations.welcome.href,
+  );
 }

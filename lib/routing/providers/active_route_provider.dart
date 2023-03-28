@@ -1,5 +1,6 @@
 import 'package:field_companion/routing/providers/router_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// ignore: implementation_imports
 import 'package:go_router/src/information_provider.dart';
 
 final activeRouteProvider =

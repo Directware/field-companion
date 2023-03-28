@@ -1,22 +1,23 @@
+import 'package:field_companion/features/territory_cards/domain/position.dart';
 import 'package:field_companion/models/entity.dart';
 import 'package:hive/hive.dart';
-import 'package:field_companion/features/territory_cards/domain/position.dart';
 
 part 'visit_ban.g.dart';
 
 @HiveType(typeId: 8)
 class VisitBan extends Entity {
-  VisitBan(
-      {required this.name,
-      required this.street,
-      required this.streetSuffix,
-      required this.territoryId,
-      this.tags = const [],
-      this.city,
-      this.floor,
-      this.lastVisit,
-      this.comment,
-      this.gpsPosition});
+  VisitBan({
+    required this.name,
+    required this.street,
+    required this.streetSuffix,
+    required this.territoryId,
+    this.tags = const [],
+    this.city,
+    this.floor,
+    this.lastVisit,
+    this.comment,
+    this.gpsPosition,
+  });
 
   @HiveField(4)
   String name;
