@@ -9,7 +9,19 @@ class ColorPalette {
 
   static const Color red = Color(0xFFff5f1b);
 
+  static const Color green = Color(0xFF15c880);
+
+  static const Color greenProgressStart = Color(0xFF15c880);
+
+  static const Color greenProgressEnd = Color(0xFF54ff6b);
+
   static Color grey2Opacity08 = grey2.withOpacity(0.08);
 
   static Color grey2Opacity20 = grey2.withOpacity(0.20);
+
+  static Color grey2Opacity24 = grey2.withOpacity(0.24);
+
+  static Color grey2Opacity30 = grey2.withOpacity(0.30);
+
+  static Color greenOpacity20 = green.withOpacity(0.20);
 }

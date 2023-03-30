@@ -26,7 +26,9 @@ class Settings extends ConsumerWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const TitleBar(title: "Einstellungen"),
+        TitleBar(
+            title: 'settings.title'.tr(),
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: Column(

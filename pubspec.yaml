@@ -45,6 +45,7 @@ dependencies:
   easy_localization: ^3.0.1
   flutter_feather_icons: ^2.0.0+1
   logger: ^1.1.0
+  table_calendar: ^3.0.8
 
 dev_dependencies:
   flutter_test:

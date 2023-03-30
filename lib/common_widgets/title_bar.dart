@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class TitleBar extends StatelessWidget {
-  final String title;
+  final String? title;
   final Widget? trailing;
   final String? backNavigationText;
 
   const TitleBar({
     super.key,
-    required this.title,
+    this.title,
     this.trailing,
     this.backNavigationText,
   });
@@ -22,7 +22,7 @@ class TitleBar extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              title,
+              title!,
               style: const TextStyle(
                 fontFamily: "Heebo",
                 fontSize: 30,
