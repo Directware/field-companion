@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - uses: subosito/flutter-action@v1
+    - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.7.0'
         channel: 'stable'
@@ -44,7 +44,7 @@ jobs:
       with:
         java-version: '12.x'
 
-    - uses: subosito/flutter-action@v1
+    - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.7.0'
         channel: 'stable'
@@ -72,7 +72,7 @@ jobs:
       shell: bash
       run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
 
-    - uses: subosito/flutter-action@v1
+    - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.7.0'
         channel: 'stable'
