@@ -20,6 +20,7 @@ jobs:
       with:
         flutter-version: '3.7.0'
         channel: 'stable'
+        cache: true    
 
     - run: flutter pub get
     
@@ -29,7 +30,7 @@ jobs:
     
     - run: flutter test
     
-    - run: flutter build apk3
+    - run: flutter build apk
 
     - uses: actions/upload-artifact@v1
       with:
