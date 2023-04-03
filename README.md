@@ -1,5 +1,19 @@
 # Field Companion
 
+## Setup
+
+### Install dependencies
+`flutter pub get`
+
+### Install lefthook
+
+You need to manually install lefthook in your specific environment.
+
+And then run: `lefthook install`
+
+### Run app
+`flutter run`
+
 ## Features
 ### Set goals for yourself
 
