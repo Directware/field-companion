@@ -1,0 +1,12 @@
+pre-push:
+  parallel: true
+  commands:
+    linter:
+      run: flutter analyze
+    tests:
+      run: flutter test
+pre-commit:
+  commands:
+    pretty:
+      glob: '*.dart'
+      run: flutter format {staged_files} && git add {staged_files}
