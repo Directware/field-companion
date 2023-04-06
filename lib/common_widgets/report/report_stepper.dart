@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:field_companion/color-palette.dart';
+import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/report/stepper_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -46,18 +46,24 @@ class ReportStepper extends ConsumerWidget {
                     ),
                     StepperWidget(
                       title: 'service.deliveries'.tr(),
-                      icon: const Icon(FeatherIcons.bookOpen,
-                          color: Colors.white),
+                      icon: const Icon(
+                        FeatherIcons.bookOpen,
+                        color: Colors.white,
+                      ),
                     ),
                     StepperWidget(
                       title: 'service.videos'.tr(),
-                      icon: const Icon(FeatherIcons.playCircle,
-                          color: Colors.white),
+                      icon: const Icon(
+                        FeatherIcons.playCircle,
+                        color: Colors.white,
+                      ),
                     ),
                     StepperWidget(
                       title: 'service.returnVisits'.tr(),
-                      icon: const Icon(FeatherIcons.refreshCcw,
-                          color: Colors.white),
+                      icon: const Icon(
+                        FeatherIcons.refreshCcw,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),

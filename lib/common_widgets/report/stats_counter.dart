@@ -1,6 +1,5 @@
+import 'package:field_companion/color_palette.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import '../../color-palette.dart';
 
 class StatsCounter extends StatelessWidget {
   const StatsCounter({super.key, required this.amount, required this.icon});

@@ -1,6 +1,5 @@
-import 'package:field_companion/color-palette.dart';
+import 'package:field_companion/color_palette.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MyDatePicker extends StatefulWidget {

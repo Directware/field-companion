@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:field_companion/color-palette.dart';
+import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/report/progress_painter.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +31,7 @@ class Progressindicator extends StatelessWidget {
         ),
        */
         Padding(
-          padding: EdgeInsets.all(19.0),
+          padding: const EdgeInsets.all(19.0),
           child: Center(
             child: SizedBox(
               width: 72,
