@@ -27,8 +27,20 @@ jobs:
     
     - run: flutter test
 
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   android-build:
-    needs: check-code
+    needs: [check-code, sonarcloud]
 
     runs-on: ubuntu-latest
 
@@ -61,7 +73,7 @@ jobs:
     #     path: build/app/outputs/apk/release/app-release.apk
 
   ios-build:
-    needs: check-code
+    needs: [check-code, sonarcloud]
 
     runs-on: macos-latest
 
