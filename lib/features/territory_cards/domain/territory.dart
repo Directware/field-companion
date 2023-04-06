@@ -18,6 +18,7 @@ class Territory extends Entity {
   @HiveField(4)
   String name;
 
+  @override
   @HiveField(5)
   String key;
 

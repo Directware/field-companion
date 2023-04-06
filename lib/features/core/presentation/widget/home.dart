@@ -23,10 +23,7 @@ class Home extends StatelessWidget {
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              padding: const EdgeInsets.only(top: 16, bottom: 72.0),
-              child: child,
-            ),
+            child: SafeArea(child: child),
           ),
         ),
       ),

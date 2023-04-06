@@ -1,0 +1,101 @@
+
+name: Check code and build
+
+on:
+  push:
+    branches:
+    - "**"
+
+jobs:
+  check-code:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.7.0'
+        channel: 'stable'
+        cache: true    
+
+    - run: flutter pub get
+    
+    - run: dart format --set-exit-if-changed .
+    
+    - run: flutter analyze .
+    
+    - run: flutter test
+
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  android-build:
+    needs: [check-code, sonarcloud]
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Extract branch name
+      id: extract_branch
+      shell: bash
+      run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
+
+    - uses: actions/setup-java@v2
+      with:
+        java-version: '12.x'
+        distribution: 'zulu'
+
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.7.0'
+        channel: 'stable'
+        cache: true    
+
+    - run: flutter pub get
+    
+    - run: flutter build apk
+
+    # - uses: actions/upload-artifact@v1
+    #   with:
+    #     name: ${{ steps.extract_branch.outputs.branch }}-release-apk
+    #     path: build/app/outputs/apk/release/app-release.apk
+
+  ios-build:
+    needs: [check-code, sonarcloud]
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Extract branch name
+      id: extract_branch
+      shell: bash
+      run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
+
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.7.0'
+        channel: 'stable'
+        cache: true    
+
+    - run: flutter pub get
+    
+    - run: flutter build ios --release --no-codesign
+
+    # - uses: actions/upload-artifact@v1
+    #   with:
+    #     name: ${{ steps.extract_branch.outputs.branch }}-release-ios
+    #     path: build/ios/iphoneos/Runner.app

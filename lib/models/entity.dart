@@ -6,7 +6,7 @@ part "entity.g.dart";
 @HiveType(typeId: 0)
 class Entity extends HiveObject {
   Entity()
-      : id = nanoid(21),
+      : id = nanoid(),
         creationTime = DateTime.now(),
         lastUpdated = DateTime.now(),
         excludeStatistic = false;

@@ -37,56 +37,56 @@ final _key = GlobalKey<NavigatorState>(debugLabel: 'navigatorKey');
 
 final appRoutes = [
   GoRoute(
-      path: AppLocations.welcome.href,
-      builder: (context, state) => const Welcome()),
+    path: AppLocations.welcome.href,
+    builder: (context, state) => const Welcome(),
+  ),
   ShellRoute(
-      navigatorKey: _key,
-      builder: (context, state, child) => Home(child: child),
-      routes: [
-        GoRoute(
-            path: AppLocations.main.href,
-            redirect: (context, state) => AppLocations.fieldService.href),
-        GoRoute(
-          path: AppLocations.territories.href,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            key: state.pageKey,
-            transitionDuration: const Duration(milliseconds: 150),
-            child: const Territories(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: CurveTween(curve: Curves.linear).animate(animation),
-              child: child,
-            ),
+    navigatorKey: _key,
+    builder: (context, state, child) => Home(child: child),
+    routes: [
+      GoRoute(
+        path: AppLocations.main.href,
+        redirect: (context, state) => AppLocations.fieldService.href,
+      ),
+      GoRoute(
+        path: AppLocations.territories.href,
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          transitionDuration: const Duration(milliseconds: 150),
+          child: const Territories(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: CurveTween(curve: Curves.linear).animate(animation),
+            child: child,
           ),
         ),
-        GoRoute(
-          path: AppLocations.fieldService.href,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            key: state.pageKey,
-            transitionDuration: const Duration(milliseconds: 150),
-            child: const FieldService(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: CurveTween(curve: Curves.linear).animate(animation),
-              child: child,
-            ),
+      ),
+      GoRoute(
+        path: AppLocations.fieldService.href,
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          transitionDuration: const Duration(milliseconds: 150),
+          child: const FieldService(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: CurveTween(curve: Curves.linear).animate(animation),
+            child: child,
           ),
         ),
-        GoRoute(
-          path: AppLocations.settings.href,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            key: state.pageKey,
-            transitionDuration: const Duration(milliseconds: 150),
-            child: const Settings(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: CurveTween(curve: Curves.linear).animate(animation),
-              child: child,
-            ),
+      ),
+      GoRoute(
+        path: AppLocations.settings.href,
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          transitionDuration: const Duration(milliseconds: 150),
+          child: const Settings(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: CurveTween(curve: Curves.linear).animate(animation),
+            child: child,
           ),
         ),
-      ])
+      ),
+    ],
+  )
 ];

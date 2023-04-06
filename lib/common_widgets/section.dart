@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:field_companion/color-palette.dart';
+import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/section_item.dart';
 import 'package:flutter/material.dart';
 
@@ -56,13 +56,11 @@ class Section extends StatelessWidget {
         ClipRRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              child: Material(
-                color: backgroundColor ?? Colors.transparent,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: childWithSeparators,
-                ),
+            child: Material(
+              color: backgroundColor ?? Colors.transparent,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: childWithSeparators,
               ),
             ),
           ),
