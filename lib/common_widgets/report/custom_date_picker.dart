@@ -223,9 +223,11 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
     }
   }
 
+/*
   _isSelectedDate(DateTime daysInMonth) {
     return _selectedDate.year == daysInMonth.year &&
         _selectedDate.month == daysInMonth.month &&
         _selectedDate.day == daysInMonth.day;
   }
+   */
 }

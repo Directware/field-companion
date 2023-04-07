@@ -1,7 +1,6 @@
 import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/report/progress_indicator.dart';
 import 'package:field_companion/common_widgets/report/stats_counter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -21,8 +20,8 @@ class StatsHeader extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Progressindicator(
-                percentage: 90.0,
+              const Progressindicator(
+                percentage: 75,
               ),
               Expanded(child: Container()),
               Row(

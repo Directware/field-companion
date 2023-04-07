@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$MonthlyReminderHash() => r'60c87bb0928281be72c1545eeb65e8497bb082e1';
+String _$MonthlyReminderHash() => r'643ed29d585d18923724d7facd1a14478e92293c';
 
 /// See also [MonthlyReminder].
 final monthlyReminderProvider =

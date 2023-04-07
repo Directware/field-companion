@@ -1,10 +1,8 @@
+import 'package:field_companion/common_widgets/report/date_picker.dart';
 import 'package:field_companion/common_widgets/report/report_stepper.dart';
+import 'package:field_companion/common_widgets/report/stats_header.dart';
+import 'package:field_companion/common_widgets/title_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../../../../common_widgets/report/custom_datePicker.dart';
-import '../../../../common_widgets/report/date_picker.dart';
-import '../../../../common_widgets/report/stats_header.dart';
-import '../../../../common_widgets/title_bar.dart';
 
 class FieldService extends StatelessWidget {
   const FieldService({super.key});
@@ -23,12 +21,17 @@ class FieldService extends StatelessWidget {
           title: 'April 2023',
         ),
         // Temporary
-        StatsHeader(),
+        const StatsHeader(),
         const SizedBox(
           height: 50,
         ),
         MyDatePicker(),
-        const ReportStepper(),
+        const ReportStepper(
+          time: 0.0,
+          placements: 0,
+          videos: 0,
+          reVisits: 0,
+        ),
       ],
     );
   }

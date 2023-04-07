@@ -8,12 +8,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ReportStepper extends ConsumerWidget {
   const ReportStepper({
     super.key,
+    required this.time,
+    required this.placements,
+    required this.videos,
+    required this.reVisits,
   });
 
-  final double time = 0.0;
-  final int placements = 0;
-  final int videos = 0;
-  final int reVisits = 0;
+  final double time;
+  final int placements;
+  final int videos;
+  final int reVisits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

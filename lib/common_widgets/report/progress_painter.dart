@@ -47,8 +47,13 @@ class ProgressIndicatorPainter extends CustomPainter {
     progressBarPaint.strokeCap = StrokeCap.round;
 
     /// darw
-    canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
-        -math.pi / 2, angle, false, progressBarPaint);
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      -math.pi / 2,
+      angle,
+      false,
+      progressBarPaint,
+    );
 
     /// hours text in the center
     final textSpan = TextSpan(

@@ -77,7 +77,7 @@ class _MyDatePickerState extends State<MyDatePicker> {
               ),
             ),
             eventLoader: (day) {
-              List<DateTime> events = [];
+              final List<DateTime> events = [];
 
               _events.forEach((key, value) {
                 if (key.year == day.year &&

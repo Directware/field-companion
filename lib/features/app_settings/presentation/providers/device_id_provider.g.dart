@@ -29,18 +29,18 @@ class _SystemHash {
   }
 }
 
-String _$DeviceIdHash() => r'aac48ea0e2ab7b79659c5e68743356053f91b93f';
+String _$DeviceIdHash() => r'a09578e0ae408841b6e095c859e4332645b5a263';
 
 /// See also [DeviceId].
-final deviceIdProvider = AutoDisposeNotifierProvider<DeviceId, String>(
+final deviceIdProvider = NotifierProvider<DeviceId, String>(
   DeviceId.new,
   name: r'deviceIdProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$DeviceIdHash,
 );
-typedef DeviceIdRef = AutoDisposeNotifierProviderRef<String>;
+typedef DeviceIdRef = NotifierProviderRef<String>;
 
-abstract class _$DeviceId extends AutoDisposeNotifier<String> {
+abstract class _$DeviceId extends Notifier<String> {
   @override
   String build();
 }

@@ -2,8 +2,8 @@ import 'package:field_companion/color_palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class StepperWidget extends StatelessWidget {
-  StepperWidget({
+class StepperWidget extends StatefulWidget {
+  const StepperWidget({
     required this.title,
     required this.icon,
     //required this.value,
@@ -11,6 +11,12 @@ class StepperWidget extends StatelessWidget {
 
   final String title;
   final Icon icon;
+
+  @override
+  State<StepperWidget> createState() => _StepperWidgetState();
+}
+
+class _StepperWidgetState extends State<StepperWidget> {
   late int value = 0;
 
   @override
@@ -21,11 +27,11 @@ class StepperWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(9.0),
-            child: icon,
+            child: widget.icon,
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
-            child: Text(title),
+            child: Text(widget.title),
           ),
           Container(
             width: 80,
@@ -51,20 +57,18 @@ class StepperWidget extends StatelessWidget {
                   ),
                 ),
 
-                if (value != null)
-                  Text(
-                    "${value.toString()}",
-                    style: const TextStyle(
-                      fontFamily: "Heebo",
-                      fontSize: 20,
-                      height: 1.2,
-                      letterSpacing: 0.4,
-                    ),
+                Text(
+                  value.toString(),
+                  style: const TextStyle(
+                    fontFamily: "Heebo",
+                    fontSize: 20,
+                    height: 1.2,
+                    letterSpacing: 0.4,
                   ),
+                ),
 
                 IconButton(
                   onPressed: () {
-                    print("test");
                     // TODO: add minus action
                   },
                   icon: const Icon(

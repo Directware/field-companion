@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$DurationStepHash() => r'b3c75dc3b10365db5d1740e560dcbfc89fdd0052';
+String _$DurationStepHash() => r'7707b93c74b1e81eb17c3c156055c2a114dc1e55';
 
 /// See also [DurationStep].
 final durationStepProvider = AutoDisposeNotifierProvider<DurationStep, int>(

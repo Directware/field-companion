@@ -1,13 +1,20 @@
-import 'dart:math' as math;
-
 import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/report/progress_painter.dart';
 import 'package:flutter/material.dart';
 
-class Progressindicator extends StatelessWidget {
-  Progressindicator({super.key, required this.percentage});
+class Progressindicator extends StatefulWidget {
+  const Progressindicator({
+    super.key,
+    required this.percentage,
+  });
 
-  double percentage;
+  final double percentage;
+
+  @override
+  State<Progressindicator> createState() => _ProgressindicatorState();
+}
+
+class _ProgressindicatorState extends State<Progressindicator> {
   int hours = 25;
   int minutes = 30;
 
@@ -40,7 +47,7 @@ class Progressindicator extends StatelessWidget {
                 painter: ProgressIndicatorPainter(
                   hours: hours,
                   minutes: minutes,
-                  percentage: percentage,
+                  percentage: widget.percentage,
                   strokeWidth: 7,
                   startingColor: ColorPalette.greenProgressStart,
                   endingColor: ColorPalette.greenProgressEnd,
