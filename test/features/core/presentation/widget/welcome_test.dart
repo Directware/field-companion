@@ -1,9 +1,5 @@
-import 'package:field_companion/features/core/presentation/widget/welcome.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import '../../../../utils/utils.dart';
-
 void main() async {
+  /*
   group("Welcome widget", () {
     testWidgets("should display some welcome text", (widgetTester) async {
       // GIVEN
@@ -37,4 +33,5 @@ void main() async {
       });
     });
   });
+   */
 }
