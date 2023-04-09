@@ -15,7 +15,7 @@ class StepperWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // TODO: add Provider
-    final value = 0;
+    const value = 0;
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
       child: Column(
