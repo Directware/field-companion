@@ -18,6 +18,7 @@ class BottomBar extends ConsumerWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
           child: SafeArea(
+            minimum: const EdgeInsets.only(bottom: 12),
             child: Padding(
               padding: const EdgeInsets.only(left: 52, right: 52, top: 12),
               child: Row(
