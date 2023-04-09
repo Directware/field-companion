@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 class ProgressIndicatorPainter extends CustomPainter {
   ProgressIndicatorPainter({
-    required this.hours,
-    required this.minutes,
     required this.percentage,
     required this.strokeWidth,
     required this.startingColor,
@@ -12,8 +10,6 @@ class ProgressIndicatorPainter extends CustomPainter {
     required this.backgroundColor,
   });
 
-  final int hours;
-  final int minutes;
   final double percentage;
   final double strokeWidth;
   final Color startingColor;
@@ -55,6 +51,7 @@ class ProgressIndicatorPainter extends CustomPainter {
       progressBarPaint,
     );
 
+    /*
     /// hours text in the center
     final textSpan = TextSpan(
       text: hours.toString(),
@@ -99,6 +96,7 @@ class ProgressIndicatorPainter extends CustomPainter {
         center.dy - textPainter.height / 2,
       ),
     );
+*/
 
     /// together rendered hours and minutes
     /*

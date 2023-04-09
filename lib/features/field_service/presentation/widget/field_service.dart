@@ -10,7 +10,6 @@ class FieldService extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         /*
         TitleBar(
@@ -23,9 +22,13 @@ class FieldService extends StatelessWidget {
         // Temporary
         const StatsHeader(),
         const SizedBox(
-          height: 50,
+          height: 24,
         ),
-        MyDatePicker(),
+
+        Expanded(
+          child: MyDatePicker(),
+        ),
+
         const ReportStepper(
           time: 0.0,
           placements: 0,

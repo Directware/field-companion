@@ -1,37 +1,32 @@
 import 'package:field_companion/color_palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StepperWidget extends StatefulWidget {
+class StepperWidget extends ConsumerWidget {
   const StepperWidget({
     required this.title,
     required this.icon,
-    //required this.value,
   });
 
   final String title;
   final Icon icon;
 
   @override
-  State<StepperWidget> createState() => _StepperWidgetState();
-}
-
-class _StepperWidgetState extends State<StepperWidget> {
-  late int value = 0;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // TODO: add Provider
+    final value = 0;
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(9.0),
-            child: widget.icon,
+            child: icon,
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
-            child: Text(widget.title),
+            child: Text(title),
           ),
           Container(
             width: 80,
@@ -46,7 +41,7 @@ class _StepperWidgetState extends State<StepperWidget> {
                   padding: const EdgeInsets.all(7.0),
                   child: IconButton(
                     onPressed: () {
-                      value += 1;
+                      // ref.read(providerName.notifier).set(value);
                       // TODO: add plus action
                     },
                     icon: const Icon(
@@ -69,6 +64,7 @@ class _StepperWidgetState extends State<StepperWidget> {
 
                 IconButton(
                   onPressed: () {
+                    // ref.read(providerName.notifier).set(value);
                     // TODO: add minus action
                   },
                   icon: const Icon(

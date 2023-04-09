@@ -21,61 +21,59 @@ class ReportStepper extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Expanded(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: ColorPalette.grey2Opacity08,
-            ),
-            child: Column(
-              children: [
-                // TODO: Move the divider up; without the translation;
-                Transform.translate(
-                  offset: const Offset(0, -9),
-                  child: const Divider(
-                    color: ColorPalette.grey2,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: ColorPalette.grey2Opacity08,
+          ),
+          child: Column(
+            children: [
+              Container(
+                height: 1,
+                color: ColorPalette.grey2Opacity30,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  StepperWidget(
+                    title: 'service.duration'.tr(),
+                    icon: const Icon(
+                      FeatherIcons.clock,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    StepperWidget(
-                      title: 'service.duration'.tr(),
-                      icon: const Icon(
-                        FeatherIcons.clock,
-                        color: Colors.white,
-                      ),
+                  StepperWidget(
+                    title: 'service.deliveries'.tr(),
+                    icon: const Icon(
+                      FeatherIcons.bookOpen,
+                      color: Colors.white,
                     ),
-                    StepperWidget(
-                      title: 'service.deliveries'.tr(),
-                      icon: const Icon(
-                        FeatherIcons.bookOpen,
-                        color: Colors.white,
-                      ),
+                  ),
+                  StepperWidget(
+                    title: 'service.videos'.tr(),
+                    icon: const Icon(
+                      FeatherIcons.playCircle,
+                      color: Colors.white,
                     ),
-                    StepperWidget(
-                      title: 'service.videos'.tr(),
-                      icon: const Icon(
-                        FeatherIcons.playCircle,
-                        color: Colors.white,
-                      ),
+                  ),
+                  StepperWidget(
+                    title: 'service.returnVisits'.tr(),
+                    icon: const Icon(
+                      FeatherIcons.refreshCcw,
+                      color: Colors.white,
                     ),
-                    StepperWidget(
-                      title: 'service.returnVisits'.tr(),
-                      icon: const Icon(
-                        FeatherIcons.refreshCcw,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

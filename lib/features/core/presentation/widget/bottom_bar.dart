@@ -17,36 +17,38 @@ class BottomBar extends ConsumerWidget {
       child: ClipRRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 52),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () => context.go(AppLocations.territories.href),
-                  icon: Icon(
-                    color: isLinkActive(ref, AppLocations.territories),
-                    size: 20,
-                    FeatherIcons.map,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 52, right: 52, top: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () => context.go(AppLocations.territories.href),
+                    icon: Icon(
+                      color: isLinkActive(ref, AppLocations.territories),
+                      size: 20,
+                      FeatherIcons.map,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () => context.go(AppLocations.fieldService.href),
-                  icon: Icon(
-                    color: isLinkActive(ref, AppLocations.fieldService),
-                    size: 20,
-                    FeatherIcons.clock,
+                  IconButton(
+                    onPressed: () => context.go(AppLocations.fieldService.href),
+                    icon: Icon(
+                      color: isLinkActive(ref, AppLocations.fieldService),
+                      size: 20,
+                      FeatherIcons.clock,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () => context.go(AppLocations.settings.href),
-                  icon: Icon(
-                    color: isLinkActive(ref, AppLocations.settings),
-                    size: 20,
-                    FeatherIcons.settings,
-                  ),
-                )
-              ],
+                  IconButton(
+                    onPressed: () => context.go(AppLocations.settings.href),
+                    icon: Icon(
+                      color: isLinkActive(ref, AppLocations.settings),
+                      size: 20,
+                      FeatherIcons.settings,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
