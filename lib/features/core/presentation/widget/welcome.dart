@@ -1,11 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/app_settings/presentation/providers/app_initialisation_provider.dart';
-import 'package:field_companion/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:logger/logger.dart';
 
 class Welcome extends ConsumerWidget {
   const Welcome({super.key});
@@ -147,7 +144,7 @@ class Welcome extends ConsumerWidget {
                     const Size.fromWidth(310),
                   ),
                 ),
-                onPressed: () => initializeFieldCompanion(context, ref),
+                onPressed: ref.read(appInitialisationProvider.notifier).set,
                 child: const Text("actions.continue").tr(),
               ),
             ],
@@ -155,13 +152,5 @@ class Welcome extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  void initializeFieldCompanion(BuildContext context, WidgetRef ref) {
-    Logger().d("Initilize Field Companion");
-
-    final appInitialisation = ref.read(appInitialisationProvider.notifier);
-    appInitialisation.set();
-    context.go(AppLocations.fieldService.href);
   }
 }

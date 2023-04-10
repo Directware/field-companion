@@ -1,4 +1,4 @@
-import 'package:field_companion/routing/app_router.dart';
+import 'package:field_companion/models/app_locations.dart';
 import 'package:field_companion/routing/providers/active_route_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$RouterNotifierHash() => r'48f3561626001b59e05bfe2afb6e4507669fdeca';
+String _$RouterNotifierHash() => r'2fd095b779223b3241c14462a07bada6fa5faf5e';
 
 /// See also [RouterNotifier].
 final routerNotifierProvider = AsyncNotifierProvider<RouterNotifier, void>(

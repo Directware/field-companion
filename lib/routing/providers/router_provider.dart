@@ -1,4 +1,3 @@
-import 'package:field_companion/routing/app_router.dart';
 import 'package:field_companion/routing/providers/router_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +15,8 @@ GoRouter router(Ref ref) {
   return GoRouter(
     navigatorKey: _key,
     refreshListenable: notifier,
-    routes: appRoutes,
-    initialLocation: AppLocations.welcome.href,
+    routes: notifier.routes,
+    initialLocation: notifier.initialLocation,
+    redirect: notifier.redirect,
   );
 }
