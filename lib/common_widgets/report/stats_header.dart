@@ -20,7 +20,6 @@ class StatsHeader extends StatelessWidget {
             child: ColoredBox(
               color: ColorPalette.grey2Opacity24,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const SizedBox(width: 20),
                   const TimeProgress(
@@ -31,10 +30,8 @@ class StatsHeader extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const [
                               Expanded(
                                 child: StatsCounter(
