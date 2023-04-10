@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:field_companion/features/core/presentation/providers/is_router_link_active_provider.dart';
-import 'package:field_companion/routing/app_router.dart';
+import 'package:field_companion/models/app_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
