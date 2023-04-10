@@ -15,6 +15,9 @@ class ColorPalette {
 
   static const Color greenProgressEnd = Color(0xFF54ff6b);
 
+  static Color greenProgressStartOpacity05 =
+      greenProgressStart.withOpacity(0.5);
+
   static Color grey2Opacity08 = grey2.withOpacity(0.08);
 
   static Color grey2Opacity20 = grey2.withOpacity(0.20);

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/report/stats_counter.dart';
 import 'package:field_companion/common_widgets/report/time_progress.dart';
@@ -11,70 +13,69 @@ class StatsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 120,
-          width: 370,
-          decoration: BoxDecoration(
-            color: ColorPalette.grey2Opacity24,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const TimeProgress(
-                progress: 75,
-              ),
-              Row(
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: ColoredBox(
+              color: ColorPalette.grey2Opacity24,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: Column(
-                      children: const [
-                        StatsCounter(
-                          amount: 20,
-                          icon: Icon(
-                            FeatherIcons.bookOpen,
-                            color: ColorPalette.grey2,
-                            size: 20,
-                          ),
-                        ),
-                        StatsCounter(
-                          amount: 3,
-                          icon: Icon(
-                            FeatherIcons.refreshCw,
-                            color: ColorPalette.grey2,
-                            size: 20,
-                          ),
-                        ),
-                      ],
-                    ),
+                  const SizedBox(width: 20),
+                  const TimeProgress(
+                    progress: 80,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0, right: 16.0),
-                    child: Column(
-                      children: const [
-                        StatsCounter(
-                          amount: 0,
-                          icon: Icon(
-                            FeatherIcons.playCircle,
-                            color: ColorPalette.grey2,
-                            size: 20,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              Expanded(
+                                child: StatsCounter(
+                                  amount: 23,
+                                  icon: FeatherIcons.bookOpen,
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Expanded(
+                                child: StatsCounter(
+                                  amount: 9,
+                                  icon: FeatherIcons.playCircle,
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        StatsCounter(
-                          amount: 0,
-                          icon: Icon(
-                            FeatherIcons.user,
-                            color: ColorPalette.grey2,
-                            size: 20,
+                          const SizedBox(height: 8),
+                          Row(
+                            children: const [
+                              Expanded(
+                                child: StatsCounter(
+                                  amount: 12,
+                                  icon: FeatherIcons.refreshCw,
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Expanded(
+                                child: StatsCounter(
+                                  amount: 3,
+                                  icon: FeatherIcons.user,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
-              )
-            ],
+              ),
+            ),
           ),
         ),
       ],

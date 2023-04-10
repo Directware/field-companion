@@ -20,7 +20,10 @@ class FieldService extends StatelessWidget {
           title: 'April 2023',
         ),
         // Temporary
-        const StatsHeader(),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: StatsHeader(),
+        ),
         const SizedBox(
           height: 24,
         ),

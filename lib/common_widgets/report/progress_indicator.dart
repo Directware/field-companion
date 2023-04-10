@@ -12,27 +12,19 @@ class ProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(19.0),
-          child: Center(
-            child: SizedBox(
-              width: 72,
-              height: 72,
-              child: CustomPaint(
-                painter: ProgressIndicatorPainter(
-                  percentage: percentage,
-                  strokeWidth: 7,
-                  startingColor: ColorPalette.greenProgressStart,
-                  endingColor: ColorPalette.greenProgressEnd,
-                  backgroundColor: ColorPalette.grey2Opacity30,
-                ),
-              ),
-            ),
-          ),
+    return SizedBox(
+      width: 72,
+      height: 72,
+      child: CustomPaint(
+        painter: ProgressIndicatorPainter(
+          percentage: percentage,
+          strokeWidth: 6,
+          startingColor: ColorPalette.greenProgressStart,
+          shadowColor: ColorPalette.greenProgressStartOpacity05,
+          endingColor: ColorPalette.greenProgressEnd,
+          backgroundColor: ColorPalette.grey2Opacity30,
         ),
-      ],
+      ),
     );
   }
 }

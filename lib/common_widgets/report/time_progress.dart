@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:field_companion/common_widgets/report/progress_indicator.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;
 
@@ -16,27 +17,30 @@ class TimeProgress extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Row(
-          // TODO: Replace the superscript;
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text(
-              "25",
+              "52",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 22,
+                letterSpacing: 0.21,
                 fontFamily: 'Heebo',
                 fontVariations: [
                   FontVariation(
                     "wght",
-                    600,
+                    500,
                   ),
                 ],
               ),
             ),
+            SizedBox(width: 2),
             Text(
-              "25",
+              "30",
               style: TextStyle(
                 fontSize: 12,
+                letterSpacing: 0.11,
                 fontFamily: 'Heebo',
+                height: 1.82,
                 fontVariations: [
                   FontVariation(
                     "wght",
