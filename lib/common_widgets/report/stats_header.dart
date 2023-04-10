@@ -23,7 +23,7 @@ class StatsHeader extends StatelessWidget {
                 children: [
                   const SizedBox(width: 20),
                   const TimeProgress(
-                    progress: 80,
+                    progress: 0.8,
                   ),
                   const SizedBox(width: 8),
                   Expanded(

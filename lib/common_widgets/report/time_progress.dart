@@ -52,7 +52,7 @@ class TimeProgress extends StatelessWidget {
           ],
         ),
         ProgressIndicator(
-          percentage: progress,
+          progress: progress,
         ),
       ],
     );

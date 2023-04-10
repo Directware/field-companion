@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ProgressIndicatorPainter extends CustomPainter {
   ProgressIndicatorPainter({
-    required this.percentage,
+    required this.progress,
     required this.strokeWidth,
     required this.startingColor,
     required this.shadowColor,
@@ -12,7 +12,7 @@ class ProgressIndicatorPainter extends CustomPainter {
     required this.backgroundColor,
   });
 
-  final double percentage;
+  final double progress;
   final double strokeWidth;
   final Color startingColor;
   final Color shadowColor;
@@ -22,10 +22,12 @@ class ProgressIndicatorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const startAngle = -math.pi / 2;
+    const gradientStartAngle = 3 * math.pi / 2;
     final center = Offset(size.width / 2, size.height / 2);
     final radius = math.min(size.width, size.height) / 2;
-    final angle = 2 * math.pi * (percentage / 100);
+    final angle = 2 * math.pi * progress;
     final rect = Rect.fromCircle(center: center, radius: radius);
+    final capRad = strokeWidth / 2 / radius;
 
     final backgroundPaint = Paint()
       ..color = backgroundColor
@@ -37,14 +39,17 @@ class ProgressIndicatorPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.5);
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
+
+    final gradient = SweepGradient(
+      startAngle: gradientStartAngle - capRad,
+      endAngle: 7 * math.pi / 2 - (capRad * 2),
+      tileMode: TileMode.repeated,
+      colors: [startingColor, endingColor],
+    );
 
     final foregroundPaint = Paint()
-      ..shader = RadialGradient(
-        colors: [startingColor, endingColor],
-        center: Alignment.topCenter,
-      ).createShader(Rect.fromCircle(center: center, radius: radius))
-      ..color = startingColor
+      ..shader = gradient.createShader(rect)
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -57,6 +62,7 @@ class ProgressIndicatorPainter extends CustomPainter {
       false,
       shadowPaint,
     );
+
     canvas.drawArc(
       rect,
       startAngle,
@@ -64,10 +70,26 @@ class ProgressIndicatorPainter extends CustomPainter {
       false,
       foregroundPaint,
     );
+
+    if (progress > 0.95) {
+      final endCapPaint = Paint()
+        ..color = endingColor
+        ..strokeWidth = strokeWidth
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round;
+
+      canvas.drawArc(
+        rect,
+        startAngle + angle - capRad,
+        capRad,
+        false,
+        endCapPaint,
+      );
+    }
   }
 
   @override
   bool shouldRepaint(covariant ProgressIndicatorPainter oldDelegate) {
-    return oldDelegate.percentage != percentage;
+    return oldDelegate.progress != progress;
   }
 }

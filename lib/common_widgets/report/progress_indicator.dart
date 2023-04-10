@@ -5,24 +5,32 @@ import 'package:flutter/material.dart' hide ProgressIndicator;
 class ProgressIndicator extends StatelessWidget {
   const ProgressIndicator({
     super.key,
-    required this.percentage,
+    required this.progress,
   });
 
-  final double percentage;
+  final double progress;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 72,
       height: 72,
-      child: CustomPaint(
-        painter: ProgressIndicatorPainter(
-          percentage: percentage,
-          strokeWidth: 6,
-          startingColor: ColorPalette.greenProgressStart,
-          shadowColor: ColorPalette.greenProgressStartOpacity05,
-          endingColor: ColorPalette.greenProgressEnd,
-          backgroundColor: ColorPalette.grey2Opacity30,
+      child: TweenAnimationBuilder<double>(
+        duration: const Duration(milliseconds: 550),
+        curve: Curves.easeInOut,
+        tween: Tween<double>(
+          begin: 0,
+          end: progress,
+        ),
+        builder: (context, value, _) => CustomPaint(
+          painter: ProgressIndicatorPainter(
+            progress: value,
+            strokeWidth: 6,
+            startingColor: ColorPalette.greenProgressStart,
+            shadowColor: ColorPalette.greenProgressStartOpacity05,
+            endingColor: ColorPalette.greenProgressEnd,
+            backgroundColor: ColorPalette.grey2Opacity30,
+          ),
         ),
       ),
     );
