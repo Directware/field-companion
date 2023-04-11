@@ -1,30 +1,20 @@
 import 'package:field_companion/features/territory_cards/domain/geo_json_context.dart';
 import 'package:field_companion/features/territory_cards/domain/geo_json_geometry.dart';
+import 'package:isar/isar.dart';
 
+part 'geo_json_feature.g.dart';
+
+@embedded
 class GeoJsonFeature {
-  GeoJsonFeature({
-    required this.id,
-    required this.type,
-    required this.placeType,
-    required this.relevance,
-    required this.properties,
-    required this.text,
-    required this.placeName,
-    required this.bbox,
-    required this.center,
-    required this.geometry,
-    required this.context,
-  });
-
-  String id;
-  String type;
-  List<String> placeType;
-  int relevance;
-  dynamic properties;
-  String text;
-  String placeName;
-  List<double> bbox;
-  List<double> center;
-  GeoJsonGeometry geometry;
-  List<GeoJsonContext> context;
+  late String id;
+  late String type;
+  late List<String> placeType;
+  late int relevance;
+  //late dynamic properties;
+  late String text;
+  late String placeName;
+  late List<double> bbox;
+  late List<double> center;
+  late GeoJsonGeometry geometry;
+  late List<GeoJsonContext> context;
 }

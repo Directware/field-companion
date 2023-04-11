@@ -1,25 +1,34 @@
-import 'package:hive/hive.dart';
+import 'package:isar/isar.dart';
 import 'package:nanoid/nanoid.dart';
 
-part "entity.g.dart";
-
-@HiveType(typeId: 0)
-class Entity extends HiveObject {
+class Entity {
   Entity()
       : id = nanoid(),
         creationTime = DateTime.now(),
         lastUpdated = DateTime.now(),
         excludeStatistic = false;
 
-  @HiveField(0)
+  @Index()
   String id;
 
-  @HiveField(1)
+  Id get isarId => fastHash(id);
+
   DateTime creationTime;
-
-  @HiveField(2)
   DateTime lastUpdated;
-
-  @HiveField(3)
   bool excludeStatistic;
+}
+
+int fastHash(String string) {
+  var hash = 0xcbf29ce484222325;
+
+  var i = 0;
+  while (i < string.length) {
+    final codeUnit = string.codeUnitAt(i++);
+    hash ^= codeUnit >> 8;
+    hash *= 0x100000001b3;
+    hash ^= codeUnit & 0xFF;
+    hash *= 0x100000001b3;
+  }
+
+  return hash;
 }

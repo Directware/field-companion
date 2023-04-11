@@ -1,6 +1,9 @@
-class Position {
-  Position({required this.lat, required this.lng});
+import 'package:isar/isar.dart';
 
-  final double lat;
-  final double lng;
+part 'position.g.dart';
+
+@embedded
+class Position {
+  late double lat;
+  late double lng;
 }

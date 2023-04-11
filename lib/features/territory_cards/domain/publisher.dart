@@ -1,18 +1,9 @@
-import 'package:field_companion/models/entity.dart';
-import 'package:hive/hive.dart';
+import 'package:isar/isar.dart';
 
 part 'publisher.g.dart';
 
-@HiveType(typeId: 6)
-class Publisher extends Entity {
-  Publisher({
-    required this.firstName,
-    required this.lastName,
-  });
-
-  @HiveField(4)
-  String firstName;
-
-  @HiveField(5)
-  String lastName;
+@embedded
+class Publisher {
+  late String firstName;
+  late String lastName;
 }

@@ -1,7 +1,10 @@
-class GeoJsonContext {
-  GeoJsonContext({required this.id, required this.osmId, required this.text});
+import 'package:isar/isar.dart';
 
-  String id;
-  String osmId;
-  String text;
+part 'geo_json_context.g.dart';
+
+@embedded
+class GeoJsonContext {
+  late String id;
+  late String osmId;
+  late String text;
 }

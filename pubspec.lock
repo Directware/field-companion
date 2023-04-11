@@ -225,6 +225,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
+  dartx:
+    dependency: transitive
+    description:
+      name: dartx
+      sha256: "45d7176701f16c5a5e00a4798791c1964bc231491b879369c818dd9a9c764871"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   easy_localization:
     dependency: "direct main"
     description:
@@ -345,10 +353,10 @@ packages:
     dependency: "direct dev"
     description:
       name: go_router_builder
-      sha256: d4006e511607d356f23b5dfc759473a25a641b49324174a662c9ba700a666985
+      sha256: ca55f7029bc5caca0e26f2530973dd4a34fea8da73d30ac79d080b286fae0042
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   graphs:
     dependency: transitive
     description:
@@ -373,14 +381,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  hive_generator:
-    dependency: "direct dev"
-    description:
-      name: hive_generator
-      sha256: "65998cc4d2cd9680a3d9709d893d2f6bb15e6c1f92626c3f1fa650b4b3281521"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -413,6 +413,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  isar:
+    dependency: "direct main"
+    description:
+      name: isar
+      sha256: "5be35dbc489880fccc535da3d1c4b3f5fdeee6ebfcacd4b149e39e803c4029cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.5"
+  isar_flutter_libs:
+    dependency: "direct main"
+    description:
+      name: isar_flutter_libs
+      sha256: "9794524734856a8a3629652f9f359b66e3fea3cebeec4dbdeb3e3a8fb253073e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.5"
+  isar_generator:
+    dependency: "direct dev"
+    description:
+      name: isar_generator
+      sha256: ee4ab5d5b251bc7e86e1257793b57af100065831f00f3a12404b177ae53c2d69
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.5"
   js:
     dependency: transitive
     description:
@@ -882,6 +906,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.20"
+  time:
+    dependency: transitive
+    description:
+      name: time
+      sha256: "83427e11d9072e038364a5e4da559e85869b227cf699a541be0da74f14140124"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.3"
   timing:
     dependency: transitive
     description:
@@ -962,6 +994,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  xxh3:
+    dependency: transitive
+    description:
+      name: xxh3
+      sha256: a92b30944a9aeb4e3d4f3c3d4ddb3c7816ca73475cd603682c4f8149690f56d7
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   yaml:
     dependency: transitive
     description:

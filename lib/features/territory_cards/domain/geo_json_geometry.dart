@@ -1,6 +1,9 @@
-class GeoJsonGeometry {
-  GeoJsonGeometry({required this.type, required this.coordinates});
+import 'package:isar/isar.dart';
 
-  String type;
-  List<List<List<double>>> coordinates;
+part 'geo_json_geometry.g.dart';
+
+@embedded
+class GeoJsonGeometry {
+  late String type;
+  //late List<List<List<double>>> coordinates;
 }
