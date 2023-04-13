@@ -1,10 +1,11 @@
 import 'package:field_companion/color_palette.dart';
+import 'package:field_companion/common_widgets/report/animated_number.dart';
 import 'package:flutter/material.dart';
 
 class StatsCounter extends StatelessWidget {
-  const StatsCounter({super.key, required this.amount, required this.icon});
+  const StatsCounter({super.key, required this.value, required this.icon});
 
-  final int amount;
+  final int value;
   final IconData icon;
 
   @override
@@ -25,14 +26,17 @@ class StatsCounter extends StatelessWidget {
               size: 20,
             ),
             const SizedBox(width: 8),
-            Text(
-              amount.toString(),
-              textAlign: TextAlign.end,
-              style: const TextStyle(
-                fontSize: 18.0,
-                letterSpacing: 0.17,
-                fontFamily: 'Heebo',
-                fontWeight: FontWeight.bold,
+            AnimatedNumber(
+              number: value,
+              builder: (value) => Text(
+                value.toString(),
+                textAlign: TextAlign.end,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  letterSpacing: 0.17,
+                  fontFamily: 'Heebo',
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' hide log;
 
 import 'package:collection/collection.dart';
@@ -46,8 +45,6 @@ class Reports extends _$Reports {
         .filter()
         .reportDateBetween(firstDateOfMonth, lastDateOfMonth)
         .findAll();
-
-    log('$reports');
 
     return reports;
   }

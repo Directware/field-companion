@@ -43,14 +43,14 @@ class StatsHeader extends ConsumerWidget {
                             children: [
                               Expanded(
                                 child: StatsCounter(
-                                  amount: deliveries,
+                                  value: deliveries,
                                   icon: FeatherIcons.bookOpen,
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: StatsCounter(
-                                  amount: videos,
+                                  value: videos,
                                   icon: FeatherIcons.playCircle,
                                 ),
                               )
@@ -61,14 +61,14 @@ class StatsHeader extends ConsumerWidget {
                             children: [
                               Expanded(
                                 child: StatsCounter(
-                                  amount: returnVisits,
+                                  value: returnVisits,
                                   icon: FeatherIcons.refreshCw,
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: StatsCounter(
-                                  amount: studies,
+                                  value: studies,
                                   icon: FeatherIcons.user,
                                 ),
                               ),
