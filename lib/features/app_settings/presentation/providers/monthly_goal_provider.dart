@@ -13,7 +13,7 @@ class MonthlyGoal extends _$MonthlyGoal {
   @override
   int build() {
     _preferences = ref.watch(sharedPreferencesProvider);
-    return _preferences.getInt(sharedPreferenesKey) ?? 0;
+    return _preferences.getInt(sharedPreferenesKey) ?? 50 * 60;
   }
 
   void set(int newValue) {

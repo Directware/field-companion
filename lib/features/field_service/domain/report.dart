@@ -12,23 +12,31 @@ class Report extends Entity {
     videos = 0;
     returnVisits = 0;
     duration = 0;
+    deliveries = 0;
     studies = 0;
     lastUpdated = DateTime.now();
   }
 
   late int videos;
   late int returnVisits;
+  late int deliveries;
   late int duration;
   late int studies;
 
   @Index(unique: true)
   late DateTime reportDate;
 
-  void update({int? videos, int? returnVisits, int? duration, int? studies}) {
+  void update(
+      {int? videos,
+      int? returnVisits,
+      int? duration,
+      int? studies,
+      int? deliveries}) {
     this.videos = videos ?? this.videos;
     this.returnVisits = returnVisits ?? this.returnVisits;
     this.duration = duration ?? this.duration;
     this.studies = studies ?? this.studies;
-    lastUpdated = DateTime.now();
+    this.deliveries = deliveries ?? this.deliveries;
+    lastUpdated = DateTime.now().toUtc();
   }
 }

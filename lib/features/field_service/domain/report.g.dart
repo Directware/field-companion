@@ -22,43 +22,48 @@ const ReportSchema = CollectionSchema(
       name: r'creationTime',
       type: IsarType.dateTime,
     ),
-    r'duration': PropertySchema(
+    r'deliveries': PropertySchema(
       id: 1,
+      name: r'deliveries',
+      type: IsarType.long,
+    ),
+    r'duration': PropertySchema(
+      id: 2,
       name: r'duration',
       type: IsarType.long,
     ),
     r'excludeStatistic': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'excludeStatistic',
       type: IsarType.bool,
     ),
     r'id': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'id',
       type: IsarType.string,
     ),
     r'lastUpdated': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'lastUpdated',
       type: IsarType.dateTime,
     ),
     r'reportDate': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'reportDate',
       type: IsarType.dateTime,
     ),
     r'returnVisits': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'returnVisits',
       type: IsarType.long,
     ),
     r'studies': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'studies',
       type: IsarType.long,
     ),
     r'videos': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'videos',
       type: IsarType.long,
     )
@@ -121,14 +126,15 @@ void _reportSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDateTime(offsets[0], object.creationTime);
-  writer.writeLong(offsets[1], object.duration);
-  writer.writeBool(offsets[2], object.excludeStatistic);
-  writer.writeString(offsets[3], object.id);
-  writer.writeDateTime(offsets[4], object.lastUpdated);
-  writer.writeDateTime(offsets[5], object.reportDate);
-  writer.writeLong(offsets[6], object.returnVisits);
-  writer.writeLong(offsets[7], object.studies);
-  writer.writeLong(offsets[8], object.videos);
+  writer.writeLong(offsets[1], object.deliveries);
+  writer.writeLong(offsets[2], object.duration);
+  writer.writeBool(offsets[3], object.excludeStatistic);
+  writer.writeString(offsets[4], object.id);
+  writer.writeDateTime(offsets[5], object.lastUpdated);
+  writer.writeDateTime(offsets[6], object.reportDate);
+  writer.writeLong(offsets[7], object.returnVisits);
+  writer.writeLong(offsets[8], object.studies);
+  writer.writeLong(offsets[9], object.videos);
 }
 
 Report _reportDeserialize(
@@ -139,14 +145,15 @@ Report _reportDeserialize(
 ) {
   final object = Report();
   object.creationTime = reader.readDateTime(offsets[0]);
-  object.duration = reader.readLong(offsets[1]);
-  object.excludeStatistic = reader.readBool(offsets[2]);
-  object.id = reader.readString(offsets[3]);
-  object.lastUpdated = reader.readDateTime(offsets[4]);
-  object.reportDate = reader.readDateTime(offsets[5]);
-  object.returnVisits = reader.readLong(offsets[6]);
-  object.studies = reader.readLong(offsets[7]);
-  object.videos = reader.readLong(offsets[8]);
+  object.deliveries = reader.readLong(offsets[1]);
+  object.duration = reader.readLong(offsets[2]);
+  object.excludeStatistic = reader.readBool(offsets[3]);
+  object.id = reader.readString(offsets[4]);
+  object.lastUpdated = reader.readDateTime(offsets[5]);
+  object.reportDate = reader.readDateTime(offsets[6]);
+  object.returnVisits = reader.readLong(offsets[7]);
+  object.studies = reader.readLong(offsets[8]);
+  object.videos = reader.readLong(offsets[9]);
   return object;
 }
 
@@ -162,18 +169,20 @@ P _reportDeserializeProp<P>(
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 4:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 5:
       return (reader.readDateTime(offset)) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 7:
       return (reader.readLong(offset)) as P;
     case 8:
+      return (reader.readLong(offset)) as P;
+    case 9:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -507,6 +516,59 @@ extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'creationTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterFilterCondition> deliveriesEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'deliveries',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterFilterCondition> deliveriesGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'deliveries',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterFilterCondition> deliveriesLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'deliveries',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterFilterCondition> deliveriesBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'deliveries',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1040,6 +1102,18 @@ extension ReportQuerySortBy on QueryBuilder<Report, Report, QSortBy> {
     });
   }
 
+  QueryBuilder<Report, Report, QAfterSortBy> sortByDeliveries() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deliveries', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterSortBy> sortByDeliveriesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deliveries', Sort.desc);
+    });
+  }
+
   QueryBuilder<Report, Report, QAfterSortBy> sortByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.asc);
@@ -1147,6 +1221,18 @@ extension ReportQuerySortThenBy on QueryBuilder<Report, Report, QSortThenBy> {
   QueryBuilder<Report, Report, QAfterSortBy> thenByCreationTimeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'creationTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterSortBy> thenByDeliveries() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deliveries', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Report, Report, QAfterSortBy> thenByDeliveriesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deliveries', Sort.desc);
     });
   }
 
@@ -1266,6 +1352,12 @@ extension ReportQueryWhereDistinct on QueryBuilder<Report, Report, QDistinct> {
     });
   }
 
+  QueryBuilder<Report, Report, QDistinct> distinctByDeliveries() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'deliveries');
+    });
+  }
+
   QueryBuilder<Report, Report, QDistinct> distinctByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'duration');
@@ -1326,6 +1418,12 @@ extension ReportQueryProperty on QueryBuilder<Report, Report, QQueryProperty> {
   QueryBuilder<Report, DateTime, QQueryOperations> creationTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'creationTime');
+    });
+  }
+
+  QueryBuilder<Report, int, QQueryOperations> deliveriesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'deliveries');
     });
   }
 
