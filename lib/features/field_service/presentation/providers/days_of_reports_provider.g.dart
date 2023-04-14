@@ -1,25 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'selected_month_provider.dart';
+part of 'days_of_reports_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedMonthHash() => r'2937b79341b7df65184162c9931bc7cb113312b5';
+String _$daysOfReportsHash() => r'cb91c00ac772810b838779280de162906214653b';
 
-/// See also [SelectedMonth].
-@ProviderFor(SelectedMonth)
-final selectedMonthProvider =
-    AutoDisposeNotifierProvider<SelectedMonth, DateTime>.internal(
-  SelectedMonth.new,
-  name: r'selectedMonthProvider',
+/// See also [daysOfReports].
+@ProviderFor(daysOfReports)
+final daysOfReportsProvider = AutoDisposeProvider<List<DateTime>>.internal(
+  daysOfReports,
+  name: r'daysOfReportsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$selectedMonthHash,
+      : _$daysOfReportsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SelectedMonth = AutoDisposeNotifier<DateTime>;
+typedef DaysOfReportsRef = AutoDisposeProviderRef<List<DateTime>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
