@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:field_companion/common_widgets/report/animated_number.dart';
-import 'package:field_companion/common_widgets/report/progress_indicator.dart';
+import 'package:field_companion/common_widgets/animated_number.dart';
+import 'package:field_companion/common_widgets/progress_indicator.dart';
 import 'package:field_companion/features/app_settings/presentation/providers/monthly_goal_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/total_duration_provider.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;

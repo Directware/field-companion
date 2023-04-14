@@ -2,7 +2,7 @@ import 'package:field_companion/features/app_settings/presentation/providers/app
 import 'package:field_companion/features/app_settings/presentation/widgets/settings.dart';
 import 'package:field_companion/features/core/presentation/widget/home.dart';
 import 'package:field_companion/features/core/presentation/widget/welcome.dart';
-import 'package:field_companion/features/field_service/presentation/widget/field_service.dart';
+import 'package:field_companion/features/field_service/presentation/widgets/field_service.dart';
 import 'package:field_companion/features/territory_cards/presentation/widget/territories.dart';
 import 'package:field_companion/models/app_locations.dart';
 import 'package:flutter/material.dart';

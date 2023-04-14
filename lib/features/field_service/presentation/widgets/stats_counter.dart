@@ -1,5 +1,5 @@
 import 'package:field_companion/color_palette.dart';
-import 'package:field_companion/common_widgets/report/animated_number.dart';
+import 'package:field_companion/common_widgets/animated_number.dart';
 import 'package:flutter/material.dart';
 
 class StatsCounter extends StatelessWidget {

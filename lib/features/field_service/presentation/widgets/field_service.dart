@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:field_companion/common_widgets/report/date_picker.dart';
-import 'package:field_companion/common_widgets/report/report_stepper.dart';
-import 'package:field_companion/common_widgets/report/stats_header.dart';
+import 'package:field_companion/common_widgets/date_picker.dart';
 import 'package:field_companion/common_widgets/title_bar.dart';
 import 'package:field_companion/features/field_service/presentation/providers/date_provider.dart';
+import 'package:field_companion/features/field_service/presentation/widgets/report_stepper.dart';
+import 'package:field_companion/features/field_service/presentation/widgets/stats_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

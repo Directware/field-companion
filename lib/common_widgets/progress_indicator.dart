@@ -1,5 +1,5 @@
 import 'package:field_companion/color_palette.dart';
-import 'package:field_companion/common_widgets/report/progress_painter.dart';
+import 'package:field_companion/common_widgets/progress_painter.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;
 
 class ProgressIndicator extends StatelessWidget {
