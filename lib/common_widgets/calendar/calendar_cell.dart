@@ -43,67 +43,70 @@ class CalendarCell extends StatelessWidget {
     final now = DateTime.now();
     final active = DateTime(now.year, now.month, now.day) == date;
 
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Opacity(
-        opacity: disabled ? 0.2 : 1,
-        child: SizedBox(
-          width: 38,
-          height: 38,
-          child: Stack(
-            children: [
-              if (selected)
-                Center(
-                  child: Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(19),
+        child: Opacity(
+          opacity: disabled ? 0.2 : 1,
+          child: SizedBox(
+            width: 38,
+            height: 38,
+            child: Stack(
+              children: [
+                if (selected)
+                  Center(
+                    child: Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        borderRadius: BorderRadius.circular(19),
                       ),
-                      borderRadius: BorderRadius.circular(19),
                     ),
                   ),
-                ),
-              if (highlight)
+                if (highlight)
+                  Center(
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: ColorPalette.greenOpacity20,
+                      ),
+                    ),
+                  ),
                 Center(
-                  child: Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: ColorPalette.greenOpacity20,
-                    ),
-                  ),
-                ),
-              Center(
-                child: Text(
-                  date.day.toString(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    letterSpacing: 0.4,
-                    color: _getColor(active: active),
-                    fontFamily: "Heebo",
-                    fontVariations: _getVariations(active: active),
-                  ),
-                ),
-              ),
-              if (active)
-                Positioned(
-                  bottom: 5,
-                  left: 17,
-                  child: Container(
-                    width: 4,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(1),
+                  child: Text(
+                    date.day.toString(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      letterSpacing: 0.4,
                       color: _getColor(active: active),
+                      fontFamily: "Heebo",
+                      fontVariations: _getVariations(active: active),
                     ),
                   ),
                 ),
-            ],
+                if (active)
+                  Positioned(
+                    bottom: 5,
+                    left: 17,
+                    child: Container(
+                      width: 4,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(1),
+                        color: _getColor(active: active),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
