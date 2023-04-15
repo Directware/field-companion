@@ -1,83 +1,89 @@
+import 'dart:ui';
+
 import 'package:field_companion/color_palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StepperWidget extends ConsumerWidget {
+class StepperWidget extends StatelessWidget {
   const StepperWidget({
     required this.title,
     required this.icon,
+    required this.value,
   });
 
   final String title;
-  final Icon icon;
+  final IconData icon;
+  final int value;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: add Provider
-    const value = 0;
-    return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 16),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(9.0),
-            child: icon,
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          color: ColorPalette.grey2,
+          size: 18,
+        ),
+        const SizedBox(height: 9),
+        Text(
+          title,
+          style: const TextStyle(
+            fontFamily: "Heebo",
+            fontSize: 16,
+            height: 1.25,
+            overflow: TextOverflow.ellipsis,
+            fontVariations: [
+              FontVariation("wght", 400),
+            ],
+            letterSpacing: 0.4,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: Text(title),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          width: 80,
+          decoration: BoxDecoration(
+            color: ColorPalette.grey2Opacity24,
+            borderRadius: BorderRadius.circular(10),
           ),
-          Container(
-            width: 80,
-            decoration: BoxDecoration(
-              color: ColorPalette.grey2Opacity24,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Column(
-              children: [
-                /// 7.0 Padding because the symbol is bigger than the minus symbol; now its symmetric;
-                Padding(
-                  padding: const EdgeInsets.all(7.0),
-                  child: IconButton(
-                    onPressed: () {
-                      // ref.read(providerName.notifier).set(value);
-                      // TODO: add plus action
-                    },
-                    icon: const Icon(
-                      FeatherIcons.plus,
-                      color: ColorPalette.grey2,
-                    ),
-                    iconSize: 20,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {},
+                  child: const Icon(
+                    FeatherIcons.plus,
+                    color: ColorPalette.grey2,
                   ),
                 ),
-
-                Text(
-                  value.toString(),
-                  style: const TextStyle(
-                    fontFamily: "Heebo",
-                    fontSize: 20,
-                    height: 1.2,
-                    letterSpacing: 0.4,
-                  ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value.toString(),
+                style: const TextStyle(
+                  fontFamily: "Heebo",
+                  fontSize: 22,
+                  fontVariations: [
+                    FontVariation("wght", 500),
+                  ],
+                  letterSpacing: 0.4,
                 ),
-
-                IconButton(
-                  onPressed: () {
-                    // ref.read(providerName.notifier).set(value);
-                    // TODO: add minus action
-                  },
-                  icon: const Icon(
+              ),
+              const SizedBox(height: 2),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {},
+                  child: const Icon(
                     FeatherIcons.minus,
                     color: ColorPalette.grey2,
                   ),
-                  iconSize: 20,
                 ),
-              ],
-            ),
-          )
-        ],
-      ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

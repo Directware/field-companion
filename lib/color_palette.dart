@@ -28,6 +28,8 @@ class ColorPalette {
 
   static Color grey2Opacity30 = grey2.withOpacity(0.30);
 
+  static Color whiteOpacity10 = Colors.white.withOpacity(0.10);
+
   static Color greenOpacity20 = green.withOpacity(0.20);
 
   static Color dark80 = dark.withOpacity(0.8);

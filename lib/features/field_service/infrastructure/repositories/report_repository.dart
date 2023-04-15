@@ -77,6 +77,16 @@ class ReportRepository implements ReportRepositoryInterface {
   }
 
   @override
+  Stream<Report?> get(DateTime date) async* {
+    final report =
+        await _collection.filter().reportDateEqualTo(date).build().findFirst();
+
+    if (report == null) yield null;
+
+    yield* _collection.watchObject(report!.isarId);
+  }
+
+  @override
   Future<void> upsert(
     DateTime date, {
     int? videos,

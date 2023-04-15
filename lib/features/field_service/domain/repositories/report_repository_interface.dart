@@ -5,6 +5,9 @@ abstract class ReportRepositoryInterface {
     DateTime month, {
     bool withSurroundingWeekdays,
   });
+
+  Stream<Report?> get(DateTime date);
+
   Future<void> upsert(
     DateTime date, {
     int? videos,
