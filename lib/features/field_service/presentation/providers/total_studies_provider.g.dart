@@ -6,7 +6,7 @@ part of 'total_studies_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$totalStudiesHash() => r'07be9841a07bc2389cf80babc3e0c9aae386f028';
+String _$totalStudiesHash() => r'81e845998eafeb5427d91979575c6904e7aec059';
 
 /// See also [totalStudies].
 @ProviderFor(totalStudies)

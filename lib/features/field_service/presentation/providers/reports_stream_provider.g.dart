@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'days_of_reports_provider.dart';
+part of 'reports_stream_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$daysOfReportsHash() => r'36c6ab435483ed71129b7c9179e92da9cce6883d';
+String _$reportsStreamHash() => r'7900e202d23ae082077489a5e6f7c164194277e6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,32 +29,35 @@ class _SystemHash {
   }
 }
 
-typedef DaysOfReportsRef = AutoDisposeProviderRef<List<DateTime>>;
+typedef ReportsStreamRef = AutoDisposeStreamProviderRef<List<Report>>;
 
-/// See also [daysOfReports].
-@ProviderFor(daysOfReports)
-const daysOfReportsProvider = DaysOfReportsFamily();
+/// See also [reportsStream].
+@ProviderFor(reportsStream)
+const reportsStreamProvider = ReportsStreamFamily();
 
-/// See also [daysOfReports].
-class DaysOfReportsFamily extends Family<List<DateTime>> {
-  /// See also [daysOfReports].
-  const DaysOfReportsFamily();
+/// See also [reportsStream].
+class ReportsStreamFamily extends Family<AsyncValue<List<Report>>> {
+  /// See also [reportsStream].
+  const ReportsStreamFamily();
 
-  /// See also [daysOfReports].
-  DaysOfReportsProvider call({
+  /// See also [reportsStream].
+  ReportsStreamProvider call({
     required DateTime month,
+    bool withSurroundingWeekdays = false,
   }) {
-    return DaysOfReportsProvider(
+    return ReportsStreamProvider(
       month: month,
+      withSurroundingWeekdays: withSurroundingWeekdays,
     );
   }
 
   @override
-  DaysOfReportsProvider getProviderOverride(
-    covariant DaysOfReportsProvider provider,
+  ReportsStreamProvider getProviderOverride(
+    covariant ReportsStreamProvider provider,
   ) {
     return call(
       month: provider.month,
+      withSurroundingWeekdays: provider.withSurroundingWeekdays,
     );
   }
 
@@ -70,41 +73,47 @@ class DaysOfReportsFamily extends Family<List<DateTime>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'daysOfReportsProvider';
+  String? get name => r'reportsStreamProvider';
 }
 
-/// See also [daysOfReports].
-class DaysOfReportsProvider extends AutoDisposeProvider<List<DateTime>> {
-  /// See also [daysOfReports].
-  DaysOfReportsProvider({
+/// See also [reportsStream].
+class ReportsStreamProvider extends AutoDisposeStreamProvider<List<Report>> {
+  /// See also [reportsStream].
+  ReportsStreamProvider({
     required this.month,
+    this.withSurroundingWeekdays = false,
   }) : super.internal(
-          (ref) => daysOfReports(
+          (ref) => reportsStream(
             ref,
             month: month,
+            withSurroundingWeekdays: withSurroundingWeekdays,
           ),
-          from: daysOfReportsProvider,
-          name: r'daysOfReportsProvider',
+          from: reportsStreamProvider,
+          name: r'reportsStreamProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$daysOfReportsHash,
-          dependencies: DaysOfReportsFamily._dependencies,
+                  : _$reportsStreamHash,
+          dependencies: ReportsStreamFamily._dependencies,
           allTransitiveDependencies:
-              DaysOfReportsFamily._allTransitiveDependencies,
+              ReportsStreamFamily._allTransitiveDependencies,
         );
 
   final DateTime month;
+  final bool withSurroundingWeekdays;
 
   @override
   bool operator ==(Object other) {
-    return other is DaysOfReportsProvider && other.month == month;
+    return other is ReportsStreamProvider &&
+        other.month == month &&
+        other.withSurroundingWeekdays == withSurroundingWeekdays;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, month.hashCode);
+    hash = _SystemHash.combine(hash, withSurroundingWeekdays.hashCode);
 
     return _SystemHash.finish(hash);
   }

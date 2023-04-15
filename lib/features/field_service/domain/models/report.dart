@@ -1,7 +1,7 @@
 import 'package:field_companion/models/entity.dart';
 import 'package:isar/isar.dart';
 
-part 'report.g.dart';
+part './report.g.dart';
 
 @collection
 class Report extends Entity {

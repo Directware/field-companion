@@ -6,7 +6,7 @@ part of 'total_duration_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$totalDurationHash() => r'7dd18f2c6033a429375f25386a0359c1bee4dc42';
+String _$totalDurationHash() => r'9686a8a57f30d2294e852e942cf33ea3cd0a3f8f';
 
 /// See also [totalDuration].
 @ProviderFor(totalDuration)

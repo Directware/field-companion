@@ -7,16 +7,16 @@ class CalendarPage extends StatelessWidget {
     super.key,
     required this.month,
     required this.firstDayOfWeek,
-    this.onDateSelected,
-    this.selectedDate,
-    this.highlightedDates,
+    required this.onDateSelected,
+    required this.selectedDate,
+    required this.highlightedDates,
   });
 
   final DateTime month;
   final int firstDayOfWeek;
   final DateTime? selectedDate;
-  final Function(DateTime)? onDateSelected;
-  final List<DateTime>? highlightedDates;
+  final Function(DateTime, int) onDateSelected;
+  final List<DateTime> highlightedDates;
 
   @override
   Widget build(BuildContext context) {

@@ -5,17 +5,17 @@ class CalendarGrid extends StatelessWidget {
   const CalendarGrid({
     super.key,
     required this.month,
-    this.onDateSelected,
-    this.selectedDate,
+    required this.onDateSelected,
+    required this.selectedDate,
     required this.firstDayOfWeek,
-    this.highlightedDates,
+    required this.highlightedDates,
   });
 
   final DateTime month;
   final int firstDayOfWeek;
   final DateTime? selectedDate;
-  final Function(DateTime)? onDateSelected;
-  final List<DateTime>? highlightedDates;
+  final Function(DateTime, int) onDateSelected;
+  final List<DateTime> highlightedDates;
 
   Widget _getCell(
     DateTime startDay,
@@ -23,17 +23,27 @@ class CalendarGrid extends StatelessWidget {
     int weekday,
     int daysBeforeMonth,
     int daysOfMonth,
-    Function(DateTime) onTap,
+    Function(DateTime, int) onTap,
   ) {
     final day = week * 7 + weekday;
     final date = startDay.add(Duration(days: day));
 
+    final isPreviousMonth = day < daysBeforeMonth;
+    final isNextMonth = day > daysOfMonth + daysBeforeMonth;
+
     return CalendarCell(
-      onTap: () => onTap(date),
+      onTap: () => onTap(
+        date,
+        isPreviousMonth
+            ? -1
+            : isNextMonth
+                ? 1
+                : 0,
+      ),
       date: date,
       selected: date == selectedDate,
-      highlight: highlightedDates?.contains(date) ?? false,
-      disabled: day < daysBeforeMonth || day > daysOfMonth + daysBeforeMonth,
+      highlight: highlightedDates.contains(date),
+      disabled: isPreviousMonth || isNextMonth,
     );
   }
 
@@ -61,7 +71,7 @@ class CalendarGrid extends StatelessWidget {
                         weekday,
                         daysBeforeMonth,
                         daysInMonth,
-                        (date) => onDateSelected?.call(date),
+                        onDateSelected,
                       ),
                     ),
                   ),

@@ -4,33 +4,65 @@ import 'package:flutter/material.dart';
 const _initialIndex = 9999999;
 
 class Calendar extends StatefulWidget {
-  const Calendar({
+  Calendar({
     super.key,
     required this.initialMonth,
     this.onDateSelected,
     this.onMonthChanged,
     this.selectedDate,
-    this.highlightedDates,
     this.firstDayOfWeek = 1,
-  });
+    List<DateTime>? highlightedDates,
+    List<DateTime> Function(DateTime month)? highlightedBuilder,
+  }) {
+    this.highlightedBuilder =
+        highlightedBuilder ?? (month) => highlightedDates ?? [];
+  }
 
   final DateTime initialMonth;
   final DateTime? selectedDate;
   final Function(DateTime)? onDateSelected;
   final Function(DateTime)? onMonthChanged;
   final int firstDayOfWeek;
-  final List<DateTime>? highlightedDates;
+  late final List<DateTime> Function(DateTime month) highlightedBuilder;
 
   @override
-  _CalendarState createState() => _CalendarState();
+  State<Calendar> createState() => _CalendarState();
 }
 
 class _CalendarState extends State<Calendar> {
   final _pageController = PageController(initialPage: _initialIndex);
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   DateTime _getMonth(int index) {
     return DateTime(
       widget.initialMonth.year,
       widget.initialMonth.month + index - _initialIndex,
+    );
+  }
+
+  Widget _getCalendarPage(int index) {
+    final month = _getMonth(index);
+    return CalendarPage(
+      month: month,
+      firstDayOfWeek: widget.firstDayOfWeek,
+      selectedDate: widget.selectedDate,
+      onDateSelected: (month, pageOffset) {
+        if (pageOffset != 0) {
+          _pageController.animateToPage(
+            index + pageOffset,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        }
+
+        widget.onDateSelected?.call(month);
+      },
+      highlightedDates: widget.highlightedBuilder(month),
     );
   }
 
@@ -40,13 +72,7 @@ class _CalendarState extends State<Calendar> {
       controller: _pageController,
       onPageChanged: (index) => widget.onMonthChanged?.call(_getMonth(index)),
       itemBuilder: (context, index) {
-        return CalendarPage(
-          month: _getMonth(index),
-          firstDayOfWeek: widget.firstDayOfWeek,
-          selectedDate: widget.selectedDate,
-          onDateSelected: widget.onDateSelected,
-          highlightedDates: widget.highlightedDates,
-        );
+        return _getCalendarPage(index);
       },
     );
   }
