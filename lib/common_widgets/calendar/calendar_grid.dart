@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:field_companion/common_widgets/calendar/calendar_cell.dart';
 import 'package:flutter/material.dart';
 
@@ -24,19 +22,18 @@ class CalendarGrid extends StatelessWidget {
     int week,
     int weekday,
     int daysBeforeMonth,
-    int daysInGrid,
-    int daysAfterMonth,
-    int weeksInGrid,
+    int daysOfMonth,
     Function(DateTime) onTap,
   ) {
-    final date = startDay.add(Duration(days: week * 7 + weekday));
+    final day = week * 7 + weekday;
+    final date = startDay.add(Duration(days: day));
+
     return CalendarCell(
       onTap: () => onTap(date),
       date: date,
       selected: date == selectedDate,
       highlight: highlightedDates?.contains(date) ?? false,
-      disabled: week == 0 && weekday < daysBeforeMonth ||
-          week == weeksInGrid - 1 && weekday >= daysInGrid - daysAfterMonth,
+      disabled: day < daysBeforeMonth || day > daysOfMonth + daysBeforeMonth,
     );
   }
 
@@ -45,18 +42,14 @@ class CalendarGrid extends StatelessWidget {
     final daysInMonth = DateTime(month.year, month.month + 1, 0).day;
     final firstWeekdayOfMonth = month.weekday;
     final daysBeforeMonth = firstWeekdayOfMonth - firstDayOfWeek;
-    final daysAfterMonth = 7 - firstDayOfWeek;
-    final daysInGrid = daysInMonth + daysBeforeMonth + daysAfterMonth;
-    final weeksInGrid = (daysInGrid / 7).ceil();
+    final weeksInGrid = ((daysInMonth + daysBeforeMonth) / 7).ceil();
     final startDay = month.subtract(Duration(days: daysBeforeMonth));
-
-    log("daysInMonth: $daysInMonth daysBeforeMonth: $daysBeforeMonth daysAfterMonth: $daysAfterMonth daysInGrid: $daysInGrid weeksInGrid: $weeksInGrid startDay: $startDay firstWeekdayOfMonth: $firstWeekdayOfMonth firstDayOfWeek: $firstDayOfWeek month: $month");
 
     return Column(
       children: [
         for (var week = 0; week < weeksInGrid; week++)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.0),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: Row(
               children: [
                 for (var weekday = 0; weekday < 7; weekday++)
@@ -67,9 +60,7 @@ class CalendarGrid extends StatelessWidget {
                         week,
                         weekday,
                         daysBeforeMonth,
-                        daysInGrid,
-                        daysAfterMonth,
-                        weeksInGrid,
+                        daysInMonth,
                         (date) => onDateSelected?.call(date),
                       ),
                     ),

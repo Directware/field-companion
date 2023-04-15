@@ -45,6 +45,7 @@ class CalendarCell extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
+      behavior: HitTestBehavior.opaque,
       child: Opacity(
         opacity: disabled ? 0.2 : 1,
         child: SizedBox(

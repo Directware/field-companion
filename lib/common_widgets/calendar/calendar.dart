@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:field_companion/common_widgets/calendar/calendar_page.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +28,6 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   final _pageController = PageController(initialPage: _initialIndex);
   DateTime _getMonth(int index) {
-    log("idnex $index");
     return DateTime(
       widget.initialMonth.year,
       widget.initialMonth.month + index - _initialIndex,
