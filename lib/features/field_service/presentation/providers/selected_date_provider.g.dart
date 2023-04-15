@@ -6,7 +6,7 @@ part of 'selected_date_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedDateHash() => r'9e986e02e9d117b11eb2a50fe7d2b7c9a6f01886';
+String _$selectedDateHash() => r'1f95875619624cebed6fbf271570cd403ebf7413';
 
 /// See also [SelectedDate].
 @ProviderFor(SelectedDate)

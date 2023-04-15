@@ -4,7 +4,7 @@ import 'package:field_companion/common_widgets/title_bar.dart';
 import 'package:field_companion/features/field_service/presentation/providers/days_of_reports_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/selected_date_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/selected_month_provider.dart';
-import 'package:field_companion/features/field_service/presentation/widgets/report_stepper.dart';
+import 'package:field_companion/features/field_service/presentation/widgets/report_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,19 +43,16 @@ class FieldService extends ConsumerWidget {
               },
               onDateSelected: (date) {
                 ref.read(selectedDateProvider.notifier).set(date);
+                //_showReportStepper(context, ref);
               },
               onMonthChanged: (date) {
+                ref.read(selectedDateProvider.notifier).clear();
                 ref.read(selectedMonthProvider.notifier).set(date);
               },
             ),
           ),
         ),
-        const ReportStepper(
-          time: 0.0,
-          placements: 0,
-          videos: 0,
-          reVisits: 0,
-        ),
+        const ReportBottomSheet()
       ],
     );
   }

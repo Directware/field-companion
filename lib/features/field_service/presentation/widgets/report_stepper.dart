@@ -6,74 +6,66 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ReportStepper extends ConsumerWidget {
-  const ReportStepper({
-    super.key,
-    required this.time,
-    required this.placements,
-    required this.videos,
-    required this.reVisits,
-  });
-
-  final double time;
-  final int placements;
-  final int videos;
-  final int reVisits;
+  const ReportStepper({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: ColorPalette.grey2Opacity08,
-          ),
-          child: Column(
-            children: [
-              Container(
-                height: 1,
-                color: ColorPalette.grey2Opacity30,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  StepperWidget(
-                    title: 'service.duration'.tr(),
-                    icon: const Icon(
-                      FeatherIcons.clock,
-                      color: Colors.white,
+    return Material(
+      color: Colors.transparent,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: ColorPalette.grey2Opacity08,
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: 1,
+                  color: ColorPalette.grey2Opacity30,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    StepperWidget(
+                      title: 'service.duration'.tr(),
+                      icon: const Icon(
+                        FeatherIcons.clock,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  StepperWidget(
-                    title: 'service.deliveries'.tr(),
-                    icon: const Icon(
-                      FeatherIcons.bookOpen,
-                      color: Colors.white,
+                    StepperWidget(
+                      title: 'service.deliveries'.tr(),
+                      icon: const Icon(
+                        FeatherIcons.bookOpen,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  StepperWidget(
-                    title: 'service.videos'.tr(),
-                    icon: const Icon(
-                      FeatherIcons.playCircle,
-                      color: Colors.white,
+                    StepperWidget(
+                      title: 'service.videos'.tr(),
+                      icon: const Icon(
+                        FeatherIcons.playCircle,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  StepperWidget(
-                    title: 'service.returnVisits'.tr(),
-                    icon: const Icon(
-                      FeatherIcons.refreshCcw,
-                      color: Colors.white,
+                    StepperWidget(
+                      title: 'service.returnVisits'.tr(),
+                      icon: const Icon(
+                        FeatherIcons.refreshCcw,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        )
-      ],
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
