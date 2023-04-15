@@ -52,15 +52,18 @@ class _CalendarState extends State<Calendar> {
       firstDayOfWeek: widget.firstDayOfWeek,
       selectedDate: widget.selectedDate,
       onDateSelected: (month, pageOffset) {
-        if (pageOffset != 0) {
-          _pageController.animateToPage(
-            index + pageOffset,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
+        final updatePageOffset = pageOffset != 0;
+        if (updatePageOffset) {
+          _pageController
+              .animateToPage(
+                index + pageOffset,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              )
+              .then((value) => widget.onDateSelected?.call(month));
+        } else {
+          widget.onDateSelected?.call(month);
         }
-
-        widget.onDateSelected?.call(month);
       },
       highlightedDates: widget.highlightedBuilder(month),
     );

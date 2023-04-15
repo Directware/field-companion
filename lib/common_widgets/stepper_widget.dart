@@ -57,7 +57,7 @@ class StepperWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 6),
               Text(
                 value.toString(),
                 style: const TextStyle(
@@ -69,7 +69,7 @@ class StepperWidget extends StatelessWidget {
                   letterSpacing: 0.4,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 1),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
