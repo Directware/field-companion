@@ -43,10 +43,12 @@ class FieldService extends ConsumerWidget {
               },
               onDateSelected: (date) {
                 ref.read(selectedDateProvider.notifier).set(date);
-                //_showReportStepper(context, ref);
               },
               onMonthChanged: (date) {
-                ref.read(selectedDateProvider.notifier).clear();
+                if (date.year != selectedDate?.year ||
+                    date.month != selectedDate?.month) {
+                  ref.read(selectedDateProvider.notifier).clear();
+                }
                 ref.read(selectedMonthProvider.notifier).set(date);
               },
             ),

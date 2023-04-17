@@ -54,16 +54,13 @@ class _CalendarState extends State<Calendar> {
       onDateSelected: (month, pageOffset) {
         final updatePageOffset = pageOffset != 0;
         if (updatePageOffset) {
-          _pageController
-              .animateToPage(
-                index + pageOffset,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              )
-              .then((value) => widget.onDateSelected?.call(month));
-        } else {
-          widget.onDateSelected?.call(month);
+          _pageController.animateToPage(
+            index + pageOffset,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
         }
+        widget.onDateSelected?.call(month);
       },
       highlightedDates: widget.highlightedBuilder(month),
     );
