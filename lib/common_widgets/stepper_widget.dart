@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:field_companion/color_palette.dart';
+import 'package:field_companion/common_widgets/animated_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -9,11 +10,19 @@ class StepperWidget extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.value,
+    this.timeFormat = false,
   });
 
   final String title;
   final IconData icon;
   final int value;
+  final bool timeFormat;
+
+  String _getTime(num value) {
+    final int hour = value ~/ 60;
+    final num minutes = value % 60;
+    return '${hour.toString().padLeft(2, "0")}:${minutes.toString().padLeft(2, "0")}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +67,19 @@ class StepperWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 6),
-              Text(
-                value.toString(),
-                style: const TextStyle(
-                  fontFamily: "Heebo",
-                  fontSize: 22,
-                  fontVariations: [
-                    FontVariation("wght", 500),
-                  ],
-                  letterSpacing: 0.4,
+              AnimatedNumber(
+                number: value,
+                duration: const Duration(milliseconds: 300),
+                builder: (number) => Text(
+                  timeFormat ? _getTime(number) : number.toString(),
+                  style: const TextStyle(
+                    fontFamily: "Heebo",
+                    fontSize: 22,
+                    fontVariations: [
+                      FontVariation("wght", 500),
+                    ],
+                    letterSpacing: 0.4,
+                  ),
                 ),
               ),
               const SizedBox(height: 1),
