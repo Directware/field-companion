@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'reports_stream_provider.dart';
+part of 'month_reports_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$reportsStreamHash() => r'7900e202d23ae082077489a5e6f7c164194277e6';
+String _$monthReportsHash() => r'33cc38dcf9aadd1f14d526fe6fa01a97e86bba1f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,35 +29,32 @@ class _SystemHash {
   }
 }
 
-typedef ReportsStreamRef = AutoDisposeStreamProviderRef<List<Report>>;
+typedef MonthReportsRef = AutoDisposeProviderRef<List<Report>>;
 
-/// See also [reportsStream].
-@ProviderFor(reportsStream)
-const reportsStreamProvider = ReportsStreamFamily();
+/// See also [monthReports].
+@ProviderFor(monthReports)
+const monthReportsProvider = MonthReportsFamily();
 
-/// See also [reportsStream].
-class ReportsStreamFamily extends Family<AsyncValue<List<Report>>> {
-  /// See also [reportsStream].
-  const ReportsStreamFamily();
+/// See also [monthReports].
+class MonthReportsFamily extends Family<List<Report>> {
+  /// See also [monthReports].
+  const MonthReportsFamily();
 
-  /// See also [reportsStream].
-  ReportsStreamProvider call({
+  /// See also [monthReports].
+  MonthReportsProvider call({
     required DateTime month,
-    bool withSurroundingWeekdays = false,
   }) {
-    return ReportsStreamProvider(
+    return MonthReportsProvider(
       month: month,
-      withSurroundingWeekdays: withSurroundingWeekdays,
     );
   }
 
   @override
-  ReportsStreamProvider getProviderOverride(
-    covariant ReportsStreamProvider provider,
+  MonthReportsProvider getProviderOverride(
+    covariant MonthReportsProvider provider,
   ) {
     return call(
       month: provider.month,
-      withSurroundingWeekdays: provider.withSurroundingWeekdays,
     );
   }
 
@@ -73,47 +70,41 @@ class ReportsStreamFamily extends Family<AsyncValue<List<Report>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'reportsStreamProvider';
+  String? get name => r'monthReportsProvider';
 }
 
-/// See also [reportsStream].
-class ReportsStreamProvider extends AutoDisposeStreamProvider<List<Report>> {
-  /// See also [reportsStream].
-  ReportsStreamProvider({
+/// See also [monthReports].
+class MonthReportsProvider extends AutoDisposeProvider<List<Report>> {
+  /// See also [monthReports].
+  MonthReportsProvider({
     required this.month,
-    this.withSurroundingWeekdays = false,
   }) : super.internal(
-          (ref) => reportsStream(
+          (ref) => monthReports(
             ref,
             month: month,
-            withSurroundingWeekdays: withSurroundingWeekdays,
           ),
-          from: reportsStreamProvider,
-          name: r'reportsStreamProvider',
+          from: monthReportsProvider,
+          name: r'monthReportsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$reportsStreamHash,
-          dependencies: ReportsStreamFamily._dependencies,
+                  : _$monthReportsHash,
+          dependencies: MonthReportsFamily._dependencies,
           allTransitiveDependencies:
-              ReportsStreamFamily._allTransitiveDependencies,
+              MonthReportsFamily._allTransitiveDependencies,
         );
 
   final DateTime month;
-  final bool withSurroundingWeekdays;
 
   @override
   bool operator ==(Object other) {
-    return other is ReportsStreamProvider &&
-        other.month == month &&
-        other.withSurroundingWeekdays == withSurroundingWeekdays;
+    return other is MonthReportsProvider && other.month == month;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, month.hashCode);
-    hash = _SystemHash.combine(hash, withSurroundingWeekdays.hashCode);
 
     return _SystemHash.finish(hash);
   }

@@ -6,7 +6,7 @@ part of 'days_of_reports_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$daysOfReportsHash() => r'36c6ab435483ed71129b7c9179e92da9cce6883d';
+String _$daysOfReportsHash() => r'54acb0ca723728fa72ae1a334a30ed8145ee48b2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -43,9 +43,11 @@ class DaysOfReportsFamily extends Family<List<DateTime>> {
   /// See also [daysOfReports].
   DaysOfReportsProvider call({
     required DateTime month,
+    int firstDayOfWeek = 1,
   }) {
     return DaysOfReportsProvider(
       month: month,
+      firstDayOfWeek: firstDayOfWeek,
     );
   }
 
@@ -55,6 +57,7 @@ class DaysOfReportsFamily extends Family<List<DateTime>> {
   ) {
     return call(
       month: provider.month,
+      firstDayOfWeek: provider.firstDayOfWeek,
     );
   }
 
@@ -78,10 +81,12 @@ class DaysOfReportsProvider extends AutoDisposeProvider<List<DateTime>> {
   /// See also [daysOfReports].
   DaysOfReportsProvider({
     required this.month,
+    this.firstDayOfWeek = 1,
   }) : super.internal(
           (ref) => daysOfReports(
             ref,
             month: month,
+            firstDayOfWeek: firstDayOfWeek,
           ),
           from: daysOfReportsProvider,
           name: r'daysOfReportsProvider',
@@ -95,16 +100,20 @@ class DaysOfReportsProvider extends AutoDisposeProvider<List<DateTime>> {
         );
 
   final DateTime month;
+  final int firstDayOfWeek;
 
   @override
   bool operator ==(Object other) {
-    return other is DaysOfReportsProvider && other.month == month;
+    return other is DaysOfReportsProvider &&
+        other.month == month &&
+        other.firstDayOfWeek == firstDayOfWeek;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, month.hashCode);
+    hash = _SystemHash.combine(hash, firstDayOfWeek.hashCode);
 
     return _SystemHash.finish(hash);
   }

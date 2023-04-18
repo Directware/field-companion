@@ -7,12 +7,11 @@ part of 'selected_month_reports_provider.dart';
 // **************************************************************************
 
 String _$selectedMonthReportsHash() =>
-    r'4450bb915f1e18173422bc90debe4b0d7c743526';
+    r'5dd5e840680156f93185384c168e086335b164cd';
 
 /// See also [selectedMonthReports].
 @ProviderFor(selectedMonthReports)
-final selectedMonthReportsProvider =
-    AutoDisposeFutureProvider<List<Report>>.internal(
+final selectedMonthReportsProvider = AutoDisposeProvider<List<Report>>.internal(
   selectedMonthReports,
   name: r'selectedMonthReportsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,5 +21,5 @@ final selectedMonthReportsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef SelectedMonthReportsRef = AutoDisposeFutureProviderRef<List<Report>>;
+typedef SelectedMonthReportsRef = AutoDisposeProviderRef<List<Report>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

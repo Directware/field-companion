@@ -6,7 +6,7 @@ part of 'total_videos_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$totalVideosHash() => r'97dd74f3d1950638dbd584359045b494592c8881';
+String _$totalVideosHash() => r'dfbaece2bdcd1f2bfc9f0aa544ba6da9f87587fe';
 
 /// See also [totalVideos].
 @ProviderFor(totalVideos)

@@ -42,6 +42,7 @@ class ReportStepper extends ConsumerWidget {
                           title: 'service.duration'.tr(),
                           icon: FeatherIcons.clock,
                           value: report?.duration ?? 0,
+                          timeFormat: true,
                         ),
                       ),
                       Expanded(

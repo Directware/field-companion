@@ -6,7 +6,7 @@ part of 'total_deliveries_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$totalDeliveriesHash() => r'873c652fea06c4e7fa20cc4d895781e9e05772d8';
+String _$totalDeliveriesHash() => r'16958a005ed8bc77d05a4a6be262cffa7f9c8f27';
 
 /// See also [totalDeliveries].
 @ProviderFor(totalDeliveries)

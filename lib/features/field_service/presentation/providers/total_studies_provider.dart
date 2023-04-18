@@ -5,11 +5,8 @@ part 'total_studies_provider.g.dart';
 
 @riverpod
 int totalStudies(TotalStudiesRef ref) {
-  return ref.watch(selectedMonthReportsProvider).maybeWhen(
-        data: (reports) => reports.fold(
-          0,
-          (previousValue, report) => previousValue + report.studies,
-        ),
-        orElse: () => 0,
+  return ref.watch(selectedMonthReportsProvider).fold(
+        0,
+        (previousValue, report) => previousValue + report.studies,
       );
 }

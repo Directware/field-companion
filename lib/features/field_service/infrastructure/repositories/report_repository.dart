@@ -1,17 +1,16 @@
-import 'dart:math';
+import 'dart:math' hide log;
 
 import 'package:field_companion/features/field_service/domain/models/report.dart';
 import 'package:field_companion/features/field_service/domain/repositories/report_repository_interface.dart';
 import 'package:isar/isar.dart';
 
 class ReportRepository implements ReportRepositoryInterface {
-  ReportRepository(this._database, [this._firstDayOfWeek = 1]) {
+  ReportRepository(this._database) {
     _collection = _database.reports;
     createTestEntities();
   }
 
   final Isar _database;
-  final int _firstDayOfWeek;
   late final IsarCollection<Report> _collection;
   late final Future<void> init = Future.value();
 
@@ -46,44 +45,22 @@ class ReportRepository implements ReportRepositoryInterface {
   }
 
   @override
-  Stream<List<Report>> getAllByMonth(
-    DateTime month, {
-    bool withSurroundingWeekdays = false,
-  }) {
-    final lastDateOfMonth = DateTime(month.year, month.month + 1, 0);
+  Future<List<Report>> getByMonths(
+    List<DateTime> months,
+  ) {
+    if (months.isEmpty) return Future.value([]);
 
-    DateTime startDate;
-    DateTime endDate;
+    final lastDateOfMonth =
+        DateTime(months.first.year, months.first.month + 1, 0);
+    var query =
+        _collection.where().reportDateBetween(months.first, lastDateOfMonth);
 
-    if (withSurroundingWeekdays) {
-      final firstWeekdayOfMonth = month.weekday;
-      final daysBeforeMonth = firstWeekdayOfMonth - _firstDayOfWeek;
-      final monthWeeksWithSurrounding =
-          ((lastDateOfMonth.day + daysBeforeMonth) / 7).ceil();
-      final dayCount = monthWeeksWithSurrounding * 7;
+    months.skip(1).forEach((month) {
+      final lastDateOfMonth = DateTime(month.year, month.month + 1, 0);
+      query = query.or().reportDateBetween(month, lastDateOfMonth);
+    });
 
-      startDate = month.subtract(Duration(days: daysBeforeMonth));
-      endDate = startDate.add(Duration(days: dayCount - 1));
-    } else {
-      startDate = month;
-      endDate = lastDateOfMonth;
-    }
-
-    return _collection
-        .filter()
-        .reportDateBetween(startDate, endDate)
-        .build()
-        .watch(fireImmediately: true);
-  }
-
-  @override
-  Stream<Report?> get(DateTime date) async* {
-    final report =
-        await _collection.filter().reportDateEqualTo(date).build().findFirst();
-
-    if (report == null) yield null;
-
-    yield* _collection.watchObject(report!.isarId);
+    return query.findAll();
   }
 
   @override

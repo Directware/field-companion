@@ -6,7 +6,7 @@ part of 'total_return_visits_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$totalReturnVisitsHash() => r'36ab14bc31391a735b0cb6218e674b6aa204f5c9';
+String _$totalReturnVisitsHash() => r'15730abab341edc6a0eff355b41d2e2a68e12c1d';
 
 /// See also [totalReturnVisits].
 @ProviderFor(totalReturnVisits)

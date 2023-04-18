@@ -1,5 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:field_companion/features/field_service/domain/models/report.dart';
-import 'package:field_companion/features/field_service/presentation/providers/report_stream_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/reports_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/selected_date_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,8 +12,7 @@ Report? selectedReport(SelectedReportRef ref) {
 
   if (selectedDate == null) return null;
 
-  return ref.watch(reportStreamProvider(date: selectedDate)).maybeWhen(
-        data: (report) => report,
-        orElse: () => null,
-      );
+  return ref
+      .watch(reportsProvider)
+      .firstWhereOrNull((report) => report.reportDate == selectedDate);
 }
