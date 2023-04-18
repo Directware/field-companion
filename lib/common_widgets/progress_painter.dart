@@ -25,7 +25,7 @@ class ProgressIndicatorPainter extends CustomPainter {
     const gradientStartAngle = 3 * math.pi / 2;
     final center = Offset(size.width / 2, size.height / 2);
     final radius = math.min(size.width, size.height) / 2;
-    final angle = 2 * math.pi * progress;
+    final angle = 2 * math.pi * math.min(progress, 1);
     final rect = Rect.fromCircle(center: center, radius: radius);
     final capRad = strokeWidth / 2 / radius;
 
