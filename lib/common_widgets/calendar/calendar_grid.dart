@@ -29,7 +29,7 @@ class CalendarGrid extends StatelessWidget {
     final date = startDay.add(Duration(days: day));
 
     final isPreviousMonth = day < daysBeforeMonth;
-    final isNextMonth = day > daysOfMonth + daysBeforeMonth;
+    final isNextMonth = day >= daysOfMonth + daysBeforeMonth;
 
     return CalendarCell(
       onTap: () => onTap(
