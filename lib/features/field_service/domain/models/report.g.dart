@@ -17,53 +17,33 @@ const ReportSchema = CollectionSchema(
   name: r'Report',
   id: 4107730612455750309,
   properties: {
-    r'creationTime': PropertySchema(
-      id: 0,
-      name: r'creationTime',
-      type: IsarType.dateTime,
-    ),
     r'deliveries': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'deliveries',
       type: IsarType.long,
     ),
     r'duration': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'duration',
       type: IsarType.long,
     ),
-    r'excludeStatistic': PropertySchema(
-      id: 3,
-      name: r'excludeStatistic',
-      type: IsarType.bool,
-    ),
-    r'id': PropertySchema(
-      id: 4,
-      name: r'id',
-      type: IsarType.string,
-    ),
-    r'lastUpdated': PropertySchema(
-      id: 5,
-      name: r'lastUpdated',
-      type: IsarType.dateTime,
-    ),
     r'reportDate': PropertySchema(
-      id: 6,
+      id: 2,
       name: r'reportDate',
       type: IsarType.dateTime,
     ),
     r'returnVisits': PropertySchema(
-      id: 7,
+      id: 3,
       name: r'returnVisits',
       type: IsarType.long,
     ),
     r'studies': PropertySchema(
-      id: 8,
+      id: 4,
       name: r'studies',
       type: IsarType.long,
     ),
     r'videos': PropertySchema(
-      id: 9,
+      id: 5,
       name: r'videos',
       type: IsarType.long,
     )
@@ -72,7 +52,7 @@ const ReportSchema = CollectionSchema(
   serialize: _reportSerialize,
   deserialize: _reportDeserialize,
   deserializeProp: _reportDeserializeProp,
-  idName: r'isarId',
+  idName: r'id',
   indexes: {
     r'reportDate': IndexSchema(
       id: -3469995908724995165,
@@ -84,19 +64,6 @@ const ReportSchema = CollectionSchema(
           name: r'reportDate',
           type: IndexType.value,
           caseSensitive: false,
-        )
-      ],
-    ),
-    r'id': IndexSchema(
-      id: -3268401673993471357,
-      name: r'id',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'id',
-          type: IndexType.hash,
-          caseSensitive: true,
         )
       ],
     )
@@ -115,7 +82,6 @@ int _reportEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.id.length * 3;
   return bytesCount;
 }
 
@@ -125,16 +91,12 @@ void _reportSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDateTime(offsets[0], object.creationTime);
-  writer.writeLong(offsets[1], object.deliveries);
-  writer.writeLong(offsets[2], object.duration);
-  writer.writeBool(offsets[3], object.excludeStatistic);
-  writer.writeString(offsets[4], object.id);
-  writer.writeDateTime(offsets[5], object.lastUpdated);
-  writer.writeDateTime(offsets[6], object.reportDate);
-  writer.writeLong(offsets[7], object.returnVisits);
-  writer.writeLong(offsets[8], object.studies);
-  writer.writeLong(offsets[9], object.videos);
+  writer.writeLong(offsets[0], object.deliveries);
+  writer.writeLong(offsets[1], object.duration);
+  writer.writeDateTime(offsets[2], object.reportDate);
+  writer.writeLong(offsets[3], object.returnVisits);
+  writer.writeLong(offsets[4], object.studies);
+  writer.writeLong(offsets[5], object.videos);
 }
 
 Report _reportDeserialize(
@@ -143,17 +105,15 @@ Report _reportDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Report();
-  object.creationTime = reader.readDateTime(offsets[0]);
-  object.deliveries = reader.readLong(offsets[1]);
-  object.duration = reader.readLong(offsets[2]);
-  object.excludeStatistic = reader.readBool(offsets[3]);
-  object.id = reader.readString(offsets[4]);
-  object.lastUpdated = reader.readDateTime(offsets[5]);
-  object.reportDate = reader.readDateTime(offsets[6]);
-  object.returnVisits = reader.readLong(offsets[7]);
-  object.studies = reader.readLong(offsets[8]);
-  object.videos = reader.readLong(offsets[9]);
+  final object = Report(
+    deliveries: reader.readLongOrNull(offsets[0]) ?? 0,
+    duration: reader.readLongOrNull(offsets[1]) ?? 0,
+    id: id,
+    reportDate: reader.readDateTime(offsets[2]),
+    returnVisits: reader.readLongOrNull(offsets[3]) ?? 0,
+    studies: reader.readLongOrNull(offsets[4]) ?? 0,
+    videos: reader.readLongOrNull(offsets[5]) ?? 0,
+  );
   return object;
 }
 
@@ -165,32 +125,24 @@ P _reportDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     case 2:
-      return (reader.readLong(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
-    case 6:
-      return (reader.readDateTime(offset)) as P;
-    case 7:
-      return (reader.readLong(offset)) as P;
-    case 8:
-      return (reader.readLong(offset)) as P;
-    case 9:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
 Id _reportGetId(Report object) {
-  return object.isarId;
+  return object.id;
 }
 
 List<IsarLinkBase<dynamic>> _reportGetLinks(Report object) {
@@ -255,7 +207,7 @@ extension ReportByIndex on IsarCollection<Report> {
 }
 
 extension ReportQueryWhereSort on QueryBuilder<Report, Report, QWhere> {
-  QueryBuilder<Report, Report, QAfterWhere> anyIsarId() {
+  QueryBuilder<Report, Report, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
@@ -271,66 +223,66 @@ extension ReportQueryWhereSort on QueryBuilder<Report, Report, QWhere> {
 }
 
 extension ReportQueryWhere on QueryBuilder<Report, Report, QWhereClause> {
-  QueryBuilder<Report, Report, QAfterWhereClause> isarIdEqualTo(Id isarId) {
+  QueryBuilder<Report, Report, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: isarId,
-        upper: isarId,
+        lower: id,
+        upper: id,
       ));
     });
   }
 
-  QueryBuilder<Report, Report, QAfterWhereClause> isarIdNotEqualTo(Id isarId) {
+  QueryBuilder<Report, Report, QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(
-              IdWhereClause.lessThan(upper: isarId, includeUpper: false),
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
             )
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: isarId, includeLower: false),
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
             );
       } else {
         return query
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: isarId, includeLower: false),
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
             )
             .addWhereClause(
-              IdWhereClause.lessThan(upper: isarId, includeUpper: false),
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
             );
       }
     });
   }
 
-  QueryBuilder<Report, Report, QAfterWhereClause> isarIdGreaterThan(Id isarId,
+  QueryBuilder<Report, Report, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: isarId, includeLower: include),
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
     });
   }
 
-  QueryBuilder<Report, Report, QAfterWhereClause> isarIdLessThan(Id isarId,
+  QueryBuilder<Report, Report, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.lessThan(upper: isarId, includeUpper: include),
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
     });
   }
 
-  QueryBuilder<Report, Report, QAfterWhereClause> isarIdBetween(
-    Id lowerIsarId,
-    Id upperIsarId, {
+  QueryBuilder<Report, Report, QAfterWhereClause> idBetween(
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: lowerIsarId,
+        lower: lowerId,
         includeLower: includeLower,
-        upper: upperIsarId,
+        upper: upperId,
         includeUpper: includeUpper,
       ));
     });
@@ -425,105 +377,9 @@ extension ReportQueryWhere on QueryBuilder<Report, Report, QWhereClause> {
       ));
     });
   }
-
-  QueryBuilder<Report, Report, QAfterWhereClause> idEqualTo(String id) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'id',
-        value: [id],
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterWhereClause> idNotEqualTo(String id) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
 }
 
 extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
-  QueryBuilder<Report, Report, QAfterFilterCondition> creationTimeEqualTo(
-      DateTime value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'creationTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> creationTimeGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'creationTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> creationTimeLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'creationTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> creationTimeBetween(
-    DateTime lower,
-    DateTime upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'creationTime',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<Report, Report, QAfterFilterCondition> deliveriesEqualTo(
       int value) {
     return QueryBuilder.apply(this, (query) {
@@ -630,180 +486,42 @@ extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Report, Report, QAfterFilterCondition> excludeStatisticEqualTo(
-      bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'excludeStatistic',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> idEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<Report, Report, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Report, Report, QAfterFilterCondition> idGreaterThan(
-    String value, {
+    Id value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'id',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Report, Report, QAfterFilterCondition> idLessThan(
-    String value, {
+    Id value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'id',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Report, Report, QAfterFilterCondition> idBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> idStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> idEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> idContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> idMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'id',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> idIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> idIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'id',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> isarIdEqualTo(Id value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isarId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> isarIdGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> isarIdLessThan(
-    Id value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> isarIdBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -811,60 +529,7 @@ extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'isarId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> lastUpdatedEqualTo(
-      DateTime value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'lastUpdated',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> lastUpdatedGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'lastUpdated',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> lastUpdatedLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'lastUpdated',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> lastUpdatedBetween(
-    DateTime lower,
-    DateTime upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'lastUpdated',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1090,18 +755,6 @@ extension ReportQueryObject on QueryBuilder<Report, Report, QFilterCondition> {}
 extension ReportQueryLinks on QueryBuilder<Report, Report, QFilterCondition> {}
 
 extension ReportQuerySortBy on QueryBuilder<Report, Report, QSortBy> {
-  QueryBuilder<Report, Report, QAfterSortBy> sortByCreationTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'creationTime', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> sortByCreationTimeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'creationTime', Sort.desc);
-    });
-  }
-
   QueryBuilder<Report, Report, QAfterSortBy> sortByDeliveries() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'deliveries', Sort.asc);
@@ -1123,42 +776,6 @@ extension ReportQuerySortBy on QueryBuilder<Report, Report, QSortBy> {
   QueryBuilder<Report, Report, QAfterSortBy> sortByDurationDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> sortByExcludeStatistic() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'excludeStatistic', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> sortByExcludeStatisticDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'excludeStatistic', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> sortById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> sortByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> sortByLastUpdated() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'lastUpdated', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> sortByLastUpdatedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'lastUpdated', Sort.desc);
     });
   }
 
@@ -1212,18 +829,6 @@ extension ReportQuerySortBy on QueryBuilder<Report, Report, QSortBy> {
 }
 
 extension ReportQuerySortThenBy on QueryBuilder<Report, Report, QSortThenBy> {
-  QueryBuilder<Report, Report, QAfterSortBy> thenByCreationTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'creationTime', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> thenByCreationTimeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'creationTime', Sort.desc);
-    });
-  }
-
   QueryBuilder<Report, Report, QAfterSortBy> thenByDeliveries() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'deliveries', Sort.asc);
@@ -1248,18 +853,6 @@ extension ReportQuerySortThenBy on QueryBuilder<Report, Report, QSortThenBy> {
     });
   }
 
-  QueryBuilder<Report, Report, QAfterSortBy> thenByExcludeStatistic() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'excludeStatistic', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> thenByExcludeStatisticDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'excludeStatistic', Sort.desc);
-    });
-  }
-
   QueryBuilder<Report, Report, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1269,30 +862,6 @@ extension ReportQuerySortThenBy on QueryBuilder<Report, Report, QSortThenBy> {
   QueryBuilder<Report, Report, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> thenByIsarId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isarId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> thenByIsarIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isarId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> thenByLastUpdated() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'lastUpdated', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> thenByLastUpdatedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'lastUpdated', Sort.desc);
     });
   }
 
@@ -1346,12 +915,6 @@ extension ReportQuerySortThenBy on QueryBuilder<Report, Report, QSortThenBy> {
 }
 
 extension ReportQueryWhereDistinct on QueryBuilder<Report, Report, QDistinct> {
-  QueryBuilder<Report, Report, QDistinct> distinctByCreationTime() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'creationTime');
-    });
-  }
-
   QueryBuilder<Report, Report, QDistinct> distinctByDeliveries() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'deliveries');
@@ -1361,25 +924,6 @@ extension ReportQueryWhereDistinct on QueryBuilder<Report, Report, QDistinct> {
   QueryBuilder<Report, Report, QDistinct> distinctByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'duration');
-    });
-  }
-
-  QueryBuilder<Report, Report, QDistinct> distinctByExcludeStatistic() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'excludeStatistic');
-    });
-  }
-
-  QueryBuilder<Report, Report, QDistinct> distinctById(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Report, Report, QDistinct> distinctByLastUpdated() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'lastUpdated');
     });
   }
 
@@ -1409,15 +953,9 @@ extension ReportQueryWhereDistinct on QueryBuilder<Report, Report, QDistinct> {
 }
 
 extension ReportQueryProperty on QueryBuilder<Report, Report, QQueryProperty> {
-  QueryBuilder<Report, int, QQueryOperations> isarIdProperty() {
+  QueryBuilder<Report, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'isarId');
-    });
-  }
-
-  QueryBuilder<Report, DateTime, QQueryOperations> creationTimeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'creationTime');
+      return query.addPropertyName(r'id');
     });
   }
 
@@ -1430,24 +968,6 @@ extension ReportQueryProperty on QueryBuilder<Report, Report, QQueryProperty> {
   QueryBuilder<Report, int, QQueryOperations> durationProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'duration');
-    });
-  }
-
-  QueryBuilder<Report, bool, QQueryOperations> excludeStatisticProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'excludeStatistic');
-    });
-  }
-
-  QueryBuilder<Report, String, QQueryOperations> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<Report, DateTime, QQueryOperations> lastUpdatedProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'lastUpdated');
     });
   }
 

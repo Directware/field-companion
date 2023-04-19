@@ -29,15 +29,15 @@ class ReportRepository implements ReportRepositoryInterface {
             startDate.month + month,
             1 + Random().nextInt(31 - 1),
           );
-          final report = Report.create(date);
-          report.update(
+
+          final report = Report(
+            reportDate: date,
             videos: 1 + Random().nextInt(10 - 1),
             studies: 1 + Random().nextInt(10 - 1),
             deliveries: 1 + Random().nextInt(10 - 1),
             duration: 1 + Random().nextInt(4 * 60 - 1),
             returnVisits: 1 + Random().nextInt(10 - 1),
           );
-          report.lastUpdated = date;
           await _database.reports.putByIndex('reportDate', report);
         }
       }
@@ -64,28 +64,16 @@ class ReportRepository implements ReportRepositoryInterface {
   }
 
   @override
-  Future<void> upsert(
-    DateTime date, {
-    int? videos,
-    int? returnVisits,
-    int? deliveries,
-    int? duration,
-    int? studies,
-  }) async {
-    final report =
-        await _collection.filter().reportDateEqualTo(date).findFirst() ??
-            Report.create(date);
-
-    report.update(
-      videos: videos,
-      returnVisits: returnVisits,
-      deliveries: deliveries,
-      duration: duration,
-      studies: studies,
-    );
-
+  Future<void> upsert(Report report) async {
     await _database.writeTxn(() async {
       await _collection.putByIndex('reportDate', report);
+    });
+  }
+
+  @override
+  Future<void> delete(Id id) async {
+    await _database.writeTxn(() async {
+      await _collection.delete(id);
     });
   }
 }

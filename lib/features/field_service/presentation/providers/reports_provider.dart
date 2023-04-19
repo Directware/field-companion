@@ -39,6 +39,47 @@ class Reports extends _$Reports {
     return false;
   }
 
+  void update(
+    DateTime date, {
+    int? videos,
+    int? returnVisits,
+    int? deliveries,
+    int? duration,
+    int? studies,
+  }) {
+    final index = state.indexWhere((report) => report.reportDate == date);
+    final report = index >= 0
+        ? state[index].clone(
+            videos: videos,
+            returnVisits: returnVisits,
+            deliveries: deliveries,
+            duration: duration,
+            studies: studies,
+          )
+        : Report(
+            reportDate: date,
+            videos: videos ?? 0,
+            returnVisits: returnVisits ?? 0,
+            deliveries: deliveries ?? 0,
+            duration: duration ?? 0,
+            studies: studies ?? 0,
+          );
+
+    if (report.isEmpty()) {
+      state = state.where((report) => report.reportDate != date).toList();
+      _repository.delete(report.id);
+    } else {
+      if (index < 0) {
+        state = [...state, report];
+      } else {
+        state = state
+            .map((item) => item.reportDate == date ? report : item)
+            .toList();
+      }
+      _repository.upsert(report);
+    }
+  }
+
   @override
   List<Report> build() {
     _repository = ref.watch(reportRepositoryProvider);
