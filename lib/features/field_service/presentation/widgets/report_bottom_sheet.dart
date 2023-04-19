@@ -33,6 +33,11 @@ class _ReportBottomSheetState extends ConsumerState<ReportBottomSheet> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ref.listen(selectedDateProvider, (previousDate, date) {
       if (date != null && previousDate == null) {

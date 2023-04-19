@@ -6,7 +6,7 @@ part of 'total_year_duration_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$totalYearDurationHash() => r'ee15c939b3d7c8415e24867136abeed3961d6021';
+String _$totalYearDurationHash() => r'933d8a9aab79f976927d95a4ef0fb6b231f4b69a';
 
 /// See also [totalYearDuration].
 @ProviderFor(totalYearDuration)

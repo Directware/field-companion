@@ -6,7 +6,7 @@ part of 'yearly_goal_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$yearlyGoalHash() => r'ea42d6ea805a87499960c922988b6c93d67f1e68';
+String _$yearlyGoalHash() => r'374c481496b60668aa0a46acd7ef67ef4041f1f7';
 
 /// See also [YearlyGoal].
 @ProviderFor(YearlyGoal)

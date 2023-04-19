@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/features/core/presentation/providers/is_router_link_active_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/selected_date_provider.dart';
 import 'package:field_companion/models/app_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -26,25 +27,28 @@ class BottomBar extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () => context.go(AppLocations.territories.href),
+                    onPressed: () =>
+                        _navigateTo(context, ref, AppLocations.territories),
                     icon: Icon(
-                      color: isLinkActive(ref, AppLocations.territories),
+                      color: _isLinkActive(ref, AppLocations.territories),
                       size: 20,
                       FeatherIcons.map,
                     ),
                   ),
                   IconButton(
-                    onPressed: () => context.go(AppLocations.fieldService.href),
+                    onPressed: () =>
+                        _navigateTo(context, ref, AppLocations.fieldService),
                     icon: Icon(
-                      color: isLinkActive(ref, AppLocations.fieldService),
+                      color: _isLinkActive(ref, AppLocations.fieldService),
                       size: 20,
                       FeatherIcons.clock,
                     ),
                   ),
                   IconButton(
-                    onPressed: () => context.go(AppLocations.settings.href),
+                    onPressed: () =>
+                        _navigateTo(context, ref, AppLocations.settings),
                     icon: Icon(
-                      color: isLinkActive(ref, AppLocations.settings),
+                      color: _isLinkActive(ref, AppLocations.settings),
                       size: 20,
                       FeatherIcons.settings,
                     ),
@@ -58,7 +62,13 @@ class BottomBar extends ConsumerWidget {
     );
   }
 
-  Color isLinkActive(WidgetRef ref, AppLocations appLocations) {
+  void _navigateTo(
+      BuildContext context, WidgetRef ref, AppLocations appLocations) {
+    ref.read(selectedDateProvider.notifier).clear();
+    context.go(appLocations.href);
+  }
+
+  Color _isLinkActive(WidgetRef ref, AppLocations appLocations) {
     if (ref.watch(isRouterLinkActiveProvider(appLocations))) {
       return const Color(0xFF3694e2);
     }
