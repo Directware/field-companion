@@ -11,17 +11,36 @@ class StepperWidget extends StatelessWidget {
     required this.icon,
     required this.value,
     this.timeFormat = false,
+    this.min = 0,
+    this.max,
+    this.step = 1,
+    required this.onChanged,
   });
 
   final String title;
   final IconData icon;
   final int value;
   final bool timeFormat;
+  final int min;
+  final int? max;
+  final int step;
+  final ValueChanged<int> onChanged;
 
   String _getTime(num value) {
     final int hour = value ~/ 60;
     final num minutes = value % 60;
     return '${hour.toString().padLeft(2, "0")}:${minutes.toString().padLeft(2, "0")}';
+  }
+
+  void _change(int step) {
+    final newValue = value + step;
+    if (newValue <= min) {
+      onChanged(min);
+    } else if (max != null && newValue >= max!) {
+      onChanged(max!);
+    } else {
+      onChanged(newValue);
+    }
   }
 
   @override
@@ -59,7 +78,7 @@ class StepperWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => _change(step),
                   child: const Icon(
                     FeatherIcons.plus,
                     color: ColorPalette.grey2,
@@ -86,7 +105,7 @@ class StepperWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => _change(-step),
                   child: const Icon(
                     FeatherIcons.minus,
                     color: ColorPalette.grey2,
