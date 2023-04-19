@@ -33,7 +33,7 @@ class ReportRepository implements ReportRepositoryInterface {
           final report = Report(
             reportDate: date,
             videos: 1 + Random().nextInt(10 - 1),
-            studies: 1 + Random().nextInt(10 - 1),
+            //studies: 1 + Random().nextInt(10 - 1),
             deliveries: 1 + Random().nextInt(10 - 1),
             duration: 1 + Random().nextInt(4 * 60 - 1),
             returnVisits: 1 + Random().nextInt(10 - 1),

@@ -5,6 +5,7 @@ import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/stepper_widget.dart';
 import 'package:field_companion/features/app_settings/presentation/providers/duration_step_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/selected_date_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/selected_report_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -37,7 +38,7 @@ class ReportStepper extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final report = ref.watch(selectedReportProvider);
     final durationStep = ref.watch(durationStepProvider);
-    final date = report?.reportDate;
+    final date = ref.watch(selectedDateProvider);
 
     return Wrap(
       children: [
