@@ -24,7 +24,7 @@ class ColorPalette {
   static Color greenProgressStartOpacity05 =
       greenProgressStart.withOpacity(0.5);
 
-  static Color blueProgressStartOpacity05 = greenProgressStart.withOpacity(0.5);
+  static Color blueProgressStartOpacity05 = blueProgressStart.withOpacity(0.5);
 
   static Color grey2Opacity08 = grey2.withOpacity(0.08);
 
