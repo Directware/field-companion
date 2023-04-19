@@ -1,0 +1,4 @@
+enum Goal {
+  yearly,
+  monthly,
+}

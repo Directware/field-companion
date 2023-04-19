@@ -90,6 +90,11 @@ class ProgressIndicatorPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant ProgressIndicatorPainter oldDelegate) {
-    return oldDelegate.progress != progress;
+    return oldDelegate.progress != progress ||
+        oldDelegate.strokeWidth != strokeWidth ||
+        oldDelegate.startingColor != startingColor ||
+        oldDelegate.shadowColor != shadowColor ||
+        oldDelegate.endingColor != endingColor ||
+        oldDelegate.backgroundColor != backgroundColor;
   }
 }

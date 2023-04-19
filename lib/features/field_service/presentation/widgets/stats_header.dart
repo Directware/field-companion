@@ -27,13 +27,13 @@ class StatsHeader extends ConsumerWidget {
           borderRadius: BorderRadius.circular(10),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: ColoredBox(
+            child: Material(
               color: ColorPalette.grey2Opacity24,
               child: Row(
                 children: [
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 17),
                   const TimeProgress(),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 5),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(16),

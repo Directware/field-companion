@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/color_palette.dart';
 import 'package:field_companion/common_widgets/stepper_widget.dart';
+import 'package:field_companion/features/app_settings/presentation/providers/duration_step_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/selected_report_provider.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class ReportStepper extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final report = ref.watch(selectedReportProvider);
+    final durationStep = ref.watch(durationStepProvider);
     final date = report?.reportDate;
 
     return Wrap(
@@ -64,7 +66,7 @@ class ReportStepper extends ConsumerWidget {
                           title: 'service.duration'.tr(),
                           icon: FeatherIcons.clock,
                           value: report?.duration ?? 0,
-                          step: 30,
+                          step: durationStep,
                           timeFormat: true,
                           onChanged: (value) =>
                               _update(ref, date, duration: value),

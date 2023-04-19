@@ -1,6 +1,8 @@
 import 'package:field_companion/features/field_service/domain/models/report.dart';
 import 'package:field_companion/features/field_service/infrastructure/repositories/report_repository.dart';
+import 'package:field_companion/features/field_service/presentation/models/goal.dart';
 import 'package:field_companion/features/field_service/presentation/providers/report_repository_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/selected_goal_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/selected_month_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,20 +11,25 @@ part 'reports_provider.g.dart';
 @riverpod
 class Reports extends _$Reports {
   late final ReportRepository _repository;
-  late Set<DateTime> loaded = {};
+  late Set<DateTime> _loaded = {};
+  DateTime? _selectedMonth;
+  Goal? _selectedGoal;
 
-  Future<void> _fetch(DateTime selectedMonth) async {
+  Future<void> _fetch() async {
+    if (_selectedMonth == null || _selectedGoal == null) return;
+
     final months = {
+      if (_selectedGoal == Goal.yearly) ..._getMonthsOfYear(_selectedMonth!),
       for (var index = -1; index <= 1; index++)
-        DateTime(selectedMonth.year, selectedMonth.month + index)
+        DateTime(_selectedMonth!.year, _selectedMonth!.month + index)
     };
 
     final loadMonths =
-        months.where((month) => !loaded.contains(month)).toList();
+        months.where((month) => !_loaded.contains(month)).toList();
 
     state = await _repository.getByMonths(loadMonths).then(
       (reports) {
-        loaded = months;
+        _loaded = months;
 
         return [
           ...reports,
@@ -32,8 +39,17 @@ class Reports extends _$Reports {
     );
   }
 
+  List<DateTime> _getMonthsOfYear(DateTime date) {
+    final firstMonth =
+        date.month >= 9 ? DateTime(date.year, 9) : DateTime(date.year - 1, 9);
+    return [
+      for (var month = 0; month < 12; month++)
+        DateTime(firstMonth.year, firstMonth.month + month - 1)
+    ];
+  }
+
   bool _monthsIncludeDate(DateTime date) {
-    for (final month in loaded) {
+    for (final month in _loaded) {
       if (month.year == date.year && month.month == date.month) return true;
     }
     return false;
@@ -84,8 +100,19 @@ class Reports extends _$Reports {
   List<Report> build() {
     _repository = ref.watch(reportRepositoryProvider);
     ref.listen(
+      selectedGoalProvider,
+      (_, selectedGoal) {
+        _selectedGoal = selectedGoal;
+        _fetch();
+      },
+      fireImmediately: true,
+    );
+    ref.listen(
       selectedMonthProvider,
-      (_, next) => _fetch(next),
+      (_, selectedMonth) {
+        _selectedMonth = selectedMonth;
+        _fetch();
+      },
       fireImmediately: true,
     );
 
