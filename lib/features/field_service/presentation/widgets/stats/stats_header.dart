@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
+import 'package:field_companion/features/field_service/presentation/providers/stats/studies_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/total_deliveries_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/total_return_visits_provider.dart';
-import 'package:field_companion/features/field_service/presentation/providers/stats/total_studies_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/total_videos_provider.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats/stats_counter.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats/time_progress.dart';
@@ -17,7 +17,7 @@ class StatsHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final videos = ref.watch(totalVideosProvider);
-    final studies = ref.watch(totalStudiesProvider);
+    final studies = ref.watch(studiesProvider);
     final deliveries = ref.watch(totalDeliveriesProvider);
     final returnVisits = ref.watch(totalReturnVisitsProvider);
 

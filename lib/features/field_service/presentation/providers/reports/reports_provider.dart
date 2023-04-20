@@ -61,7 +61,6 @@ class Reports extends _$Reports {
     int? returnVisits,
     int? deliveries,
     int? duration,
-    int? studies,
   }) {
     final index = state.indexWhere((report) => report.reportDate == date);
     final report = index >= 0
@@ -70,7 +69,6 @@ class Reports extends _$Reports {
             returnVisits: returnVisits,
             deliveries: deliveries,
             duration: duration,
-            studies: studies,
           )
         : Report(
             reportDate: date,
@@ -78,7 +76,6 @@ class Reports extends _$Reports {
             returnVisits: returnVisits ?? 0,
             deliveries: deliveries ?? 0,
             duration: duration ?? 0,
-            studies: studies ?? 0,
           );
 
     if (report.isEmpty()) {

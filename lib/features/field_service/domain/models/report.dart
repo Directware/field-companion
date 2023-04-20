@@ -10,7 +10,6 @@ class Report {
     this.videos = 0,
     this.returnVisits = 0,
     this.duration = 0,
-    this.studies = 0,
     this.deliveries = 0,
   });
 
@@ -19,7 +18,6 @@ class Report {
   final int returnVisits;
   final int deliveries;
   final int duration;
-  final int studies;
 
   @Index(unique: true)
   late DateTime reportDate;
@@ -28,7 +26,6 @@ class Report {
     int? videos,
     int? returnVisits,
     int? duration,
-    int? studies,
     int? deliveries,
   }) {
     return Report(
@@ -37,16 +34,11 @@ class Report {
       videos: videos ?? this.videos,
       returnVisits: returnVisits ?? this.returnVisits,
       duration: duration ?? this.duration,
-      studies: studies ?? this.studies,
       deliveries: deliveries ?? this.deliveries,
     );
   }
 
   bool isEmpty() {
-    return videos == 0 &&
-        returnVisits == 0 &&
-        duration == 0 &&
-        studies == 0 &&
-        deliveries == 0;
+    return videos == 0 && returnVisits == 0 && duration == 0 && deliveries == 0;
   }
 }

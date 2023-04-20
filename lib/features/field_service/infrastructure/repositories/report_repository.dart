@@ -16,7 +16,7 @@ class ReportRepository implements ReportRepositoryInterface {
 
   Future<void> createTestEntities() async {
     await _database.writeTxn(() async {
-      await _database.reports.where().deleteAll();
+      await _collection.where().deleteAll();
 
       final count = 1 + Random().nextInt(31 - 1);
 
@@ -38,7 +38,7 @@ class ReportRepository implements ReportRepositoryInterface {
             duration: 1 + Random().nextInt(4 * 60 - 1),
             returnVisits: 1 + Random().nextInt(10 - 1),
           );
-          await _database.reports.putByIndex('reportDate', report);
+          await _collection.putByIndex('reportDate', report);
         }
       }
     });

@@ -37,13 +37,8 @@ const ReportSchema = CollectionSchema(
       name: r'returnVisits',
       type: IsarType.long,
     ),
-    r'studies': PropertySchema(
-      id: 4,
-      name: r'studies',
-      type: IsarType.long,
-    ),
     r'videos': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'videos',
       type: IsarType.long,
     )
@@ -95,8 +90,7 @@ void _reportSerialize(
   writer.writeLong(offsets[1], object.duration);
   writer.writeDateTime(offsets[2], object.reportDate);
   writer.writeLong(offsets[3], object.returnVisits);
-  writer.writeLong(offsets[4], object.studies);
-  writer.writeLong(offsets[5], object.videos);
+  writer.writeLong(offsets[4], object.videos);
 }
 
 Report _reportDeserialize(
@@ -111,8 +105,7 @@ Report _reportDeserialize(
     id: id,
     reportDate: reader.readDateTime(offsets[2]),
     returnVisits: reader.readLongOrNull(offsets[3]) ?? 0,
-    studies: reader.readLongOrNull(offsets[4]) ?? 0,
-    videos: reader.readLongOrNull(offsets[5]) ?? 0,
+    videos: reader.readLongOrNull(offsets[4]) ?? 0,
   );
   return object;
 }
@@ -133,8 +126,6 @@ P _reportDeserializeProp<P>(
     case 3:
       return (reader.readLongOrNull(offset) ?? 0) as P;
     case 4:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
-    case 5:
       return (reader.readLongOrNull(offset) ?? 0) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -644,59 +635,6 @@ extension ReportQueryFilter on QueryBuilder<Report, Report, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Report, Report, QAfterFilterCondition> studiesEqualTo(
-      int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'studies',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> studiesGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'studies',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> studiesLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'studies',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterFilterCondition> studiesBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'studies',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<Report, Report, QAfterFilterCondition> videosEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -803,18 +741,6 @@ extension ReportQuerySortBy on QueryBuilder<Report, Report, QSortBy> {
     });
   }
 
-  QueryBuilder<Report, Report, QAfterSortBy> sortByStudies() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'studies', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> sortByStudiesDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'studies', Sort.desc);
-    });
-  }
-
   QueryBuilder<Report, Report, QAfterSortBy> sortByVideos() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'videos', Sort.asc);
@@ -889,18 +815,6 @@ extension ReportQuerySortThenBy on QueryBuilder<Report, Report, QSortThenBy> {
     });
   }
 
-  QueryBuilder<Report, Report, QAfterSortBy> thenByStudies() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'studies', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Report, Report, QAfterSortBy> thenByStudiesDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'studies', Sort.desc);
-    });
-  }
-
   QueryBuilder<Report, Report, QAfterSortBy> thenByVideos() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'videos', Sort.asc);
@@ -939,12 +853,6 @@ extension ReportQueryWhereDistinct on QueryBuilder<Report, Report, QDistinct> {
     });
   }
 
-  QueryBuilder<Report, Report, QDistinct> distinctByStudies() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'studies');
-    });
-  }
-
   QueryBuilder<Report, Report, QDistinct> distinctByVideos() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'videos');
@@ -980,12 +888,6 @@ extension ReportQueryProperty on QueryBuilder<Report, Report, QQueryProperty> {
   QueryBuilder<Report, int, QQueryOperations> returnVisitsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'returnVisits');
-    });
-  }
-
-  QueryBuilder<Report, int, QQueryOperations> studiesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'studies');
     });
   }
 
