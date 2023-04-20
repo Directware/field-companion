@@ -2,18 +2,28 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
-import 'package:field_companion/features/core/presentation/widgets/common/number_picker.dart';
-import 'package:field_companion/features/field_service/presentation/providers/goals/monthly_goal_provider.dart';
-import 'package:field_companion/features/field_service/presentation/providers/goals/yearly_goal_provider.dart';
+import 'package:field_companion/features/core/presentation/widgets/common/stepper_widget.dart';
+import 'package:field_companion/features/field_service/presentation/providers/reports/selected_month_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/stats/studies_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/stats/year_studies_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class StudiesBottomSheet extends ConsumerWidget {
   const StudiesBottomSheet({super.key});
 
+  void _update(
+    WidgetRef ref,
+    int count,
+  ) {
+    final selectedMonth = ref.watch(selectedMonthProvider);
+    ref.read(yearStudiesProvider.notifier).update(selectedMonth, count: count);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final studies = ref.watch(yearlyGoalProvider);
+    final studies = ref.watch(studiesProvider);
 
     return Wrap(
       children: [
@@ -38,12 +48,11 @@ class StudiesBottomSheet extends ConsumerWidget {
                     children: [
                       const SizedBox(width: 16),
                       Expanded(
-                        child: NumberPicker(
-                          max: 100,
-                          title: 'service.monthly'.tr(),
+                        child: StepperWidget(
+                          title: 'service.studies'.tr(),
+                          icon: FeatherIcons.user,
                           value: studies,
-                          onChanged: (value) =>
-                              ref.read(monthlyGoalProvider.notifier).set(value),
+                          onChanged: (value) => _update(ref, value),
                         ),
                       ),
                       const SizedBox(width: 16),

@@ -6,6 +6,7 @@ import 'package:field_companion/features/field_service/presentation/providers/st
 import 'package:field_companion/features/field_service/presentation/providers/stats/total_return_visits_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/total_videos_provider.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats/stats_counter.dart';
+import 'package:field_companion/features/field_service/presentation/widgets/stats/studies_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats/time_progress.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -13,6 +14,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class StatsHeader extends ConsumerWidget {
   const StatsHeader({super.key});
+
+  void _showStudiesBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) => const StudiesBottomSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,6 +80,7 @@ class StatsHeader extends ConsumerWidget {
                                 child: StatsCounter(
                                   value: studies,
                                   icon: FeatherIcons.user,
+                                  onTap: () => _showStudiesBottomSheet(context),
                                 ),
                               ),
                             ],

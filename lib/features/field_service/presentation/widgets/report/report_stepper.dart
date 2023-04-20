@@ -6,7 +6,6 @@ import 'package:field_companion/features/core/presentation/widgets/common/steppe
 import 'package:field_companion/features/field_service/presentation/providers/reports/reports_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_date_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_report_provider.dart';
-import 'package:field_companion/features/field_service/presentation/providers/stats/year_studies_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/duration_step_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -22,22 +21,16 @@ class ReportStepper extends ConsumerWidget {
     int? videos,
     int? returnVisits,
     int? deliveries,
-    int? studies,
   }) {
     if (date == null) return;
-    if (studies != null) {
-      ref
-          .read(yearStudiesProvider.notifier)
-          .update(DateTime(date.year, date.month), count: studies);
-    } else {
-      ref.read(reportsProvider.notifier).update(
-            date,
-            duration: duration,
-            videos: videos,
-            returnVisits: returnVisits,
-            deliveries: deliveries,
-          );
-    }
+
+    ref.read(reportsProvider.notifier).update(
+          date,
+          duration: duration,
+          videos: videos,
+          returnVisits: returnVisits,
+          deliveries: deliveries,
+        );
   }
 
   @override

@@ -17,7 +17,7 @@ class TimeProgress extends ConsumerWidget {
   void _showGoalBottomSheet(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
-      barrierColor: Colors.transparent,
+      barrierColor: Colors.black26,
       context: context,
       builder: (context) => const GoalBottomSheet(),
     );
