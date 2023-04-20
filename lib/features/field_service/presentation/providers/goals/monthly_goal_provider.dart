@@ -6,18 +6,18 @@ part 'monthly_goal_provider.g.dart';
 
 @riverpod
 class MonthlyGoal extends _$MonthlyGoal {
-  final sharedPreferenesKey = "MonthlyGoal";
+  final sharedPreferencesKey = "MonthlyGoal";
 
   late final SharedPreferences _preferences;
 
   @override
   int build() {
     _preferences = ref.watch(sharedPreferencesProvider);
-    return _preferences.getInt(sharedPreferenesKey) ?? 50 * 60;
+    return _preferences.getInt(sharedPreferencesKey) ?? 0;
   }
 
   void set(int newValue) {
     state = newValue;
-    _preferences.setInt(sharedPreferenesKey, newValue);
+    _preferences.setInt(sharedPreferencesKey, newValue);
   }
 }

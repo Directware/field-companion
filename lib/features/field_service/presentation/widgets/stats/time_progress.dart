@@ -4,14 +4,24 @@ import 'package:field_companion/features/core/infrastructure/models/color_palett
 import 'package:field_companion/features/core/presentation/widgets/common/animated_number.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/progress_indicator.dart';
 import 'package:field_companion/features/field_service/presentation/models/goal.dart';
-import 'package:field_companion/features/field_service/presentation/providers/stats/progress_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/goals/progress_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/selected_goal_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/total_duration_provider.dart';
+import 'package:field_companion/features/field_service/presentation/widgets/goals/goal_bottom_sheet.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TimeProgress extends ConsumerWidget {
   const TimeProgress({super.key});
+
+  void _showGoalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
+      context: context,
+      builder: (context) => const GoalBottomSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,6 +31,7 @@ class TimeProgress extends ConsumerWidget {
 
     return InkWell(
       onTap: () => ref.read(selectedGoalProvider.notifier).toggle(),
+      onLongPress: () => _showGoalBottomSheet(context),
       borderRadius: BorderRadius.circular(39),
       child: Padding(
         padding: const EdgeInsets.all(3),

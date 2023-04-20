@@ -13,7 +13,7 @@ class YearlyGoal extends _$YearlyGoal {
   @override
   int build() {
     _preferences = ref.watch(sharedPreferencesProvider);
-    return _preferences.getInt(sharedPreferencesKey) ?? 600 * 60;
+    return _preferences.getInt(sharedPreferencesKey) ?? 0;
   }
 
   void set(int newValue) {
