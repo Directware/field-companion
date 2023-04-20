@@ -55,30 +55,42 @@ class CalendarCell extends StatelessWidget {
             height: 38,
             child: Stack(
               children: [
-                if (selected)
-                  Center(
-                    child: Container(
-                      width: 38,
-                      height: 38,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: selected ? 1 : 0),
+                  duration: const Duration(milliseconds: 150),
+                  builder: (context, opacity, _) => Opacity(
+                    opacity: opacity,
+                    child: Center(
+                      child: Container(
+                        width: 38,
+                        height: 38,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
+                          borderRadius: BorderRadius.circular(19),
                         ),
-                        borderRadius: BorderRadius.circular(19),
                       ),
                     ),
                   ),
-                if (highlight)
-                  Center(
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: ColorPalette.greenOpacity20,
+                ),
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: highlight ? 1 : 0),
+                  duration: const Duration(milliseconds: 150),
+                  builder: (context, opacity, _) => Opacity(
+                    opacity: opacity,
+                    child: Center(
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: ColorPalette.greenOpacity20,
+                        ),
                       ),
                     ),
                   ),
+                ),
                 Center(
                   child: Text(
                     date.day.toString(),
