@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:field_companion/features/core/presentation/widget/field_companion.dart';
+import 'package:field_companion/features/core/presentation/providers/database_provider.dart';
+import 'package:field_companion/features/core/presentation/providers/shared_preferences_provider.dart';
+import 'package:field_companion/features/core/presentation/widgets/field_companion.dart';
 import 'package:field_companion/features/field_service/domain/models/report.dart';
-import 'package:field_companion/providers/database_provider.dart';
-import 'package:field_companion/providers/shared_preferences_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
