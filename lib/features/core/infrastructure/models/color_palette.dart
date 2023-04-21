@@ -21,6 +21,10 @@ class ColorPalette {
 
   static const Color dark = Color(0xFF14191f);
 
+  static const Color backdrop = Color(0x990c1118);
+
+  static const Color darkGrey = Color(0xFF373a44);
+
   static Color greenProgressStartOpacity05 =
       greenProgressStart.withOpacity(0.5);
 

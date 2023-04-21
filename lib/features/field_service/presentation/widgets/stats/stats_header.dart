@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
+import 'package:field_companion/features/field_service/presentation/providers/reports/selected_date_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/studies_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/total_deliveries_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/total_return_visits_provider.dart';
@@ -15,7 +16,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class StatsHeader extends ConsumerWidget {
   const StatsHeader({super.key});
 
-  void _showStudiesBottomSheet(BuildContext context) {
+  void _showStudiesBottomSheet(BuildContext context, WidgetRef ref) {
+    ref.read(selectedDateProvider.notifier).clear();
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       barrierColor: Colors.black26,
@@ -80,7 +82,8 @@ class StatsHeader extends ConsumerWidget {
                                 child: StatsCounter(
                                   value: studies,
                                   icon: FeatherIcons.user,
-                                  onTap: () => _showStudiesBottomSheet(context),
+                                  onTap: () =>
+                                      _showStudiesBottomSheet(context, ref),
                                 ),
                               ),
                             ],

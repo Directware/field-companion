@@ -75,7 +75,8 @@ class CalendarCell extends StatelessWidget {
                   ),
                 ),
                 TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0, end: highlight ? 1 : 0),
+                  tween:
+                      Tween(begin: highlight ? 1 : 0, end: highlight ? 1 : 0),
                   duration: const Duration(milliseconds: 150),
                   builder: (context, opacity, _) => Opacity(
                     opacity: opacity,

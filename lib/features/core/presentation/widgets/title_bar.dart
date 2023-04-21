@@ -18,7 +18,7 @@ class TitleBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding:
-          const EdgeInsets.only(left: 16.0, top: 30, right: 16, bottom: 16),
+          const EdgeInsets.only(left: 16.0, top: 26, right: 16, bottom: 12),
       child: Row(
         children: [
           Expanded(
@@ -27,7 +27,6 @@ class TitleBar extends StatelessWidget {
               style: const TextStyle(
                 fontFamily: "Heebo",
                 fontSize: 30,
-                height: 1.2,
                 fontVariations: [
                   FontVariation("wght", 500),
                 ],
