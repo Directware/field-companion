@@ -100,6 +100,7 @@ class _FieldServiceMenuButtonState extends ConsumerState<FieldServiceMenuButton>
               top: 32,
               right: 16,
               child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: Material(
@@ -165,6 +166,7 @@ class _FieldServiceMenuButtonState extends ConsumerState<FieldServiceMenuButton>
     return Opacity(
       opacity: isOpen ? 0 : 1,
       child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Material(

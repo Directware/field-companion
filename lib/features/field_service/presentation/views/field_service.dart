@@ -48,6 +48,15 @@ class FieldService extends ConsumerWidget {
     );
   }
 
+  void _showMonthPickerBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) => const GoalBottomSheet(),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final date = DateTime.now();
@@ -59,6 +68,7 @@ class FieldService extends ConsumerWidget {
     return Column(
       children: [
         TitleBar(
+          onTap: () => _showMonthPickerBottomSheet(context),
           title: month,
           trailing: FieldServiceMenuButton(
             items: const [
