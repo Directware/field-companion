@@ -28,20 +28,20 @@ class BottomBar extends ConsumerWidget {
                 children: [
                   IconButton(
                     onPressed: () =>
-                        _navigateTo(context, ref, AppLocations.territories),
-                    icon: Icon(
-                      color: _isLinkActive(ref, AppLocations.territories),
-                      size: 20,
-                      FeatherIcons.map,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () =>
                         _navigateTo(context, ref, AppLocations.fieldService),
                     icon: Icon(
                       color: _isLinkActive(ref, AppLocations.fieldService),
                       size: 20,
                       FeatherIcons.clock,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () =>
+                        _navigateTo(context, ref, AppLocations.territories),
+                    icon: Icon(
+                      color: _isLinkActive(ref, AppLocations.territories),
+                      size: 20,
+                      FeatherIcons.map,
                     ),
                   ),
                   IconButton(
