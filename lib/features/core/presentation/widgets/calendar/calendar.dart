@@ -7,6 +7,7 @@ class Calendar extends StatefulWidget {
   Calendar({
     super.key,
     required this.initialMonth,
+    this.selectedMonth,
     this.onDateSelected,
     this.onMonthChanged,
     this.selectedDate,
@@ -19,6 +20,7 @@ class Calendar extends StatefulWidget {
   }
 
   final DateTime initialMonth;
+  final DateTime? selectedMonth;
   final DateTime? selectedDate;
   final Function(DateTime)? onDateSelected;
   final Function(DateTime)? onMonthChanged;
@@ -31,6 +33,15 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   final _pageController = PageController(initialPage: _initialIndex);
+  late final DateTime _initialMonth;
+  late DateTime _currentMonth;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialMonth = widget.initialMonth;
+    _currentMonth = widget.selectedMonth ?? _initialMonth;
+  }
 
   @override
   void dispose() {
@@ -38,11 +49,31 @@ class _CalendarState extends State<Calendar> {
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(Calendar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.selectedMonth != null && _currentMonth != widget.selectedMonth) {
+      final yearDiff = _initialMonth.year - widget.selectedMonth!.year;
+      final monthDiff = _initialMonth.month - widget.selectedMonth!.month;
+      final diff = yearDiff * 12 + monthDiff;
+
+      _currentMonth = widget.selectedMonth!;
+      _pageController.jumpToPage(_initialIndex - diff);
+    }
+  }
+
   DateTime _getMonth(int index) {
     return DateTime(
-      widget.initialMonth.year,
-      widget.initialMonth.month + index - _initialIndex,
+      _initialMonth.year,
+      _initialMonth.month + index - _initialIndex,
     );
+  }
+
+  void _onMonthChanged(int index) {
+    _currentMonth = _getMonth(index);
+    if (_currentMonth != widget.selectedMonth) {
+      widget.onMonthChanged?.call(_currentMonth);
+    }
   }
 
   Widget _getCalendarPage(int index) {
@@ -70,7 +101,7 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return PageView.builder(
       controller: _pageController,
-      onPageChanged: (index) => widget.onMonthChanged?.call(_getMonth(index)),
+      onPageChanged: _onMonthChanged,
       itemBuilder: (context, index) {
         return _getCalendarPage(index);
       },

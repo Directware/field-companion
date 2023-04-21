@@ -6,6 +6,7 @@ import 'package:field_companion/features/field_service/presentation/providers/re
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_month_provider.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/goals/goal_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/report/field_service_menu_button.dart';
+import 'package:field_companion/features/field_service/presentation/widgets/report/month_picker_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/report/report_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats/stats_header.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats/studies_bottom_sheet.dart';
@@ -15,9 +16,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class FieldService extends ConsumerWidget {
   const FieldService({super.key});
 
-  void _onMenuItemTap(BuildContext context, String key) {
+  void _onMenuItemTap(BuildContext context, WidgetRef ref, String key) {
     switch (key) {
       case 'service.chooseMonth':
+        _showMonthPickerBottomSheet(context, ref);
         break;
       case 'service.inputStudies':
         _showStudiesBottomSheet(context);
@@ -48,27 +50,27 @@ class FieldService extends ConsumerWidget {
     );
   }
 
-  void _showMonthPickerBottomSheet(BuildContext context) {
+  void _showMonthPickerBottomSheet(BuildContext context, WidgetRef ref) {
+    ref.read(selectedDateProvider.notifier).clear();
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       barrierColor: Colors.black26,
       context: context,
-      builder: (context) => const GoalBottomSheet(),
+      builder: (context) => const MonthPickerBottomSheet(),
     );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final date = DateTime.now();
     final selectedDate = ref.watch(selectedDateProvider);
     final selectedMonth = ref.watch(selectedMonthProvider);
-    final initialMonth = DateTime(date.year, date.month);
+    final initialMonth = ref.read(selectedMonthProvider);
     final month = DateFormat('MMMM y').format(selectedMonth);
 
     return Column(
       children: [
         TitleBar(
-          onTap: () => _showMonthPickerBottomSheet(context),
+          onTap: () => _showMonthPickerBottomSheet(context, ref),
           title: month,
           trailing: FieldServiceMenuButton(
             items: const [
@@ -77,7 +79,7 @@ class FieldService extends ConsumerWidget {
               'service.durationGoals',
               'service.sendReport'
             ],
-            onMenuItemTap: (key) => _onMenuItemTap(context, key),
+            onMenuItemTap: (key) => _onMenuItemTap(context, ref, key),
           ),
         ),
         const Padding(
@@ -92,6 +94,7 @@ class FieldService extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Calendar(
               initialMonth: initialMonth,
+              selectedMonth: selectedMonth,
               selectedDate: selectedDate,
               highlightedBuilder: (month) {
                 return ref.watch(daysOfReportsProvider(month: month));
@@ -104,6 +107,7 @@ class FieldService extends ConsumerWidget {
                     date.month != selectedDate?.month) {
                   ref.read(selectedDateProvider.notifier).clear();
                 }
+
                 ref.read(selectedMonthProvider.notifier).set(date);
               },
             ),
