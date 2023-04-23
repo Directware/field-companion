@@ -1,3 +1,4 @@
+import 'package:field_companion/features/core/infrastructure/models/debouncer.dart';
 import 'package:field_companion/features/core/presentation/providers/shared_preferences_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +10,7 @@ class YearlyGoal extends _$YearlyGoal {
   final sharedPreferencesKey = "YearlyGoal";
 
   late final SharedPreferences _preferences;
+  final debouncer = Debouncer(delay: const Duration(milliseconds: 300));
 
   @override
   int build() {
@@ -18,7 +20,7 @@ class YearlyGoal extends _$YearlyGoal {
 
   void set(int newValue) {
     state = newValue;
-    _preferences.setInt(sharedPreferencesKey, newValue);
+    debouncer.run(() => _preferences.setInt(sharedPreferencesKey, newValue));
   }
 
   void reset() {
