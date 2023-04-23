@@ -6,7 +6,8 @@ part of 'is_router_link_active_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$isRouterLinkActiveHash() =>
+    r'8ade344113b969f79a97e9de275ba4cd0b33ddc1';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,14 +30,56 @@ class _SystemHash {
   }
 }
 
-String _$isRouterLinkActiveHash() =>
-    r'8ade344113b969f79a97e9de275ba4cd0b33ddc1';
+typedef IsRouterLinkActiveRef = AutoDisposeProviderRef<bool>;
+
+/// See also [isRouterLinkActive].
+@ProviderFor(isRouterLinkActive)
+const isRouterLinkActiveProvider = IsRouterLinkActiveFamily();
+
+/// See also [isRouterLinkActive].
+class IsRouterLinkActiveFamily extends Family<bool> {
+  /// See also [isRouterLinkActive].
+  const IsRouterLinkActiveFamily();
+
+  /// See also [isRouterLinkActive].
+  IsRouterLinkActiveProvider call(
+    AppLocations appLocation,
+  ) {
+    return IsRouterLinkActiveProvider(
+      appLocation,
+    );
+  }
+
+  @override
+  IsRouterLinkActiveProvider getProviderOverride(
+    covariant IsRouterLinkActiveProvider provider,
+  ) {
+    return call(
+      provider.appLocation,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'isRouterLinkActiveProvider';
+}
 
 /// See also [isRouterLinkActive].
 class IsRouterLinkActiveProvider extends AutoDisposeProvider<bool> {
+  /// See also [isRouterLinkActive].
   IsRouterLinkActiveProvider(
     this.appLocation,
-  ) : super(
+  ) : super.internal(
           (ref) => isRouterLinkActive(
             ref,
             appLocation,
@@ -47,6 +90,9 @@ class IsRouterLinkActiveProvider extends AutoDisposeProvider<bool> {
               const bool.fromEnvironment('dart.vm.product')
                   ? null
                   : _$isRouterLinkActiveHash,
+          dependencies: IsRouterLinkActiveFamily._dependencies,
+          allTransitiveDependencies:
+              IsRouterLinkActiveFamily._allTransitiveDependencies,
         );
 
   final AppLocations appLocation;
@@ -65,38 +111,4 @@ class IsRouterLinkActiveProvider extends AutoDisposeProvider<bool> {
     return _SystemHash.finish(hash);
   }
 }
-
-typedef IsRouterLinkActiveRef = AutoDisposeProviderRef<bool>;
-
-/// See also [isRouterLinkActive].
-final isRouterLinkActiveProvider = IsRouterLinkActiveFamily();
-
-class IsRouterLinkActiveFamily extends Family<bool> {
-  IsRouterLinkActiveFamily();
-
-  IsRouterLinkActiveProvider call(
-    AppLocations appLocation,
-  ) {
-    return IsRouterLinkActiveProvider(
-      appLocation,
-    );
-  }
-
-  @override
-  AutoDisposeProvider<bool> getProviderOverride(
-    covariant IsRouterLinkActiveProvider provider,
-  ) {
-    return call(
-      provider.appLocation,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'isRouterLinkActiveProvider';
-}
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

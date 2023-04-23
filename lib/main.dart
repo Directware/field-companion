@@ -1,20 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:field_companion/features/core/presentation/widget/field_companion.dart';
-import 'package:field_companion/features/field_service/domain/report_entry.dart';
-import 'package:field_companion/features/territory_cards/domain/drawing.dart';
-import 'package:field_companion/features/territory_cards/domain/publisher.dart';
-import 'package:field_companion/features/territory_cards/domain/territory.dart';
-import 'package:field_companion/providers/shared_preferences_provider.dart';
+import 'package:field_companion/features/core/presentation/providers/database_provider.dart';
+import 'package:field_companion/features/core/presentation/providers/shared_preferences_provider.dart';
+import 'package:field_companion/features/core/presentation/widgets/field_companion.dart';
+import 'package:field_companion/features/field_service/domain/models/report.dart';
+import 'package:field_companion/features/field_service/domain/models/studies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 void main() async {
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is stack_trace.Trace) return stack.vmTrace;
+    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
+    return stack;
+  };
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-
-  await _initDatabase();
 
   final Widget easyLocalization = EasyLocalization(
     supportedLocales: const [
@@ -30,28 +34,17 @@ void main() async {
     child: const FieldCompanion(),
   );
 
-  // For widgets to be able to read providers, we need to wrap the entire
-  // application in a "ProviderScope" widget.
-  // This is where the state of our providers will be stored.
   final sharedPreferences = await SharedPreferences.getInstance();
+  final database = await Isar.open([ReportSchema, StudiesSchema]);
 
   runApp(
     ProviderScope(
       overrides: [
-        sharedPreferencesProvider.overrideWith((ref) => sharedPreferences)
+        sharedPreferencesProvider.overrideWith((ref) => sharedPreferences),
+        databaseProvider.overrideWith((ref) => database)
       ],
       observers: const [],
       child: easyLocalization,
     ),
   );
-}
-
-/// Um die Adapter zu generieren muss folgender Befehl ausgeführt werden: flutter packages pub run build_runner build
-Future<void> _initDatabase() async {
-  await Hive.initFlutter();
-
-  Hive.registerAdapter(ReportEntryAdapter());
-  Hive.registerAdapter(PublisherAdapter());
-  Hive.registerAdapter(DrawingAdapter());
-  Hive.registerAdapter(TerritoryAdapter());
 }

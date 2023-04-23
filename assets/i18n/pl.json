@@ -173,5 +173,12 @@
   },
   "errors": {
     "inputShouldBeNumber": "Błąd! Dane wejściowe muszą być liczbą."
+  },
+  "tips": {
+    "0": "You can change the language in the settings.",
+    "1": "Tap on the number of hours in the report overview to switch between the display of the monthly / annual target.",
+    "2": "In the Overview report, tap the study icon (Person) to change the number of studies.",
+    "3": "You can set a monthly and annual hourly target. The app shows you your progress.",
+    "4": "Your reported hours are rounded off and the remaining time is carried over to the next month."
   }
 }
