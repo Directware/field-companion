@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
+import 'package:field_companion/features/core/infrastructure/models/debouncer.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/month_picker.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_month_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class MonthPickerBottomSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedMonth = ref.watch(selectedMonthProvider);
+    final debouncer = Debouncer(delay: const Duration(milliseconds: 150));
 
     return Wrap(
       children: [
@@ -40,9 +42,11 @@ class MonthPickerBottomSheet extends ConsumerWidget {
                         child: MonthPicker(
                           title: 'service.month'.tr(),
                           value: selectedMonth,
-                          onChanged: (value) => ref
-                              .read(selectedMonthProvider.notifier)
-                              .set(value),
+                          onChanged: (value) => debouncer.run(
+                            () => ref
+                                .read(selectedMonthProvider.notifier)
+                                .set(value),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 16),
