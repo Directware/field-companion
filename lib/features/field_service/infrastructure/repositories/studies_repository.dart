@@ -50,6 +50,13 @@ class StudiesRepository implements StudiesRepositoryInterface {
   }
 
   @override
+  Future<void> deleteAll() async {
+    await _database.writeTxn(() async {
+      await _collection.clear();
+    });
+  }
+
+  @override
   Future<void> delete(Id id) async {
     await _database.writeTxn(() async {
       await _collection.delete(id);

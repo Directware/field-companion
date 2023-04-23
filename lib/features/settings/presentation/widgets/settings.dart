@@ -4,6 +4,14 @@ import 'package:field_companion/features/core/presentation/widgets/common/sectio
 import 'package:field_companion/features/core/presentation/widgets/common/section_item.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/section_item_styles.dart';
 import 'package:field_companion/features/core/presentation/widgets/title_bar.dart';
+import 'package:field_companion/features/field_service/presentation/providers/goals/monthly_goal_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/goals/yearly_goal_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/reports/reports_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/reports/selected_date_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/reports/selected_month_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/stats/year_studies_provider.dart';
+import 'package:field_companion/features/settings/presentation/providers/app_initialisation_provider.dart';
+import 'package:field_companion/features/settings/presentation/providers/confirmed_features_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/device_id_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/duration_step_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/monthly_reminder_provider.dart';
@@ -15,6 +23,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Settings extends ConsumerWidget {
   const Settings({super.key});
+
+  void _resetApp(WidgetRef ref) {
+    ref.read(appInitialisationProvider.notifier).reset();
+    ref.read(confirmedFeaturesProvider.notifier).reset();
+    ref.read(durationStepProvider.notifier).reset();
+    ref.read(monthlyReminderProvider.notifier).reset();
+    ref.read(userLanguageProvider.notifier).reset();
+    ref.read(monthlyGoalProvider.notifier).reset();
+    ref.read(yearlyGoalProvider.notifier).reset();
+    ref.read(reportsProvider.notifier).reset();
+    ref.read(yearStudiesProvider.notifier).reset();
+    ref.read(selectedDateProvider.notifier).clear();
+    ref.read(selectedMonthProvider.notifier).set(DateTime.now());
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -150,7 +172,7 @@ class Settings extends ConsumerWidget {
                       ],
                     ),
                     SectionItem(
-                      onTap: () {},
+                      onTap: () => _resetApp(ref),
                       children: [
                         Text(
                           'settings.actions.resetApp',

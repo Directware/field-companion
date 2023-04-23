@@ -6,18 +6,23 @@ part 'user_language_provider.g.dart';
 
 @riverpod
 class UserLanguage extends _$UserLanguage {
-  final sharedPreferenesKey = "UserLanguage";
+  final sharedPreferencesKey = "UserLanguage";
 
   late final SharedPreferences _preferences;
 
   @override
   String build() {
     _preferences = ref.watch(sharedPreferencesProvider);
-    return _preferences.getString(sharedPreferenesKey) ?? "en";
+    return _preferences.getString(sharedPreferencesKey) ?? "en";
   }
 
   void set(String newValue) {
     state = newValue;
-    _preferences.setString(sharedPreferenesKey, newValue);
+    _preferences.setString(sharedPreferencesKey, newValue);
+  }
+
+  void reset() {
+    state = "en";
+    _preferences.setString(sharedPreferencesKey, "en");
   }
 }

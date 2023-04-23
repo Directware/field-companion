@@ -6,18 +6,23 @@ part 'monthly_reminder_provider.g.dart';
 
 @riverpod
 class MonthlyReminder extends _$MonthlyReminder {
-  final sharedPreferenesKey = "MonthlyReminderProvider";
+  final sharedPreferencesKey = "MonthlyReminderProvider";
 
   late final SharedPreferences _preferences;
 
   @override
   bool build() {
     _preferences = ref.watch(sharedPreferencesProvider);
-    return _preferences.getBool(sharedPreferenesKey) ?? false;
+    return _preferences.getBool(sharedPreferencesKey) ?? false;
   }
 
   void set({required bool value}) {
     state = value;
-    _preferences.setBool(sharedPreferenesKey, value);
+    _preferences.setBool(sharedPreferencesKey, value);
+  }
+
+  void reset() {
+    state = false;
+    _preferences.setBool(sharedPreferencesKey, false);
   }
 }

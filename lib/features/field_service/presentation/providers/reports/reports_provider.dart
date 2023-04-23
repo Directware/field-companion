@@ -93,6 +93,12 @@ class Reports extends _$Reports {
     }
   }
 
+  void reset() {
+    state = [];
+    _loaded = {};
+    _repository.deleteAll();
+  }
+
   @override
   List<Report> build() {
     _repository = ref.watch(reportRepositoryProvider);

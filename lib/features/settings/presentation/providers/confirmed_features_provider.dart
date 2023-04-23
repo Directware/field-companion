@@ -23,4 +23,9 @@ class ConfirmedFeatures extends _$ConfirmedFeatures {
     state = newValue;
     _preferences.setStringList(sharedPreferencesKey, newValue);
   }
+
+  void reset() {
+    state = [];
+    _preferences.setStringList(sharedPreferencesKey, []);
+  }
 }

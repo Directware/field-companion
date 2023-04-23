@@ -9,4 +9,6 @@ abstract class StudiesRepositoryInterface {
   Future<void> upsert(Studies studies);
 
   Future<void> delete(Id id);
+
+  Future<void> deleteAll();
 }

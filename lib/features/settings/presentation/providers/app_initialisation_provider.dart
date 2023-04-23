@@ -20,4 +20,9 @@ class AppInitialisation extends _$AppInitialisation {
     state = true;
     _preferences.setBool(sharedPreferencesKey, true);
   }
+
+  void reset() {
+    state = false;
+    _preferences.setBool(sharedPreferencesKey, false);
+  }
 }

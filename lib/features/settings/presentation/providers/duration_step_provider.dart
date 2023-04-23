@@ -6,18 +6,23 @@ part 'duration_step_provider.g.dart';
 
 @riverpod
 class DurationStep extends _$DurationStep {
-  final sharedPreferenesKey = "DurationStep";
+  final sharedPreferencesKey = "DurationStep";
 
   late final SharedPreferences _preferences;
 
   @override
   int build() {
     _preferences = ref.watch(sharedPreferencesProvider);
-    return _preferences.getInt(sharedPreferenesKey) ?? 30;
+    return _preferences.getInt(sharedPreferencesKey) ?? 30;
   }
 
   void set(int newValue) {
     state = newValue;
-    _preferences.setInt(sharedPreferenesKey, newValue);
+    _preferences.setInt(sharedPreferencesKey, newValue);
+  }
+
+  void reset() {
+    state = 30;
+    _preferences.setInt(sharedPreferencesKey, 30);
   }
 }

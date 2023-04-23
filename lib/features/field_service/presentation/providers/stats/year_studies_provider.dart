@@ -50,6 +50,12 @@ class YearStudies extends _$YearStudies {
     }
   }
 
+  void reset() {
+    state = [];
+    _loadedYear = null;
+    _repository.deleteAll();
+  }
+
   @override
   List<Studies> build() {
     _repository = ref.watch(studiesRepositoryProvider);

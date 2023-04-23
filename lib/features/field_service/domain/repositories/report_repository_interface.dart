@@ -8,5 +8,7 @@ abstract class ReportRepositoryInterface {
 
   Future<void> upsert(Report report);
 
+  Future<void> deleteAll();
+
   Future<void> delete(Id id);
 }

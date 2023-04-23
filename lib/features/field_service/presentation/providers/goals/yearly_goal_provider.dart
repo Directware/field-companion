@@ -20,4 +20,9 @@ class YearlyGoal extends _$YearlyGoal {
     state = newValue;
     _preferences.setInt(sharedPreferencesKey, newValue);
   }
+
+  void reset() {
+    state = 0;
+    _preferences.setInt(sharedPreferencesKey, 0);
+  }
 }
