@@ -58,8 +58,8 @@ class WheelPicker extends StatefulWidget {
     this.offAxisFraction = 0.0,
   }) {
     final initialValueIndex =
-        items.indexWhere((item) => item.value == initialValue);
-    final valueIndex = items.indexWhere((item) => item.value == value);
+        items.indexWhere((item) => item.value == initialValue) + 1;
+    final valueIndex = items.indexWhere((item) => item.value == value) + 1;
     initialPosition = initialValueIndex >= 0 ? initialValueIndex : 0;
     position = valueIndex >= 0 ? valueIndex : 0;
     builder = (index, selected) => buildItem(index, selected, items);
