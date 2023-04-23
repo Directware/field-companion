@@ -2,7 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() async {
   group("Comparing bites", () {
-    expect(true, true);
+    test('digits', () {
+      expect(true, true);
+    });
   });
   /*
   group("Welcome widget", () {
