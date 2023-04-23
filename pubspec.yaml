@@ -45,8 +45,6 @@ dependencies:
   riverpod_annotation: ^2.0.4
   shared_preferences: ^2.1.0
   stack_trace: ^1.11.0
-  table_calendar: ^3.0.8
-  wheel_chooser: ^1.1.2
 
 dev_dependencies:
   build_runner: ^2.3.3
