@@ -2,8 +2,9 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
+import 'package:field_companion/features/core/infrastructure/models/wheel_picker_item.dart';
+import 'package:field_companion/features/core/presentation/widgets/common/wheel_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:wheel_chooser/wheel_chooser.dart';
 
 class MonthPicker extends StatelessWidget {
   const MonthPicker({
@@ -18,8 +19,8 @@ class MonthPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int month = value.month;
-    int year = value.year;
+    final int month = value.month;
+    final int year = value.year;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -47,23 +48,25 @@ class MonthPicker extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(width: 16),
-              WheelChooser.choices(
-                choices: List.generate(
+              WheelPicker.item(
+                items: List.generate(
                   12,
-                  (index) => WheelChoice(
-                    value: index + 1,
-                    title: DateFormat('MMMM').format(DateTime(2000, index + 1)),
+                  (index) => WheelPickerItem(
+                    DateFormat('MMM').format(DateTime(2000, index + 1)),
+                    index + 1,
                   ),
                 ),
-                startPosition: value.month - 1,
-                listHeight: 200,
-                listWidth: 120,
-                onChoiceChanged: (value) => onChanged(
+                initialValue: value.month - 1,
+                height: 200,
+                width: 47,
+                offAxisFraction: -0.5,
+                textAlign: TextAlign.right,
+                onChanged: (value) => onChanged(
                   DateTime(year, value as int),
                 ),
                 unSelectTextStyle: const TextStyle(
                   fontFamily: "Heebo",
-                  fontSize: 16,
+                  fontSize: 14,
                   overflow: TextOverflow.ellipsis,
                   fontVariations: [
                     FontVariation("wght", 400),
@@ -81,18 +84,20 @@ class MonthPicker extends StatelessWidget {
                   letterSpacing: 0.4,
                 ),
               ),
-              WheelChooser.integer(
-                maxValue: 2500,
-                minValue: 1900,
-                listHeight: 200,
-                listWidth: 80,
-                initValue: value.year,
-                onValueChanged: (value) => onChanged(
-                  DateTime(value as int, month),
+              const SizedBox(width: 8),
+              WheelPicker.number(
+                min: 1900,
+                height: 200,
+                width: 60,
+                offAxisFraction: 0.5,
+                textAlign: TextAlign.left,
+                initialValue: value.year,
+                onChanged: (value) => onChanged(
+                  DateTime(value, month),
                 ),
                 unSelectTextStyle: const TextStyle(
                   fontFamily: "Heebo",
-                  fontSize: 16,
+                  fontSize: 14,
                   overflow: TextOverflow.ellipsis,
                   fontVariations: [
                     FontVariation("wght", 400),

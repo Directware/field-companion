@@ -40,7 +40,6 @@ class GoalBottomSheet extends ConsumerWidget {
                       const SizedBox(width: 16),
                       Expanded(
                         child: NumberPicker(
-                          max: 100,
                           title: 'service.monthly'.tr(),
                           value: monthlyGoal,
                           onChanged: (value) =>
@@ -49,7 +48,6 @@ class GoalBottomSheet extends ConsumerWidget {
                       ),
                       Expanded(
                         child: NumberPicker(
-                          max: 1000,
                           step: 5,
                           title: 'service.yearly'.tr(),
                           value: yearlyGoal,
