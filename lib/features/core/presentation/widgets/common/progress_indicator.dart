@@ -24,11 +24,11 @@ class ProgressIndicator extends StatefulWidget {
 
 class _ProgressIndicatorState extends State<ProgressIndicator>
     with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
   Animation<Color?>? _animationStartingColor;
   Animation<Color?>? _animationEndingColor;
   Animation<Color?>? _animationShadowColor;
   Animation<double>? _animationProgress;
-  late AnimationController _controller;
 
   @override
   void initState() {
