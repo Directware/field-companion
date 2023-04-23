@@ -24,6 +24,7 @@ class CalendarGrid extends StatelessWidget {
     int daysBeforeMonth,
     int daysOfMonth,
     Function(DateTime, int) onTap,
+    DateTime now,
   ) {
     final day = week * 7 + weekday;
     final date = startDay.add(Duration(days: day));
@@ -44,6 +45,9 @@ class CalendarGrid extends StatelessWidget {
       selected: date == selectedDate,
       highlight: highlightedDates.contains(date),
       disabled: isPreviousMonth || isNextMonth,
+      active: date.year == now.year &&
+          date.month == now.month &&
+          date.day == now.day,
     );
   }
 
@@ -54,6 +58,7 @@ class CalendarGrid extends StatelessWidget {
     final daysBeforeMonth = firstWeekdayOfMonth - firstDayOfWeek;
     final weeksInGrid = ((daysInMonth + daysBeforeMonth) / 7).ceil();
     final startDay = month.subtract(Duration(days: daysBeforeMonth));
+    final now = DateTime.now();
 
     return Column(
       children: [
@@ -72,6 +77,7 @@ class CalendarGrid extends StatelessWidget {
                         daysBeforeMonth,
                         daysInMonth,
                         onDateSelected,
+                        now,
                       ),
                     ),
                   ),
