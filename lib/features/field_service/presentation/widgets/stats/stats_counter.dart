@@ -3,8 +3,12 @@ import 'package:field_companion/features/core/presentation/widgets/common/animat
 import 'package:flutter/material.dart';
 
 class StatsCounter extends StatelessWidget {
-  const StatsCounter(
-      {super.key, required this.value, required this.icon, this.onTap});
+  const StatsCounter({
+    super.key,
+    required this.value,
+    required this.icon,
+    this.onTap,
+  });
 
   final int value;
   final IconData icon;

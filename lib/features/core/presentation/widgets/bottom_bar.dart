@@ -63,7 +63,10 @@ class BottomBar extends ConsumerWidget {
   }
 
   void _navigateTo(
-      BuildContext context, WidgetRef ref, AppLocations appLocations) {
+    BuildContext context,
+    WidgetRef ref,
+    AppLocations appLocations,
+  ) {
     ref.read(selectedDateProvider.notifier).clear();
     context.go(appLocations.href);
   }

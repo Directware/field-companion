@@ -43,8 +43,9 @@ class _ProgressIndicatorState extends State<ProgressIndicator>
 
   void onProgressChanged() {
     _animationProgress = Tween<double>(
-            begin: _animationProgress?.value ?? 0, end: widget.progress)
-        .animate(_controller);
+      begin: _animationProgress?.value ?? 0,
+      end: widget.progress,
+    ).animate(_controller);
     _animationStartingColor = ColorTween(
       begin: _animationStartingColor?.value ?? widget.startingColor,
       end: widget.startingColor,
