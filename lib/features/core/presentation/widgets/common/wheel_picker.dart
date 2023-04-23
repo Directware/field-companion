@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:field_companion/features/core/infrastructure/models/wheel_picker_item.dart';
 import 'package:flutter/material.dart';
 
@@ -94,7 +92,6 @@ class WheelPicker extends StatefulWidget {
     int? max,
   ) {
     final value = (index + min) * step;
-    log("value: $value, index: $index, step: $step, min: $min, max: $max");
 
     if (value < min || (max != null && value > max)) {
       return null;
@@ -116,8 +113,6 @@ class WheelPicker extends StatefulWidget {
     bool selected,
     List<WheelPickerItem<dynamic>> items,
   ) {
-    log("index: $index");
-
     if (index < 0 || index + 1 > items.length) {
       return null;
     }
@@ -140,7 +135,6 @@ class _WheelPickerState extends State<WheelPicker> {
   @override
   void initState() {
     super.initState();
-    log("initialPosition: ${widget.initialPosition}, position: ${widget.position}");
     _currentPosition = widget.initialPosition ?? widget.position ?? 0;
     _controller = FixedExtentScrollController(initialItem: _currentPosition);
   }
