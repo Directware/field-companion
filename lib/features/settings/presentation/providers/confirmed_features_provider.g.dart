@@ -6,7 +6,7 @@ part of 'confirmed_features_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$confirmedFeaturesHash() => r'1007ab0bbcdfe2924997074ea27d62f9e158fd15';
+String _$confirmedFeaturesHash() => r'1ad086f0ccf6e4ba768edc3a514da2f749b2e864';
 
 /// See also [ConfirmedFeatures].
 @ProviderFor(ConfirmedFeatures)

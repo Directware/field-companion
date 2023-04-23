@@ -10,6 +10,8 @@ import 'package:field_companion/features/field_service/presentation/providers/re
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_date_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_month_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/stats/year_studies_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/tips/acknowledged_tips_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/tips/current_tip_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/app_initialisation_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/confirmed_features_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/device_id_provider.dart';
@@ -35,6 +37,8 @@ class Settings extends ConsumerWidget {
     ref.read(reportsProvider.notifier).reset();
     ref.read(yearStudiesProvider.notifier).reset();
     ref.read(selectedDateProvider.notifier).clear();
+    ref.read(acknowledgedTipsProvider.notifier).reset();
+    ref.read(currentTipProvider.notifier).reset();
     ref.read(selectedMonthProvider.notifier).set(DateTime.now());
   }
 

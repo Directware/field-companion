@@ -4,12 +4,14 @@ import 'package:field_companion/features/core/presentation/widgets/title_bar.dar
 import 'package:field_companion/features/field_service/presentation/providers/reports/days_of_reports_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_date_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_month_provider.dart';
+import 'package:field_companion/features/field_service/presentation/providers/tips/current_tip_provider.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/goals/goal_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/report/field_service_menu_button.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/report/month_picker_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/report/report_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats/stats_header.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/stats/studies_bottom_sheet.dart';
+import 'package:field_companion/features/field_service/presentation/widgets/tips/tip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -66,6 +68,7 @@ class FieldService extends ConsumerWidget {
     final selectedMonth = ref.watch(selectedMonthProvider);
     final initialMonth = ref.read(selectedMonthProvider);
     final month = DateFormat('MMMM y').format(selectedMonth);
+    final tip = ref.watch(currentTipProvider);
 
     return Column(
       children: [
@@ -89,7 +92,8 @@ class FieldService extends ConsumerWidget {
         const SizedBox(
           height: 24,
         ),
-        Expanded(
+        SizedBox(
+          height: 320,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Calendar(
@@ -113,6 +117,15 @@ class FieldService extends ConsumerWidget {
             ),
           ),
         ),
+        Expanded(child: Container()),
+        if (tip != null)
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Tip(
+              text: tip,
+              onTap: () => ref.read(currentTipProvider.notifier).acknowledge(),
+            ),
+          ),
         const ReportBottomSheet()
       ],
     );

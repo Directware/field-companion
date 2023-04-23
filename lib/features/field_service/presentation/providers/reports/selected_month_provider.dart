@@ -8,6 +8,10 @@ class SelectedMonth extends _$SelectedMonth {
     state = DateTime(month.year, month.month);
   }
 
+  void reset(DateTime month) {
+    set(DateTime.now());
+  }
+
   @override
   DateTime build() {
     final now = DateTime.now();

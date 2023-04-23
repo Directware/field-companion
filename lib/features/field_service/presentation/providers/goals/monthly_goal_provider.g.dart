@@ -6,7 +6,7 @@ part of 'monthly_goal_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$monthlyGoalHash() => r'451404c22e3cdec1535c16a3d52783d87cd8ce6a';
+String _$monthlyGoalHash() => r'872253044569905c4562d27f62ef818408d022cd';
 
 /// See also [MonthlyGoal].
 @ProviderFor(MonthlyGoal)

@@ -6,7 +6,7 @@ part of 'year_studies_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$yearStudiesHash() => r'b722b4eb35d30e593cf0b46684bd33217de2c0a2';
+String _$yearStudiesHash() => r'900fdd1d853c08fdcb66f087f6b9ba630bf42dba';
 
 /// See also [YearStudies].
 @ProviderFor(YearStudies)
