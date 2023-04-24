@@ -1,5 +1,5 @@
-import 'package:field_companion/features/territory_cards/domain/models/geo_json_context.dart';
-import 'package:field_companion/features/territory_cards/domain/models/geo_json_geometry.dart';
+import 'package:field_companion/features/territories/domain/models/geo_json_context.dart';
+import 'package:field_companion/features/territories/domain/models/geo_json_geometry.dart';
 import 'package:isar/isar.dart';
 
 part 'geo_json_feature.g.dart';

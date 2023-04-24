@@ -1,4 +1,4 @@
-import 'package:field_companion/features/territory_cards/domain/models/publisher.dart';
+import 'package:field_companion/features/territories/domain/models/publisher.dart';
 import 'package:isar/isar.dart';
 
 part 'assignment.g.dart';

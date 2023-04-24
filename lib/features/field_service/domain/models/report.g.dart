@@ -68,7 +68,7 @@ const ReportSchema = CollectionSchema(
   getId: _reportGetId,
   getLinks: _reportGetLinks,
   attach: _reportAttach,
-  version: '3.0.5',
+  version: '3.0.6-dev.0',
 );
 
 int _reportEstimateSize(

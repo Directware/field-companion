@@ -4,7 +4,7 @@ import 'package:field_companion/features/core/presentation/views/welcome.dart';
 import 'package:field_companion/features/field_service/presentation/views/field_service.dart';
 import 'package:field_companion/features/settings/presentation/providers/app_initialisation_provider.dart';
 import 'package:field_companion/features/settings/presentation/widgets/settings.dart';
-import 'package:field_companion/features/territory_cards/presentation/views/territories.dart';
+import 'package:field_companion/features/territories/presentation/views/territories.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

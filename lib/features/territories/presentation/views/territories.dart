@@ -1,3 +1,4 @@
+import 'package:field_companion/features/territories/presentation/widgets/vector_map.dart';
 import 'package:flutter/material.dart';
 
 class Territories extends StatelessWidget {
@@ -5,6 +6,6 @@ class Territories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("test Territories");
+    return VectorMap();
   }
 }

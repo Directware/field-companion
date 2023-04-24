@@ -108,7 +108,7 @@ const TerritoryCardSchema = CollectionSchema(
   getId: _territoryCardGetId,
   getLinks: _territoryCardGetLinks,
   attach: _territoryCardAttach,
-  version: '3.0.5',
+  version: '3.0.6-dev.0',
 );
 
 int _territoryCardEstimateSize(

@@ -1,9 +1,9 @@
 import 'package:field_companion/features/core/domain/models/entity.dart';
-import 'package:field_companion/features/territory_cards/domain/models/assignment.dart';
-import 'package:field_companion/features/territory_cards/domain/models/drawing.dart';
-import 'package:field_companion/features/territory_cards/domain/models/publisher.dart';
-import 'package:field_companion/features/territory_cards/domain/models/territory.dart';
-import 'package:field_companion/features/territory_cards/domain/models/visit_ban.dart';
+import 'package:field_companion/features/territories/domain/models/assignment.dart';
+import 'package:field_companion/features/territories/domain/models/drawing.dart';
+import 'package:field_companion/features/territories/domain/models/publisher.dart';
+import 'package:field_companion/features/territories/domain/models/territory.dart';
+import 'package:field_companion/features/territories/domain/models/visit_ban.dart';
 import 'package:isar/isar.dart';
 
 part 'territory_card.g.dart';

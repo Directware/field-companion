@@ -1,4 +1,4 @@
-import 'package:field_companion/features/territory_cards/domain/models/position.dart';
+import 'package:field_companion/features/territories/domain/models/position.dart';
 import 'package:isar/isar.dart';
 
 part 'visit_ban.g.dart';
