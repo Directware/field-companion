@@ -1,14 +1,11 @@
-import 'package:field_companion/features/field_service/domain/models/report.dart';
-import 'package:isar/isar.dart';
+import 'package:field_companion/features/territories/domain/models/territory.dart';
 
-abstract class ReportRepositoryInterface {
-  Future<List<Report>> getByMonths(
-    List<DateTime> month,
-  );
+abstract class TerritoryRepositoryInterface {
+  Future<List<Territory>> getAll();
 
-  Future<void> upsert(Report report);
+  Future<void> upsert(Territory territory);
 
   Future<void> deleteAll();
 
-  Future<void> delete(Id id);
+  Future<void> delete(String id);
 }

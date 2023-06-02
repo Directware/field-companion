@@ -1,21 +1,26 @@
 // ignore: uri_does_not_exist
+import 'dart:developer';
+
 import 'package:field_companion/api_key.dart';
-import 'package:flutter/foundation.dart';
+import 'package:field_companion/features/territories/presentation/models/geo_json_parser.dart';
+import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
-class VectorMap extends StatefulWidget {
+class VectorMap extends ConsumerStatefulWidget {
   const VectorMap({super.key});
 
   @override
-  State<VectorMap> createState() => _VectorMapState();
+  ConsumerState<VectorMap> createState() => _VectorMapState();
 }
 
-class _VectorMapState extends State<VectorMap> {
+class _VectorMapState extends ConsumerState<VectorMap> {
+  GeoJsonParser myGeoJson = GeoJsonParser();
+
   Future<Style> _readStyle() => StyleReader(
         uri: "mapbox://styles/mapbox/streets-v12?access_token={key}",
         // ignore: undefined_identifier
@@ -23,7 +28,12 @@ class _VectorMapState extends State<VectorMap> {
       ).read();
 
   Future<Style?> _initStyle() async {
+    final territory = ref.watch(selectedTerritoryProvider);
     try {
+      if (territory != null) {
+        log('Parsing GeoJson');
+        myGeoJson.parseGeoJson(territory.geoJson);
+      }
       final style = await _readStyle();
       return style;
     } catch (e, stack) {
@@ -51,7 +61,7 @@ class _VectorMapState extends State<VectorMap> {
                     InteractiveFlag.doubleTapZoom,
               ),
               nonRotatedChildren: [
-                AttributionWidget.defaultWidget(
+                /*AttributionWidget.defaultWidget(
                   source: '© Mapbox © OpenStreetMap',
                   onSourceTapped: () async {
                     // Requires 'url_launcher'
@@ -60,7 +70,7 @@ class _VectorMapState extends State<VectorMap> {
                       if (kDebugMode) print('Could not launch URL');
                     }
                   },
-                )
+                )*/
               ],
               children: [
                 VectorTileLayer(
@@ -72,6 +82,7 @@ class _VectorMapState extends State<VectorMap> {
                 CurrentLocationLayer(
                   moveAnimationDuration: const Duration(milliseconds: 500),
                 ),
+                PolylineLayer(polylines: myGeoJson.polylines)
               ],
             )
           : Container(),

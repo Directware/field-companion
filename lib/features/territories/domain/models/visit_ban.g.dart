@@ -18,50 +18,24 @@ const VisitBanSchema = Schema(
       name: r'city',
       type: IsarType.string,
     ),
-    r'comment': PropertySchema(
+    r'id': PropertySchema(
       id: 1,
-      name: r'comment',
+      name: r'id',
       type: IsarType.string,
     ),
-    r'floor': PropertySchema(
-      id: 2,
-      name: r'floor',
-      type: IsarType.long,
-    ),
-    r'gpsPosition': PropertySchema(
-      id: 3,
-      name: r'gpsPosition',
-      type: IsarType.object,
-      target: r'Position',
-    ),
-    r'lastVisit': PropertySchema(
-      id: 4,
-      name: r'lastVisit',
-      type: IsarType.dateTime,
-    ),
     r'name': PropertySchema(
-      id: 5,
+      id: 2,
       name: r'name',
       type: IsarType.string,
     ),
     r'street': PropertySchema(
-      id: 6,
+      id: 3,
       name: r'street',
       type: IsarType.string,
     ),
     r'streetSuffix': PropertySchema(
-      id: 7,
+      id: 4,
       name: r'streetSuffix',
-      type: IsarType.string,
-    ),
-    r'tags': PropertySchema(
-      id: 8,
-      name: r'tags',
-      type: IsarType.stringList,
-    ),
-    r'territoryId': PropertySchema(
-      id: 9,
-      name: r'territoryId',
       type: IsarType.string,
     )
   },
@@ -77,36 +51,11 @@ int _visitBanEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.city;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.comment;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.gpsPosition;
-    if (value != null) {
-      bytesCount += 3 +
-          PositionSchema.estimateSize(value, allOffsets[Position]!, allOffsets);
-    }
-  }
+  bytesCount += 3 + object.city.length * 3;
+  bytesCount += 3 + object.id.length * 3;
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.street.length * 3;
   bytesCount += 3 + object.streetSuffix.length * 3;
-  bytesCount += 3 + object.tags.length * 3;
-  {
-    for (var i = 0; i < object.tags.length; i++) {
-      final value = object.tags[i];
-      bytesCount += value.length * 3;
-    }
-  }
-  bytesCount += 3 + object.territoryId.length * 3;
   return bytesCount;
 }
 
@@ -117,20 +66,10 @@ void _visitBanSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.city);
-  writer.writeString(offsets[1], object.comment);
-  writer.writeLong(offsets[2], object.floor);
-  writer.writeObject<Position>(
-    offsets[3],
-    allOffsets,
-    PositionSchema.serialize,
-    object.gpsPosition,
-  );
-  writer.writeDateTime(offsets[4], object.lastVisit);
-  writer.writeString(offsets[5], object.name);
-  writer.writeString(offsets[6], object.street);
-  writer.writeString(offsets[7], object.streetSuffix);
-  writer.writeStringList(offsets[8], object.tags);
-  writer.writeString(offsets[9], object.territoryId);
+  writer.writeString(offsets[1], object.id);
+  writer.writeString(offsets[2], object.name);
+  writer.writeString(offsets[3], object.street);
+  writer.writeString(offsets[4], object.streetSuffix);
 }
 
 VisitBan _visitBanDeserialize(
@@ -140,20 +79,11 @@ VisitBan _visitBanDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = VisitBan();
-  object.city = reader.readStringOrNull(offsets[0]);
-  object.comment = reader.readStringOrNull(offsets[1]);
-  object.floor = reader.readLongOrNull(offsets[2]);
-  object.gpsPosition = reader.readObjectOrNull<Position>(
-    offsets[3],
-    PositionSchema.deserialize,
-    allOffsets,
-  );
-  object.lastVisit = reader.readDateTimeOrNull(offsets[4]);
-  object.name = reader.readString(offsets[5]);
-  object.street = reader.readString(offsets[6]);
-  object.streetSuffix = reader.readString(offsets[7]);
-  object.tags = reader.readStringList(offsets[8]) ?? [];
-  object.territoryId = reader.readString(offsets[9]);
+  object.city = reader.readString(offsets[0]);
+  object.id = reader.readString(offsets[1]);
+  object.name = reader.readString(offsets[2]);
+  object.street = reader.readString(offsets[3]);
+  object.streetSuffix = reader.readString(offsets[4]);
   return object;
 }
 
@@ -165,28 +95,14 @@ P _visitBanDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readObjectOrNull<Position>(
-        offset,
-        PositionSchema.deserialize,
-        allOffsets,
-      )) as P;
+      return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readDateTimeOrNull(offset)) as P;
-    case 5:
-      return (reader.readString(offset)) as P;
-    case 6:
-      return (reader.readString(offset)) as P;
-    case 7:
-      return (reader.readString(offset)) as P;
-    case 8:
-      return (reader.readStringList(offset) ?? []) as P;
-    case 9:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -195,24 +111,8 @@ P _visitBanDeserializeProp<P>(
 
 extension VisitBanQueryFilter
     on QueryBuilder<VisitBan, VisitBan, QFilterCondition> {
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> cityIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'city',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> cityIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'city',
-      ));
-    });
-  }
-
   QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> cityEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -225,7 +125,7 @@ extension VisitBanQueryFilter
   }
 
   QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> cityGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -240,7 +140,7 @@ extension VisitBanQueryFilter
   }
 
   QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> cityLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -255,8 +155,8 @@ extension VisitBanQueryFilter
   }
 
   QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> cityBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -341,75 +241,59 @@ extension VisitBanQueryFilter
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'comment',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'comment',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentEqualTo(
-    String? value, {
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idEqualTo(
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'comment',
+        property: r'id',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentGreaterThan(
-    String? value, {
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idGreaterThan(
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'comment',
+        property: r'id',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentLessThan(
-    String? value, {
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idLessThan(
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'comment',
+        property: r'id',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentBetween(
-    String? lower,
-    String? upper, {
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'comment',
+        property: r'id',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -419,225 +303,70 @@ extension VisitBanQueryFilter
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentStartsWith(
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'comment',
+        property: r'id',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentEndsWith(
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'comment',
+        property: r'id',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentContains(
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'comment',
+        property: r'id',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentMatches(
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'comment',
+        property: r'id',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentIsEmpty() {
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'comment',
+        property: r'id',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> commentIsNotEmpty() {
+  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'comment',
+        property: r'id',
         value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> floorIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'floor',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> floorIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'floor',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> floorEqualTo(
-      int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'floor',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> floorGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'floor',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> floorLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'floor',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> floorBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'floor',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> gpsPositionIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'gpsPosition',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition>
-      gpsPositionIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'gpsPosition',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> lastVisitIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'lastVisit',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> lastVisitIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'lastVisit',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> lastVisitEqualTo(
-      DateTime? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'lastVisit',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> lastVisitGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'lastVisit',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> lastVisitLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'lastVisit',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> lastVisitBetween(
-    DateTime? lower,
-    DateTime? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'lastVisit',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
       ));
     });
   }
@@ -1035,362 +764,7 @@ extension VisitBanQueryFilter
       ));
     });
   }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'tags',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition>
-      tagsElementGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'tags',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsElementLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'tags',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsElementBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'tags',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'tags',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'tags',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsElementContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'tags',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsElementMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'tags',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'tags',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition>
-      tagsElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'tags',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsLengthEqualTo(
-      int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'tags',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'tags',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'tags',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'tags',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'tags',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> tagsLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'tags',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> territoryIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'territoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition>
-      territoryIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'territoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> territoryIdLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'territoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> territoryIdBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'territoryId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> territoryIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'territoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> territoryIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'territoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> territoryIdContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'territoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> territoryIdMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'territoryId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> territoryIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'territoryId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition>
-      territoryIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'territoryId',
-        value: '',
-      ));
-    });
-  }
 }
 
 extension VisitBanQueryObject
-    on QueryBuilder<VisitBan, VisitBan, QFilterCondition> {
-  QueryBuilder<VisitBan, VisitBan, QAfterFilterCondition> gpsPosition(
-      FilterQuery<Position> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'gpsPosition');
-    });
-  }
-}
+    on QueryBuilder<VisitBan, VisitBan, QFilterCondition> {}

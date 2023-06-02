@@ -30,6 +30,8 @@ class ColorPalette {
 
   static Color blueProgressStartOpacity05 = blueProgressStart.withOpacity(0.5);
 
+  static Color redOpacity20 = red.withOpacity(0.2);
+
   static Color grey2Opacity08 = grey2.withOpacity(0.08);
 
   static Color grey2Opacity20 = grey2.withOpacity(0.20);

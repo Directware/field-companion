@@ -1,6 +1,7 @@
 enum AppLocations {
-  welcome,
   main,
+  welcome,
+  map,
   territories,
   fieldService,
   settings,
@@ -13,6 +14,8 @@ extension AppLocationsExtension on AppLocations {
         return '/';
       case AppLocations.welcome:
         return '/welcome';
+      case AppLocations.map:
+        return '/map';
       case AppLocations.fieldService:
         return '/field-service';
       case AppLocations.territories:

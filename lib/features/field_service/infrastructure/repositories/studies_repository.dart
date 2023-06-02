@@ -12,7 +12,6 @@ class StudiesRepository implements StudiesRepositoryInterface {
 
   final Isar _database;
   late final IsarCollection<Studies> _collection;
-  late final Future<void> init = Future.value();
 
   Future<void> createTestEntities() async {
     await _database.writeTxn(() async {

@@ -4,6 +4,7 @@ import 'package:field_companion/features/core/presentation/providers/shared_pref
 import 'package:field_companion/features/core/presentation/widgets/field_companion.dart';
 import 'package:field_companion/features/field_service/domain/models/report.dart';
 import 'package:field_companion/features/field_service/domain/models/studies.dart';
+import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
@@ -35,7 +36,8 @@ void main() async {
   );
 
   final sharedPreferences = await SharedPreferences.getInstance();
-  final database = await Isar.open([ReportSchema, StudiesSchema]);
+  final database =
+      await Isar.open([ReportSchema, StudiesSchema, TerritorySchema]);
 
   runApp(
     ProviderScope(

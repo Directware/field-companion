@@ -12,7 +12,6 @@ class ReportRepository implements ReportRepositoryInterface {
 
   final Isar _database;
   late final IsarCollection<Report> _collection;
-  late final Future<void> init = Future.value();
 
   Future<void> createTestEntities() async {
     await _database.writeTxn(() async {

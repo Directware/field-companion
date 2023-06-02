@@ -5,6 +5,7 @@ import 'package:field_companion/features/field_service/presentation/views/field_
 import 'package:field_companion/features/settings/presentation/providers/app_initialisation_provider.dart';
 import 'package:field_companion/features/settings/presentation/widgets/settings.dart';
 import 'package:field_companion/features/territories/presentation/views/territories.dart';
+import 'package:field_companion/features/territories/presentation/views/territory_map.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -22,6 +23,10 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
         GoRoute(
           path: AppLocations.welcome.href,
           builder: (context, state) => const Welcome(),
+        ),
+        GoRoute(
+          path: AppLocations.map.href,
+          builder: (context, state) => const TerritoryMap(),
         ),
         ShellRoute(
           navigatorKey: _key,

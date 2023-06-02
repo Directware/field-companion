@@ -1,91 +1,95 @@
-// ignore: uri_does_not_exist
-import 'dart:developer';
-
-import 'package:field_companion/api_key.dart';
-import 'package:field_companion/features/territories/presentation/models/geo_json_parser.dart';
+import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
+import 'package:permission_handler/permission_handler.dart';
 
-class VectorMap extends ConsumerStatefulWidget {
-  const VectorMap({super.key});
+String accessToken = const String.fromEnvironment("PUBLIC_ACCESS_TOKEN");
+
+class MapWidget extends ConsumerStatefulWidget {
+  const MapWidget({super.key});
 
   @override
-  ConsumerState<VectorMap> createState() => _VectorMapState();
+  ConsumerState createState() => _MapWidgetState();
 }
 
-class _VectorMapState extends ConsumerState<VectorMap> {
-  GeoJsonParser myGeoJson = GeoJsonParser();
+class _MapWidgetState extends ConsumerState<MapWidget> {
+  late final mapbox.MapboxMap _map;
 
-  Future<Style> _readStyle() => StyleReader(
-        uri: "mapbox://styles/mapbox/streets-v12?access_token={key}",
-        // ignore: undefined_identifier
-        apiKey: mapboxApiKey,
-      ).read();
+  @override
+  void initState() {
+    super.initState();
+    Permission.locationWhenInUse.request();
+  }
 
-  Future<Style?> _initStyle() async {
+  Future<void> _onMapCreated(mapbox.MapboxMap mapboxMap) async {
     final territory = ref.watch(selectedTerritoryProvider);
-    try {
-      if (territory != null) {
-        log('Parsing GeoJson');
-        myGeoJson.parseGeoJson(territory.geoJson);
+    _map = mapboxMap;
+    _map.compass.updateSettings(
+      mapbox.CompassSettings(
+        enabled: false,
+      ),
+    );
+    _map.attribution.updateSettings(
+      mapbox.AttributionSettings(
+        marginBottom: 150,
+      ),
+    );
+    _map.logo.updateSettings(
+      mapbox.LogoSettings(
+        marginBottom: 150,
+      ),
+    );
+    _map.scaleBar.updateSettings(mapbox.ScaleBarSettings(enabled: false));
+
+    _map.annotations.createPolygonAnnotationManager().then((annotationManager) {
+      final options = <mapbox.PolygonAnnotationOptions>[];
+      for (var i = 0; i < 2; i++) {
+        options.add(territory.geoJson);
       }
-      final style = await _readStyle();
-      return style;
-    } catch (e, stack) {
-      // ignore: avoid_print
-      print(e);
-      // ignore: avoid_print
-      print(stack);
-      return null;
-    }
+      annotationManager.createMulti(territory.geoJson);
+      annotationManager.annotationManager
+          .addOnPolygonAnnotationClickListener(AnnotationClickListener());
+    });
+
+    Future.wait([
+      rootBundle.load('assets/images/location-marker.png'),
+      rootBundle.load('assets/images/location-bearing.png'),
+      rootBundle.load('assets/images/location-shadow.png')
+    ]).then(
+      (imagesData) => _map.location.updateSettings(
+        mapbox.LocationComponentSettings(
+          enabled: true,
+          showAccuracyRing: true,
+          puckBearingEnabled: true,
+          accuracyRingColor: ColorPalette.redOpacity20.value,
+          locationPuck: mapbox.LocationPuck(
+            locationPuck2D: mapbox.LocationPuck2D(
+              topImage: imagesData[0].buffer.asUint8List(),
+              bearingImage: imagesData[1].buffer.asUint8List(),
+              shadowImage: imagesData[2].buffer.asUint8List(),
+              scaleExpression: '2',
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initStyle(),
-      builder: (context, snapshot) => snapshot.data != null
-          ? FlutterMap(
-              options: MapOptions(
-                center: LatLng(48.355344, 10.860545),
-                zoom: 17,
-                interactiveFlags: InteractiveFlag.drag |
-                    InteractiveFlag.flingAnimation |
-                    InteractiveFlag.pinchMove |
-                    InteractiveFlag.pinchZoom |
-                    InteractiveFlag.doubleTapZoom,
-              ),
-              nonRotatedChildren: [
-                /*AttributionWidget.defaultWidget(
-                  source: '© Mapbox © OpenStreetMap',
-                  onSourceTapped: () async {
-                    // Requires 'url_launcher'
-                    if (!await launchUrl(Uri.parse(
-                        "https://docs.mapbox.com/help/getting-started/attribution/"))) {
-                      if (kDebugMode) print('Could not launch URL');
-                    }
-                  },
-                )*/
-              ],
-              children: [
-                VectorTileLayer(
-                  tileProviders: snapshot.data!.providers,
-                  theme: snapshot.data!.theme,
-                  maximumZoom: 22,
-                  tileOffset: TileOffset.mapbox,
-                ),
-                CurrentLocationLayer(
-                  moveAnimationDuration: const Duration(milliseconds: 500),
-                ),
-                PolylineLayer(polylines: myGeoJson.polylines)
-              ],
-            )
-          : Container(),
+    return mapbox.MapWidget(
+      resourceOptions: mapbox.ResourceOptions(accessToken: accessToken),
+      onMapCreated: _onMapCreated,
+      //styleUri: mapbox.MapboxStyles.MAPBOX_STREETS,
+      cameraOptions: mapbox.CameraOptions(
+        center: mapbox.Point(coordinates: mapbox.Position(10.860545, 48.355344))
+            .toJson(),
+        zoom: 17.0,
+      ),
     );
   }
 }

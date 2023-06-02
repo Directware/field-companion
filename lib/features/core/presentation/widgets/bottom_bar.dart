@@ -12,6 +12,23 @@ import 'package:go_router/go_router.dart';
 class BottomBar extends ConsumerWidget {
   const BottomBar({super.key});
 
+  void _navigateTo(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocations appLocations,
+  ) {
+    ref.read(selectedDateProvider.notifier).clear();
+    context.go(appLocations.href);
+  }
+
+  Color _isLinkActive(WidgetRef ref, AppLocations appLocations) {
+    if (ref.watch(isRouterLinkActiveProvider(appLocations))) {
+      return const Color(0xFF3694e2);
+    }
+
+    return Colors.white;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ClipRRect(
@@ -60,22 +77,5 @@ class BottomBar extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  void _navigateTo(
-    BuildContext context,
-    WidgetRef ref,
-    AppLocations appLocations,
-  ) {
-    ref.read(selectedDateProvider.notifier).clear();
-    context.go(appLocations.href);
-  }
-
-  Color _isLinkActive(WidgetRef ref, AppLocations appLocations) {
-    if (ref.watch(isRouterLinkActiveProvider(appLocations))) {
-      return const Color(0xFF3694e2);
-    }
-
-    return Colors.white;
   }
 }
