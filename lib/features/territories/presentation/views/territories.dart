@@ -5,6 +5,7 @@ import 'package:field_companion/features/core/presentation/widgets/title_bar.dar
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
+import 'package:field_companion/features/territories/presentation/widgets/no_territories_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,22 +45,30 @@ class Territories extends ConsumerWidget {
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: territories.length,
-              itemBuilder: (context, index) => ListTile(
-                onTap: () => context.go(AppLocations.map.href),
-                title: Text(
-                  '${territories[index].key} ${territories[index].name}',
-                ),
-                subtitle: Text(territories[index].id),
-                trailing: IconButton(
-                  onPressed: () => onSelected(context, ref, territories[index]),
-                  icon: const Icon(FeatherIcons.trash2),
-                ),
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
             ),
-          ),
+            child: territories.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: territories.length,
+                      itemBuilder: (context, index) => ListTile(
+                        onTap: () => context.go(AppLocations.map.href),
+                        title: Text(
+                          '${territories[index].key} ${territories[index].name}',
+                        ),
+                        subtitle: Text(territories[index].id),
+                        trailing: IconButton(
+                          onPressed: () =>
+                              onSelected(context, ref, territories[index]),
+                          icon: const Icon(FeatherIcons.trash2),
+                        ),
+                      ),
+                    ),
+                  )
+                : const NoTerritoriesPlaceholder(),
+          )
         ],
       ),
     );
