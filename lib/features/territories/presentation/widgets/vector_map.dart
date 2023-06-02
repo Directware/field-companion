@@ -1,7 +1,6 @@
 // ignore: uri_does_not_exist
 import 'dart:developer';
 
-import 'package:field_companion/api_key.dart';
 import 'package:field_companion/features/territories/presentation/models/geo_json_parser.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +19,12 @@ class VectorMap extends ConsumerStatefulWidget {
 
 class _VectorMapState extends ConsumerState<VectorMap> {
   GeoJsonParser myGeoJson = GeoJsonParser();
+  String secretApiKey = const String.fromEnvironment("SECRET_TOKEN");
 
   Future<Style> _readStyle() => StyleReader(
         uri: "mapbox://styles/mapbox/streets-v12?access_token={key}",
         // ignore: undefined_identifier
-        apiKey: mapboxApiKey,
+        apiKey: secretApiKey,
       ).read();
 
   Future<Style?> _initStyle() async {

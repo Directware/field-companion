@@ -48,11 +48,11 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
     _map.annotations.createPolygonAnnotationManager().then((annotationManager) {
       final options = <mapbox.PolygonAnnotationOptions>[];
       for (var i = 0; i < 2; i++) {
-        options.add(territory.geoJson);
+        // options.add(territory.geoJson);
       }
-      annotationManager.createMulti(territory.geoJson);
-      annotationManager.annotationManager
-          .addOnPolygonAnnotationClickListener(AnnotationClickListener());
+      // annotationManager.createMulti(territory.geoJson);
+      // annotationManager.annotationManager
+      //    .addOnPolygonAnnotationClickListener(AnnotationClickListener());
     });
 
     Future.wait([
