@@ -17,58 +17,63 @@ const TerritorySchema = CollectionSchema(
   name: r'Territory',
   id: 7565812741823055623,
   properties: {
-    r'estimationInMonths': PropertySchema(
+    r'boundaryNames': PropertySchema(
       id: 0,
+      name: r'boundaryNames',
+      type: IsarType.stringList,
+    ),
+    r'estimationInMonths': PropertySchema(
+      id: 1,
       name: r'estimationInMonths',
       type: IsarType.long,
     ),
     r'id': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'id',
       type: IsarType.string,
     ),
     r'isarGeoJson': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'isarGeoJson',
       type: IsarType.string,
     ),
     r'key': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'key',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'name',
       type: IsarType.string,
     ),
     r'populationCount': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'populationCount',
       type: IsarType.long,
     ),
-    r'publisher': PropertySchema(
-      id: 6,
-      name: r'publisher',
+    r'publisherId': PropertySchema(
+      id: 7,
+      name: r'publisherId',
       type: IsarType.string,
     ),
     r'startTime': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'startTime',
       type: IsarType.dateTime,
     ),
     r'type': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'type',
       type: IsarType.string,
     ),
     r'version': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'version',
       type: IsarType.long,
     ),
     r'visitBans': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'visitBans',
       type: IsarType.objectList,
       target: r'VisitBan',
@@ -108,11 +113,18 @@ int _territoryEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.boundaryNames.length * 3;
+  {
+    for (var i = 0; i < object.boundaryNames.length; i++) {
+      final value = object.boundaryNames[i];
+      bytesCount += value.length * 3;
+    }
+  }
   bytesCount += 3 + object.id.length * 3;
   bytesCount += 3 + object.isarGeoJson.length * 3;
   bytesCount += 3 + object.key.length * 3;
   bytesCount += 3 + object.name.length * 3;
-  bytesCount += 3 + object.publisher.length * 3;
+  bytesCount += 3 + object.publisherId.length * 3;
   bytesCount += 3 + object.type.length * 3;
   bytesCount += 3 + object.visitBans.length * 3;
   {
@@ -131,18 +143,19 @@ void _territorySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.estimationInMonths);
-  writer.writeString(offsets[1], object.id);
-  writer.writeString(offsets[2], object.isarGeoJson);
-  writer.writeString(offsets[3], object.key);
-  writer.writeString(offsets[4], object.name);
-  writer.writeLong(offsets[5], object.populationCount);
-  writer.writeString(offsets[6], object.publisher);
-  writer.writeDateTime(offsets[7], object.startTime);
-  writer.writeString(offsets[8], object.type);
-  writer.writeLong(offsets[9], object.version);
+  writer.writeStringList(offsets[0], object.boundaryNames);
+  writer.writeLong(offsets[1], object.estimationInMonths);
+  writer.writeString(offsets[2], object.id);
+  writer.writeString(offsets[3], object.isarGeoJson);
+  writer.writeString(offsets[4], object.key);
+  writer.writeString(offsets[5], object.name);
+  writer.writeLong(offsets[6], object.populationCount);
+  writer.writeString(offsets[7], object.publisherId);
+  writer.writeDateTime(offsets[8], object.startTime);
+  writer.writeString(offsets[9], object.type);
+  writer.writeLong(offsets[10], object.version);
   writer.writeObjectList<VisitBan>(
-    offsets[10],
+    offsets[11],
     allOffsets,
     VisitBanSchema.serialize,
     object.visitBans,
@@ -156,24 +169,25 @@ Territory _territoryDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Territory(
-    estimationInMonths: reader.readLong(offsets[0]),
-    id: reader.readString(offsets[1]),
-    key: reader.readString(offsets[3]),
-    name: reader.readString(offsets[4]),
-    populationCount: reader.readLong(offsets[5]),
-    publisher: reader.readString(offsets[6]),
-    startTime: reader.readDateTime(offsets[7]),
-    type: reader.readString(offsets[8]),
-    version: reader.readLong(offsets[9]),
+    boundaryNames: reader.readStringList(offsets[0]) ?? [],
+    estimationInMonths: reader.readLong(offsets[1]),
+    id: reader.readString(offsets[2]),
+    key: reader.readString(offsets[4]),
+    name: reader.readString(offsets[5]),
+    populationCount: reader.readLong(offsets[6]),
+    publisherId: reader.readString(offsets[7]),
+    startTime: reader.readDateTime(offsets[8]),
+    type: reader.readString(offsets[9]),
+    version: reader.readLong(offsets[10]),
     visitBans: reader.readObjectList<VisitBan>(
-          offsets[10],
+          offsets[11],
           VisitBanSchema.deserialize,
           allOffsets,
           VisitBan(),
         ) ??
         [],
   );
-  object.isarGeoJson = reader.readString(offsets[2]);
+  object.isarGeoJson = reader.readString(offsets[3]);
   return object;
 }
 
@@ -185,9 +199,9 @@ P _territoryDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringList(offset) ?? []) as P;
     case 1:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
@@ -195,16 +209,18 @@ P _territoryDeserializeProp<P>(
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readString(offset)) as P;
-    case 7:
-      return (reader.readDateTime(offset)) as P;
-    case 8:
-      return (reader.readString(offset)) as P;
-    case 9:
       return (reader.readLong(offset)) as P;
+    case 7:
+      return (reader.readString(offset)) as P;
+    case 8:
+      return (reader.readDateTime(offset)) as P;
+    case 9:
+      return (reader.readString(offset)) as P;
     case 10:
+      return (reader.readLong(offset)) as P;
+    case 11:
       return (reader.readObjectList<VisitBan>(
             offset,
             VisitBanSchema.deserialize,
@@ -408,6 +424,231 @@ extension TerritoryQueryWhere
 
 extension TerritoryQueryFilter
     on QueryBuilder<Territory, Territory, QFilterCondition> {
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'boundaryNames',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'boundaryNames',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'boundaryNames',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'boundaryNames',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'boundaryNames',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'boundaryNames',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'boundaryNames',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'boundaryNames',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'boundaryNames',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'boundaryNames',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'boundaryNames',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'boundaryNames',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'boundaryNames',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'boundaryNames',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'boundaryNames',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      boundaryNamesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'boundaryNames',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
   QueryBuilder<Territory, Territory, QAfterFilterCondition>
       estimationInMonthsEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
@@ -1097,13 +1338,13 @@ extension TerritoryQueryFilter
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherEqualTo(
+  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherIdEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'publisher',
+        property: r'publisherId',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1111,7 +1352,7 @@ extension TerritoryQueryFilter
   }
 
   QueryBuilder<Territory, Territory, QAfterFilterCondition>
-      publisherGreaterThan(
+      publisherIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1119,14 +1360,14 @@ extension TerritoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'publisher',
+        property: r'publisherId',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherLessThan(
+  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherIdLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1134,14 +1375,14 @@ extension TerritoryQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'publisher',
+        property: r'publisherId',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherBetween(
+  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1150,7 +1391,7 @@ extension TerritoryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'publisher',
+        property: r'publisherId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1160,70 +1401,72 @@ extension TerritoryQueryFilter
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherStartsWith(
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      publisherIdStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'publisher',
+        property: r'publisherId',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherEndsWith(
+  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherIdEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'publisher',
+        property: r'publisherId',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherContains(
+  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherIdContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'publisher',
+        property: r'publisherId',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherMatches(
+  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherIdMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'publisher',
+        property: r'publisherId',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterFilterCondition> publisherIsEmpty() {
+  QueryBuilder<Territory, Territory, QAfterFilterCondition>
+      publisherIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'publisher',
+        property: r'publisherId',
         value: '',
       ));
     });
   }
 
   QueryBuilder<Territory, Territory, QAfterFilterCondition>
-      publisherIsNotEmpty() {
+      publisherIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'publisher',
+        property: r'publisherId',
         value: '',
       ));
     });
@@ -1642,15 +1885,15 @@ extension TerritoryQuerySortBy on QueryBuilder<Territory, Territory, QSortBy> {
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterSortBy> sortByPublisher() {
+  QueryBuilder<Territory, Territory, QAfterSortBy> sortByPublisherId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'publisher', Sort.asc);
+      return query.addSortBy(r'publisherId', Sort.asc);
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterSortBy> sortByPublisherDesc() {
+  QueryBuilder<Territory, Territory, QAfterSortBy> sortByPublisherIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'publisher', Sort.desc);
+      return query.addSortBy(r'publisherId', Sort.desc);
     });
   }
 
@@ -1778,15 +2021,15 @@ extension TerritoryQuerySortThenBy
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterSortBy> thenByPublisher() {
+  QueryBuilder<Territory, Territory, QAfterSortBy> thenByPublisherId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'publisher', Sort.asc);
+      return query.addSortBy(r'publisherId', Sort.asc);
     });
   }
 
-  QueryBuilder<Territory, Territory, QAfterSortBy> thenByPublisherDesc() {
+  QueryBuilder<Territory, Territory, QAfterSortBy> thenByPublisherIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'publisher', Sort.desc);
+      return query.addSortBy(r'publisherId', Sort.desc);
     });
   }
 
@@ -1829,6 +2072,12 @@ extension TerritoryQuerySortThenBy
 
 extension TerritoryQueryWhereDistinct
     on QueryBuilder<Territory, Territory, QDistinct> {
+  QueryBuilder<Territory, Territory, QDistinct> distinctByBoundaryNames() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'boundaryNames');
+    });
+  }
+
   QueryBuilder<Territory, Territory, QDistinct> distinctByEstimationInMonths() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'estimationInMonths');
@@ -1869,10 +2118,10 @@ extension TerritoryQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Territory, Territory, QDistinct> distinctByPublisher(
+  QueryBuilder<Territory, Territory, QDistinct> distinctByPublisherId(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'publisher', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'publisherId', caseSensitive: caseSensitive);
     });
   }
 
@@ -1901,6 +2150,13 @@ extension TerritoryQueryProperty
   QueryBuilder<Territory, int, QQueryOperations> isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
+    });
+  }
+
+  QueryBuilder<Territory, List<String>, QQueryOperations>
+      boundaryNamesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'boundaryNames');
     });
   }
 
@@ -1940,9 +2196,9 @@ extension TerritoryQueryProperty
     });
   }
 
-  QueryBuilder<Territory, String, QQueryOperations> publisherProperty() {
+  QueryBuilder<Territory, String, QQueryOperations> publisherIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'publisher');
+      return query.addPropertyName(r'publisherId');
     });
   }
 

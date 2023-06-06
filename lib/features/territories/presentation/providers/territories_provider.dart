@@ -55,9 +55,7 @@ class Territories extends _$Territories {
     final bytes = File(result!.paths[0]!).readAsBytesSync();
     final archive = GZipDecoder().decodeBytes(bytes, verify: true);
     final territoryData = utf8.decode(archive);
-    log("$territoryData");
     final object = jsonDecode(territoryData) as Map<String, dynamic>;
-    log("$object");
     final territory = Territory.fromJson(object);
 
     state = [...state, territory];

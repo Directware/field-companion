@@ -6,7 +6,7 @@ part of 'territories_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$territoriesHash() => r'f76d1b6dbdf0d6769e9b8b480865fda2bc528183';
+String _$territoriesHash() => r'c1aee1f7943ce67678063b521dee1ad99edfb647';
 
 /// See also [Territories].
 @ProviderFor(Territories)

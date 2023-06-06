@@ -11,12 +11,13 @@ class Territory {
     required this.id,
     required this.name,
     required this.key,
-    required this.publisher,
+    required this.publisherId,
     required this.populationCount,
     this.geoJson = const {},
     required this.startTime,
     required this.estimationInMonths,
     required this.visitBans,
+    required this.boundaryNames,
     required this.type,
     required this.version,
   });
@@ -28,11 +29,12 @@ class Territory {
 
   late final String name;
   late final String key;
-  late final String publisher;
+  late final String publisherId;
   late final int populationCount;
   late final DateTime startTime;
   late final int estimationInMonths;
   late final List<VisitBan> visitBans;
+  late final List<String> boundaryNames;
   late final String type;
   late final int version;
 
@@ -50,12 +52,13 @@ class Territory {
       id: id,
       name: name,
       key: key,
-      publisher: publisher,
+      publisherId: publisherId,
       populationCount: populationCount,
       geoJson: geoJson,
       startTime: startTime,
       estimationInMonths: estimationInMonths,
       visitBans: visitBans ?? this.visitBans,
+      boundaryNames: boundaryNames,
       type: type,
       version: version,
     );
@@ -65,7 +68,7 @@ class Territory {
       : id = json['id'] as String,
         name = json['name'] as String,
         key = json['key'] as String,
-        publisher = json['publisher'] as String,
+        publisherId = json['publisherId'] as String,
         populationCount = json['populationCount'] as int,
         geoJson = json['geoJson'] as Map<String, dynamic>,
         startTime = DateTime.parse(json['startTime'] as String),
@@ -75,18 +78,20 @@ class Territory {
                 VisitBan.fromJson(visitBan as Map<String, dynamic>))
             .toList(),
         type = json['type'] as String,
+        boundaryNames = json['boundaryNames'] as List<String>,
         version = json['version'] as int;
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
         'key': key,
-        'publisher': publisher,
+        'publisherId': publisherId,
         'populationCount': populationCount,
         'geoJson': geoJson,
         'startTime': startTime.toIso8601String(),
         'estimationInMonths': estimationInMonths,
         'visitBans': visitBans.map((visitBan) => visitBan.toJson()).toList(),
+        'boundaryNames': boundaryNames,
         'type': type,
         'version': version,
       };

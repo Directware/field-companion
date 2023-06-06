@@ -55,6 +55,7 @@ dependencies:
   url_launcher: ^6.1.10
   vector_map_tiles: ^3.3.5
   flutter_svg: ^0.22.0
+  jiffy: ^5.0.0
 
 dev_dependencies:
   build_runner: ^2.3.3
