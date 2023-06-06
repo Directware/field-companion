@@ -38,6 +38,8 @@ PODS:
     - Flutter
   - geolocator_apple (1.2.0):
     - Flutter
+  - integration_test (0.0.1):
+    - Flutter
   - isar_flutter_libs (1.0.0):
     - Flutter
   - mapbox_maps_flutter (0.4.2):
@@ -73,6 +75,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_compass (from `.symlinks/plugins/flutter_compass/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - isar_flutter_libs (from `.symlinks/plugins/isar_flutter_libs/ios`)
   - mapbox_maps_flutter (from `.symlinks/plugins/mapbox_maps_flutter/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
@@ -101,6 +104,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_compass/ios"
   geolocator_apple:
     :path: ".symlinks/plugins/geolocator_apple/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   isar_flutter_libs:
     :path: ".symlinks/plugins/isar_flutter_libs/ios"
   mapbox_maps_flutter:
@@ -121,6 +126,7 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_compass: cbbd285cea1584c7ac9c4e0c3e1f17cbea55e855
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
+  integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
   isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
   mapbox_maps_flutter: be1a16ff33006fff69d5c21b1cec8ed82be9c02d
   MapboxCommon: e7948335faacbe6f8b9b115511fd0dd0354bf565
