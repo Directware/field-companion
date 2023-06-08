@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/app_locations.dart';
@@ -18,6 +19,7 @@ class Territories extends ConsumerWidget {
   const Territories({super.key});
 
   void onSelected(BuildContext context, WidgetRef ref, Territory territory) {
+    log("Selected territory: ${territory.key} ${territory.name}");
     ref.read(selectedTerritoryProvider.notifier).set(territory);
     context.go(AppLocations.map.href);
   }
@@ -62,7 +64,7 @@ class Territories extends ConsumerWidget {
           letterSpacing: 0.4,
           height: 1.5,
         ),
-        "${"territories.toLate".tr()} $expiredMonths M $expiredDays T",
+        "${"territories.toLate".tr()} ${expiredMonths}M ${expiredDays}T",
       );
     }
 
@@ -75,7 +77,7 @@ class Territories extends ConsumerWidget {
         letterSpacing: 0.4,
         height: 1.5,
       ),
-      "${"territories.still".tr()} $leftMonths M $leftDays T",
+      "${"territories.still".tr()} ${leftMonths}M ${leftDays}T",
     );
   }
 
@@ -110,7 +112,7 @@ class Territories extends ConsumerWidget {
                     itemCount: territories.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) => ListTile(
-                      onTap: () => context.go(AppLocations.map.href),
+                      onTap: () => onSelected(context, ref, territories[index]),
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 4,
                       ),
