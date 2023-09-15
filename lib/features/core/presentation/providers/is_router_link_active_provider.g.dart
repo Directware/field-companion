@@ -30,8 +30,6 @@ class _SystemHash {
   }
 }
 
-typedef IsRouterLinkActiveRef = AutoDisposeProviderRef<bool>;
-
 /// See also [isRouterLinkActive].
 @ProviderFor(isRouterLinkActive)
 const isRouterLinkActiveProvider = IsRouterLinkActiveFamily();
@@ -78,10 +76,10 @@ class IsRouterLinkActiveFamily extends Family<bool> {
 class IsRouterLinkActiveProvider extends AutoDisposeProvider<bool> {
   /// See also [isRouterLinkActive].
   IsRouterLinkActiveProvider(
-    this.appLocation,
-  ) : super.internal(
+    AppLocations appLocation,
+  ) : this._internal(
           (ref) => isRouterLinkActive(
-            ref,
+            ref as IsRouterLinkActiveRef,
             appLocation,
           ),
           from: isRouterLinkActiveProvider,
@@ -93,9 +91,43 @@ class IsRouterLinkActiveProvider extends AutoDisposeProvider<bool> {
           dependencies: IsRouterLinkActiveFamily._dependencies,
           allTransitiveDependencies:
               IsRouterLinkActiveFamily._allTransitiveDependencies,
+          appLocation: appLocation,
         );
 
+  IsRouterLinkActiveProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.appLocation,
+  }) : super.internal();
+
   final AppLocations appLocation;
+
+  @override
+  Override overrideWith(
+    bool Function(IsRouterLinkActiveRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: IsRouterLinkActiveProvider._internal(
+        (ref) => create(ref as IsRouterLinkActiveRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        appLocation: appLocation,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<bool> createElement() {
+    return _IsRouterLinkActiveProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -111,4 +143,19 @@ class IsRouterLinkActiveProvider extends AutoDisposeProvider<bool> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+
+mixin IsRouterLinkActiveRef on AutoDisposeProviderRef<bool> {
+  /// The parameter `appLocation` of this provider.
+  AppLocations get appLocation;
+}
+
+class _IsRouterLinkActiveProviderElement
+    extends AutoDisposeProviderElement<bool> with IsRouterLinkActiveRef {
+  _IsRouterLinkActiveProviderElement(super.provider);
+
+  @override
+  AppLocations get appLocation =>
+      (origin as IsRouterLinkActiveProvider).appLocation;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef DaysOfReportsRef = AutoDisposeProviderRef<List<DateTime>>;
-
 /// See also [daysOfReports].
 @ProviderFor(daysOfReports)
 const daysOfReportsProvider = DaysOfReportsFamily();
@@ -80,11 +78,11 @@ class DaysOfReportsFamily extends Family<List<DateTime>> {
 class DaysOfReportsProvider extends AutoDisposeProvider<List<DateTime>> {
   /// See also [daysOfReports].
   DaysOfReportsProvider({
-    required this.month,
-    this.firstDayOfWeek = 1,
-  }) : super.internal(
+    required DateTime month,
+    int firstDayOfWeek = 1,
+  }) : this._internal(
           (ref) => daysOfReports(
-            ref,
+            ref as DaysOfReportsRef,
             month: month,
             firstDayOfWeek: firstDayOfWeek,
           ),
@@ -97,10 +95,47 @@ class DaysOfReportsProvider extends AutoDisposeProvider<List<DateTime>> {
           dependencies: DaysOfReportsFamily._dependencies,
           allTransitiveDependencies:
               DaysOfReportsFamily._allTransitiveDependencies,
+          month: month,
+          firstDayOfWeek: firstDayOfWeek,
         );
+
+  DaysOfReportsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.month,
+    required this.firstDayOfWeek,
+  }) : super.internal();
 
   final DateTime month;
   final int firstDayOfWeek;
+
+  @override
+  Override overrideWith(
+    List<DateTime> Function(DaysOfReportsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: DaysOfReportsProvider._internal(
+        (ref) => create(ref as DaysOfReportsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        month: month,
+        firstDayOfWeek: firstDayOfWeek,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<List<DateTime>> createElement() {
+    return _DaysOfReportsProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -118,4 +153,23 @@ class DaysOfReportsProvider extends AutoDisposeProvider<List<DateTime>> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+
+mixin DaysOfReportsRef on AutoDisposeProviderRef<List<DateTime>> {
+  /// The parameter `month` of this provider.
+  DateTime get month;
+
+  /// The parameter `firstDayOfWeek` of this provider.
+  int get firstDayOfWeek;
+}
+
+class _DaysOfReportsProviderElement
+    extends AutoDisposeProviderElement<List<DateTime>> with DaysOfReportsRef {
+  _DaysOfReportsProviderElement(super.provider);
+
+  @override
+  DateTime get month => (origin as DaysOfReportsProvider).month;
+  @override
+  int get firstDayOfWeek => (origin as DaysOfReportsProvider).firstDayOfWeek;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

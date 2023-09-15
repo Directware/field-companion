@@ -24,31 +24,24 @@ class Territories extends ConsumerWidget {
   }
 
   Text _timeInformationWidget(Territory territory) {
-    final startTime = Jiffy(
-      DateTime(
-        territory.startTime.year,
-        territory.startTime.month,
-        territory.startTime.day,
-      ),
-    );
+    final startTime = Jiffy.parseFromDateTime(territory.startTime);
 
     final estimatedIn = territory.estimationInMonths;
-    final endDateTime = Jiffy(startTime).add(months: estimatedIn).dateTime;
-    final now = DateTime.now();
+    final endDateTime = startTime.add(months: estimatedIn);
+    final now = Jiffy.now();
 
-    final int leftMonths = Jiffy(endDateTime).diff(now, Units.MONTH).toInt();
-    final int leftDays = Jiffy(endDateTime)
+    final int leftMonths = endDateTime.diff(now, unit: Unit.month).toInt();
+    final int leftDays = endDateTime
         .subtract(months: leftMonths)
-        .diff(now, Units.DAY)
+        .diff(now, unit: Unit.day)
         .toInt();
 
     if (leftMonths <= 0 && leftDays <= 0) {
-      final int expiredMonths =
-          Jiffy(now).diff(endDateTime, Units.MONTH).toInt();
+      final int expiredMonths = now.diff(endDateTime, unit: Unit.month).toInt();
 
-      final int expiredDays = Jiffy(now)
+      final int expiredDays = now
           .subtract(months: expiredMonths)
-          .diff(endDateTime, Units.DAY)
+          .diff(endDateTime, unit: Unit.day)
           .toInt();
 
       return Text(
@@ -90,13 +83,14 @@ class Territories extends ConsumerWidget {
             trailing: Material(
               color: Colors.transparent,
               child: InkWell(
-                  onTap: () => ref.read(territoriesProvider.notifier).add(),
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  child: const Icon(
-                    size: 30,
-                    FeatherIcons.plus,
-                    color: ColorPalette.blue,
-                  ),),
+                onTap: () => ref.read(territoriesProvider.notifier).add(),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
+                child: const Icon(
+                  size: 30,
+                  FeatherIcons.plus,
+                  color: ColorPalette.blue,
+                ),
+              ),
             ),
           ),
           Padding(

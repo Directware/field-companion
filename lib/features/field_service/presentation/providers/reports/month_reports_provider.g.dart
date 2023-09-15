@@ -29,8 +29,6 @@ class _SystemHash {
   }
 }
 
-typedef MonthReportsRef = AutoDisposeProviderRef<List<Report>>;
-
 /// See also [monthReports].
 @ProviderFor(monthReports)
 const monthReportsProvider = MonthReportsFamily();
@@ -77,10 +75,10 @@ class MonthReportsFamily extends Family<List<Report>> {
 class MonthReportsProvider extends AutoDisposeProvider<List<Report>> {
   /// See also [monthReports].
   MonthReportsProvider({
-    required this.month,
-  }) : super.internal(
+    required DateTime month,
+  }) : this._internal(
           (ref) => monthReports(
-            ref,
+            ref as MonthReportsRef,
             month: month,
           ),
           from: monthReportsProvider,
@@ -92,9 +90,43 @@ class MonthReportsProvider extends AutoDisposeProvider<List<Report>> {
           dependencies: MonthReportsFamily._dependencies,
           allTransitiveDependencies:
               MonthReportsFamily._allTransitiveDependencies,
+          month: month,
         );
 
+  MonthReportsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.month,
+  }) : super.internal();
+
   final DateTime month;
+
+  @override
+  Override overrideWith(
+    List<Report> Function(MonthReportsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: MonthReportsProvider._internal(
+        (ref) => create(ref as MonthReportsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        month: month,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<List<Report>> createElement() {
+    return _MonthReportsProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -109,4 +141,18 @@ class MonthReportsProvider extends AutoDisposeProvider<List<Report>> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+
+mixin MonthReportsRef on AutoDisposeProviderRef<List<Report>> {
+  /// The parameter `month` of this provider.
+  DateTime get month;
+}
+
+class _MonthReportsProviderElement
+    extends AutoDisposeProviderElement<List<Report>> with MonthReportsRef {
+  _MonthReportsProviderElement(super.provider);
+
+  @override
+  DateTime get month => (origin as MonthReportsProvider).month;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

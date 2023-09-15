@@ -6,7 +6,7 @@ part of 'router_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerNotifierHash() => r'f26dfbbbf01148e8d1faf50dee64dfbdab3a0770';
+String _$routerNotifierHash() => r'bc9ae9d42e0e83e1b9cf829aea469fd986709143';
 
 /// See also [RouterNotifier].
 @ProviderFor(RouterNotifier)
@@ -22,4 +22,5 @@ final routerNotifierProvider =
 );
 
 typedef _$RouterNotifier = AsyncNotifier<void>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
