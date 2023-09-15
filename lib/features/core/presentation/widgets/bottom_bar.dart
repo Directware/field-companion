@@ -69,7 +69,7 @@ class BottomBar extends ConsumerWidget {
                       size: 20,
                       FeatherIcons.settings,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

@@ -80,7 +80,7 @@ class FieldService extends ConsumerWidget {
               'service.chooseMonth',
               'service.inputStudies',
               'service.durationGoals',
-              'service.sendReport'
+              'service.sendReport',
             ],
             onMenuItemTap: (key) => _onMenuItemTap(context, ref, key),
           ),
@@ -126,7 +126,7 @@ class FieldService extends ConsumerWidget {
               onTap: () => ref.read(currentTipProvider.notifier).acknowledge(),
             ),
           ),
-        const ReportBottomSheet()
+        const ReportBottomSheet(),
       ],
     );
   }

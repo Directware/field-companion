@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/app_locations.dart';
@@ -30,9 +29,6 @@ class Territories extends ConsumerWidget {
         territory.startTime.year,
         territory.startTime.month,
         territory.startTime.day,
-        0,
-        0,
-        0,
       ),
     );
 
@@ -100,7 +96,7 @@ class Territories extends ConsumerWidget {
                     size: 30,
                     FeatherIcons.plus,
                     color: ColorPalette.blue,
-                  )),
+                  ),),
             ),
           ),
           Padding(
@@ -137,7 +133,7 @@ class Territories extends ConsumerWidget {
                     ),
                   )
                 : const NoTerritoriesPlaceholder(),
-          )
+          ),
         ],
       ),
     );

@@ -75,7 +75,7 @@ class Territory {
         estimationInMonths = json['estimationInMonths'] as int,
         visitBans = (json['visitBans'] as List<dynamic>)
             .map((visitBan) =>
-                VisitBan.fromJson(visitBan as Map<String, dynamic>))
+                VisitBan.fromJson(visitBan as Map<String, dynamic>),)
             .toList(),
         type = json['type'] as String,
         boundaryNames = json['boundaryNames'] as List<String>,

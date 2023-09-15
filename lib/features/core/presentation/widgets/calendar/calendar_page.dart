@@ -30,7 +30,7 @@ class CalendarPage extends StatelessWidget {
           selectedDate: selectedDate,
           onDateSelected: onDateSelected,
           highlightedDates: highlightedDates,
-        )
+        ),
       ],
     );
   }

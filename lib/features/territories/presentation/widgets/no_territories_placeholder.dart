@@ -55,7 +55,7 @@ class NoTerritoriesPlaceholder extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

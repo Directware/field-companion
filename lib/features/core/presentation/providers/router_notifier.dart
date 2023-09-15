@@ -79,7 +79,7 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
               ),
             ),
           ],
-        )
+        ),
       ];
 
   String get initialLocation => AppLocations.fieldService.href;

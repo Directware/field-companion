@@ -56,7 +56,7 @@ class Welcome extends ConsumerWidget {
                       "welcome.feature1",
                       style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
                     ).tr(),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 32),
@@ -82,7 +82,7 @@ class Welcome extends ConsumerWidget {
                       "welcome.feature2",
                       style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
                     ).tr(),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 32),
@@ -108,7 +108,7 @@ class Welcome extends ConsumerWidget {
                       "welcome.feature3",
                       style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
                     ).tr(),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 32),
@@ -134,7 +134,7 @@ class Welcome extends ConsumerWidget {
                       "welcome.feature4",
                       style: TextStyle(color: Color(0xFFadb1b8), fontSize: 18),
                     ).tr(),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 86),
@@ -148,7 +148,7 @@ class Welcome extends ConsumerWidget {
                 child: const Text("actions.continue").tr(),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

@@ -25,7 +25,7 @@ void main() async {
     supportedLocales: const [
       Locale('en', 'US'),
       Locale('de', 'DE'),
-      Locale('pl', 'PL')
+      Locale('pl', 'PL'),
     ],
     path: 'assets/i18n',
     saveLocale: false,
@@ -43,7 +43,7 @@ void main() async {
     ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWith((ref) => sharedPreferences),
-        databaseProvider.overrideWith((ref) => database)
+        databaseProvider.overrideWith((ref) => database),
       ],
       observers: const [],
       child: easyLocalization,

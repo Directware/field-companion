@@ -13,7 +13,7 @@ List<Report> yearReports(YearReportsRef ref) {
       : DateTime(selectedMonth.year - 1, 9);
   final months = [
     for (var month = 0; month < 12; month++)
-      DateTime(firstMonth.year, firstMonth.month + month - 1)
+      DateTime(firstMonth.year, firstMonth.month + month - 1),
   ];
 
   return ref.watch(reportsProvider).where(

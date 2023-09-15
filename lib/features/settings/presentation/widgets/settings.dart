@@ -222,7 +222,7 @@ class Settings extends ConsumerWidget {
                           color: ColorPalette.blue,
                           FeatherIcons.externalLink,
                           size: 20,
-                        )
+                        ),
                       ],
                     ),
                     SectionItem(
@@ -236,7 +236,7 @@ class Settings extends ConsumerWidget {
                           color: ColorPalette.blue,
                           FeatherIcons.info,
                           size: 20,
-                        )
+                        ),
                       ],
                     ),
                   ],
