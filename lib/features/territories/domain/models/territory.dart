@@ -74,11 +74,14 @@ class Territory {
         startTime = DateTime.parse(json['startTime'] as String),
         estimationInMonths = json['estimationInMonths'] as int,
         visitBans = (json['visitBans'] as List<dynamic>)
-            .map((visitBan) =>
-                VisitBan.fromJson(visitBan as Map<String, dynamic>),)
+            .map(
+              (visitBan) => VisitBan.fromJson(visitBan as Map<String, dynamic>),
+            )
             .toList(),
         type = json['type'] as String,
-        boundaryNames = json['boundaryNames'] as List<String>,
+        boundaryNames = (json['boundaryNames'] as List<dynamic>)
+            .map((boundaryName) => boundaryName as String)
+            .toList(),
         version = json['version'] as int;
 
   Map<String, dynamic> toJson() => {

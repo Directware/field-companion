@@ -1,11 +1,10 @@
 import 'package:isar/isar.dart';
-import 'package:nanoid/nanoid.dart';
 
 part 'visit_ban.g.dart';
 
 @embedded
 class VisitBan {
-  VisitBan() : id = nanoid();
+  VisitBan();
 
   late final String id;
   late final String name;

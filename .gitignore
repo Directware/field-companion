@@ -45,3 +45,7 @@ app.*.map.json
 
 api_key.dart
 .vscode/launch.json
+
+# territory_converter
+utils/territory_converter/input/
+utils/territory_converter/output
