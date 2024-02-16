@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+.env
 
 # IntelliJ related
 *.iml
@@ -44,7 +45,6 @@ app.*.map.json
 /android/app/release
 
 api_key.dart
-.vscode/launch.json
 
 # territory_converter
 utils/territory_converter/input/

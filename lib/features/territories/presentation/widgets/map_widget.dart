@@ -1,9 +1,16 @@
+import 'dart:convert';
 
+import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:turf/center.dart';
+import 'package:turf/helpers.dart';
+import 'package:turf/turf.dart';
 
 String accessToken = const String.fromEnvironment("PUBLIC_ACCESS_TOKEN");
 
@@ -52,17 +59,32 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
 
     _map.scaleBar.updateSettings(mapbox.ScaleBarSettings(enabled: false));
 
-    // _map.annotations.createPolygonAnnotationManager().then((annotationManager) {
-    //   final options = <mapbox.PolygonAnnotationOptions>[];
-    //   for (var i = 0; i < 2; i++) {
-    //     options
-    //         .add(selectedTerritory.geoJson as mapbox.PolygonAnnotationOptions);
-    //   }
-    //   annotationManager.createMulti(
-    //       selectedTerritory.geoJson as List<mapbox.PolygonAnnotationOptions>);
-    //   // annotationManager
-    //   //    .addOnPolygonAnnotationClickListener(AnnotationClickListener());
-    // });
+    final geoJson = json.encode(selectedTerritory.geoJson);
+
+    await mapboxMap.style.addSource(
+      mapbox.GeoJsonSource(id: selectedTerritory.key, data: geoJson),
+    );
+
+    await mapboxMap.style.addLayer(
+      mapbox.FillLayer(
+        id: selectedTerritory.key,
+        sourceId: selectedTerritory.key,
+        fillColor: ColorPalette.blueProgressStartOpacity05.value,
+        fillOpacity: 0.3,
+      ),
+    );
+
+    final point = center(mapbox.GeoJSONObject.fromJson(selectedTerritory.geoJson));
+
+    mapboxMap.flyTo(
+      mapbox.CameraOptions(
+        center:
+            mapbox.Point(coordinates: mapbox.Position(point.geometry!.coordinates.lng, point.geometry!.coordinates.lat))
+                .toJson(),
+        zoom: 17.0,
+      ),
+      mapbox.MapAnimationOptions(duration: 1000),
+    );
 
     // Future.wait([
     //   rootBundle.load('assets/images/location-marker.png'),
