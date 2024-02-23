@@ -4,6 +4,7 @@ enum AppLocations {
   territories,
   fieldService,
   settings,
+  settingsAboutApp,
 }
 
 extension AppLocationsExtension on AppLocations {
@@ -19,6 +20,8 @@ extension AppLocationsExtension on AppLocations {
         return '/territories';
       case AppLocations.settings:
         return '/settings';
+      case AppLocations.settingsAboutApp:
+        return '/settings/about-app';
       default:
         return "/";
     }

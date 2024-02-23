@@ -3,6 +3,7 @@ import 'package:field_companion/features/core/presentation/views/home.dart';
 import 'package:field_companion/features/core/presentation/views/welcome.dart';
 import 'package:field_companion/features/field_service/presentation/views/field_service.dart';
 import 'package:field_companion/features/settings/presentation/providers/app_initialisation_provider.dart';
+import 'package:field_companion/features/settings/presentation/widgets/about_the_app.dart';
 import 'package:field_companion/features/settings/presentation/widgets/settings.dart';
 import 'package:field_companion/features/territory_cards/presentation/views/territories.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,21 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
               ),
             ),
           ],
-        )
+        ),
+        GoRoute(
+          path: AppLocations.settingsAboutApp.href,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 150),
+            child: const AboutTheApp(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(
+              opacity: CurveTween(curve: Curves.linear).animate(animation),
+              child: child,
+            ),
+          ),
+        ),
       ];
 
   String get initialLocation => AppLocations.fieldService.href;
