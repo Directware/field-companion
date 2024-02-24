@@ -24,7 +24,7 @@ void main() async {
     supportedLocales: const [
       Locale('en', 'US'),
       Locale('de', 'DE'),
-      Locale('pl', 'PL')
+      Locale('pl', 'PL'),
     ],
     path: 'assets/i18n',
     saveLocale: false,
@@ -42,6 +42,7 @@ void main() async {
       overrides: [
         sharedPreferencesProvider.overrideWith((ref) => sharedPreferences),
         databaseProvider.overrideWith((ref) => database)
+        // ignore: require_trailing_commas
       ],
       observers: const [],
       child: easyLocalization,

@@ -21,7 +21,7 @@ class Reports extends _$Reports {
     final months = {
       if (_selectedGoal == Goal.yearly) ..._getMonthsOfYear(_selectedMonth!),
       for (var index = -1; index <= 1; index++)
-        DateTime(_selectedMonth!.year, _selectedMonth!.month + index)
+        DateTime(_selectedMonth!.year, _selectedMonth!.month + index),
     };
 
     final loadMonths =
@@ -33,7 +33,7 @@ class Reports extends _$Reports {
 
         return [
           ...reports,
-          ...state.where((report) => _monthsIncludeDate(report.reportDate))
+          ...state.where((report) => _monthsIncludeDate(report.reportDate)),
         ];
       },
     );
@@ -44,7 +44,7 @@ class Reports extends _$Reports {
         date.month >= 9 ? DateTime(date.year, 9) : DateTime(date.year - 1, 9);
     return [
       for (var month = 0; month < 12; month++)
-        DateTime(firstMonth.year, firstMonth.month + month - 1)
+        DateTime(firstMonth.year, firstMonth.month + month - 1),
     ];
   }
 
