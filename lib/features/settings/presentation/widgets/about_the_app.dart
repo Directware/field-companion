@@ -6,6 +6,7 @@ import 'package:field_companion/features/core/infrastructure/models/color_palett
 import 'package:field_companion/features/core/presentation/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
 
 class AboutTheApp extends StatelessWidget {
@@ -57,7 +58,7 @@ class AboutTheApp extends StatelessWidget {
                   ),
                   shareApp(),
                   const SizedBox(
-                    height: 40,
+                    height: 25,
                   ),
                   contributor('Idea & Devloper', 'Mateusz Klimentowicz'),
                   const SizedBox(
@@ -81,11 +82,10 @@ class AboutTheApp extends StatelessWidget {
     return GestureDetector(
       onTap: openShareSheet,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.circular(10), // This is for rounded corners
+            borderRadius: BorderRadius.circular(10),
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -93,7 +93,7 @@ class AboutTheApp extends StatelessWidget {
                 Color.fromRGBO(79, 250, 106, 1),
                 Color.fromRGBO(49, 225, 118, 1),
                 Color.fromRGBO(23, 201, 125, 1),
-              ], // Replace with your desired colors
+              ],
             ),
           ),
           child: Row(
@@ -131,8 +131,8 @@ class AboutTheApp extends StatelessWidget {
               ),
               const Expanded(child: SizedBox()),
               const Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: const Icon(Icons.send),
+                padding: EdgeInsets.all(16.0),
+                child: Icon(Icons.send),
               ),
             ],
           ),
@@ -162,24 +162,47 @@ class AboutTheApp extends StatelessWidget {
   }
 
   Widget footer() {
-    return const Column(
+    return Column(
       children: [
-        Text(
+        const Text(
           'Copyright © 2024 Mateusz Klimentowicz',
         ),
-        Text(
+        const Text(
           'All Rights Reserved',
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Text(
-          'Field Companion v.1.1.0', // TODO - get version from pubspec.yaml
-          style: TextStyle(
-            color: ColorPalette.grey2,
-          ),
+        FutureBuilder<String>(
+          future: getAppVerion(),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Text(
+                'Field Companion',
+                style: TextStyle(
+                  color: ColorPalette.grey2,
+                ),
+              );
+            } else {
+              if (snapshot.hasError) {
+                return const Text(
+                  'Field Companion',
+                  style: TextStyle(
+                    color: ColorPalette.grey2,
+                  ),
+                );
+              } else {
+                return Text(
+                  'Field Companion v.${snapshot.data}',
+                  style: const TextStyle(
+                    color: ColorPalette.grey2,
+                  ),
+                );
+              }
+            }
+          },
         ),
-        Text(
+        const Text(
           'Made with love in Augsburg',
           style: TextStyle(
             color: ColorPalette.grey2,
@@ -193,5 +216,11 @@ class AboutTheApp extends StatelessWidget {
     const String url =
         'https://apps.apple.com/de/app/field-companion/id1513900519';
     Share.share(url);
+  }
+
+  Future<String> getAppVerion() async {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    return packageInfo.version;
   }
 }
