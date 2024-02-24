@@ -6,6 +6,7 @@ import 'package:field_companion/features/core/infrastructure/models/color_palett
 import 'package:field_companion/features/core/presentation/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share/share.dart';
 
 class AboutTheApp extends StatelessWidget {
   const AboutTheApp({super.key});
@@ -54,6 +55,10 @@ class AboutTheApp extends StatelessWidget {
                       ),
                     ),
                   ),
+                  shareApp(),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   contributor('Idea & Devloper', 'Mateusz Klimentowicz'),
                   const SizedBox(
                     height: 40,
@@ -73,7 +78,67 @@ class AboutTheApp extends StatelessWidget {
   }
 
   Widget shareApp() {
-    return const Row();
+    return GestureDetector(
+      onTap: openShareSheet,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius:
+                BorderRadius.circular(10), // This is for rounded corners
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromRGBO(79, 250, 106, 1),
+                Color.fromRGBO(49, 225, 118, 1),
+                Color.fromRGBO(23, 201, 125, 1),
+              ], // Replace with your desired colors
+            ),
+          ),
+          child: Row(
+            children: <Widget>[
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SizedBox(
+                      height: 50,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset('assets/images/icon-fc.png'),
+                      ),
+                    ),
+                  ),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'You like our app?',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Shar it with others!',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const Expanded(child: SizedBox()),
+              const Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: const Icon(Icons.send),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget contributor(String role, String name) {
@@ -122,5 +187,11 @@ class AboutTheApp extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void openShareSheet() {
+    const String url =
+        'https://apps.apple.com/de/app/field-companion/id1513900519';
+    Share.share(url);
   }
 }
