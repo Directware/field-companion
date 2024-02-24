@@ -64,7 +64,7 @@ class Section extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

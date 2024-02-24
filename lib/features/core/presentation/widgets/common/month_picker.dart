@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/core/infrastructure/models/wheel_picker_item.dart';
@@ -118,7 +116,7 @@ class MonthPicker extends StatelessWidget {
               const SizedBox(width: 16),
             ],
           ),
-        )
+        ),
       ],
     );
   }

@@ -112,7 +112,7 @@ class StepperWidget extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

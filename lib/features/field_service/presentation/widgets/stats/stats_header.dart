@@ -65,7 +65,7 @@ class StatsHeader extends ConsumerWidget {
                                   value: videos,
                                   icon: FeatherIcons.playCircle,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           const SizedBox(height: 8),
