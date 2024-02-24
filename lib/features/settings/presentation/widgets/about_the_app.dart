@@ -120,7 +120,7 @@ class AboutTheApp extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Shar it with others!',
+                        'Share it with others!',
                         style: TextStyle(
                           color: Colors.black,
                         ),
