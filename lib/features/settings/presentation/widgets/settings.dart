@@ -19,7 +19,6 @@ import 'package:field_companion/features/settings/presentation/providers/device_
 import 'package:field_companion/features/settings/presentation/providers/duration_step_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/monthly_reminder_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/user_language_provider.dart';
-import 'package:field_companion/features/settings/presentation/widgets/about_the_app.dart';
 import 'package:flutter/cupertino.dart' show CupertinoSwitch;
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
