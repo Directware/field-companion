@@ -41,8 +41,7 @@ void main() async {
     ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWith((ref) => sharedPreferences),
-        databaseProvider.overrideWith((ref) => database)
-        // ignore: require_trailing_commas
+        databaseProvider.overrideWith((ref) => database),
       ],
       observers: const [],
       child: easyLocalization,

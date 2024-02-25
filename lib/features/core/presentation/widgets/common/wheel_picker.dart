@@ -37,8 +37,13 @@ class WheelPicker extends StatefulWidget {
   }) {
     position = (value - min) ~/ step;
     initialPosition = ((initialValue ?? 0) - min) ~/ step;
-    builder =
-        (index, selected) => buildNumberItem(index, selected, step, min, max);
+    builder = (index, {required selected}) => buildNumberItem(
+          index,
+          selected,
+          step,
+          min,
+          max,
+        );
     itemCount = max != null ? (max - min) ~/ step + 1 : null;
     this.onChanged = (index) => onChanged((index + min) * step);
   }
@@ -62,7 +67,7 @@ class WheelPicker extends StatefulWidget {
     final valueIndex = items.indexWhere((item) => item.value == value) + 1;
     initialPosition = initialValueIndex >= 0 ? initialValueIndex : 0;
     position = valueIndex >= 0 ? valueIndex : 0;
-    builder = (index, selected) => buildItem(index, selected, items);
+    builder = (index, {required selected}) => buildItem(index, selected, items);
     itemCount = items.length;
     this.onChanged = (index) => onChanged(items[index].value);
   }
@@ -70,8 +75,7 @@ class WheelPicker extends StatefulWidget {
   late final int? position;
   late final int? initialPosition;
   late final ValueChanged<int> onChanged;
-  // ignore: avoid_positional_boolean_parameters
-  late final Widget? Function(int index, bool selected) builder;
+  late final Widget? Function(int index, {required bool selected}) builder;
   late final int? itemCount;
   final double? height;
   final double? width;
@@ -168,7 +172,7 @@ class _WheelPickerState extends State<WheelPicker> {
           childCount: widget.itemCount,
           builder: (context, index) => widget.builder.call(
             index,
-            _currentPosition == index,
+            selected: index == _currentPosition,
           ),
         ),
         onSelectedItemChanged: onValueChange,
