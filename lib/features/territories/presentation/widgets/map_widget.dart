@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
+import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +32,7 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
   }
 
   Future<void> _onMapCreated(mapbox.MapboxMap mapboxMap) async {
-    final selectedTerritory = ref.watch(selectedTerritoryProvider);
+    final selectedTerritory = ref.read(selectedTerritoryProvider);
 
     if (selectedTerritory == null) {
       throw Exception("No territory selected");
@@ -74,18 +75,6 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
       ),
     );
 
-    final point = center(mapbox.GeoJSONObject.fromJson(selectedTerritory.geoJson));
-
-    mapboxMap.flyTo(
-      mapbox.CameraOptions(
-        center:
-            mapbox.Point(coordinates: mapbox.Position(point.geometry!.coordinates.lng, point.geometry!.coordinates.lat))
-                .toJson(),
-        zoom: 17.0,
-      ),
-      mapbox.MapAnimationOptions(duration: 1000),
-    );
-
     // Future.wait([
     //   rootBundle.load('assets/images/location-marker.png'),
     //   rootBundle.load('assets/images/location-bearing.png'),
@@ -110,20 +99,62 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
     // );
   }
 
+  void focusOnTerritory(Territory? territory) {
+    print("focusOnTerritory");
+
+    if (territory == null) {
+      return;
+    }
+
+    final point = center(mapbox.GeoJSONObject.fromJson(territory.geoJson));
+
+    _map.flyTo(
+      mapbox.CameraOptions(
+        center: mapbox.Point(
+                coordinates: mapbox.Position(point.geometry!.coordinates.lng,
+                    point.geometry!.coordinates.lat))
+            .toJson(),
+        zoom: 17.0,
+      ),
+      mapbox.MapAnimationOptions(duration: 1000),
+    );
+  }
+
+  mapbox.Point? centerOfTerritory(Territory? territory) {
+    if (territory?.geoJson == null) {
+      return null;
+    }
+    final point = center(mapbox.GeoJSONObject.fromJson(territory!.geoJson));
+    
+
+    if (point.geometry?.coordinates == null) {
+      return null;
+    }
+
+    return mapbox.Point(
+      coordinates: point.geometry!.coordinates,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (accessToken.isEmpty) {
       throw Exception("No access token for mapbox provided");
     }
-    final selectedTerritory = ref.watch(selectedTerritoryProvider);
+
+    ref.listen(
+      selectedTerritoryProvider,
+      (previous, next) => focusOnTerritory(next),
+    );
+
+    final selectedTerritory = ref.read(selectedTerritoryProvider);
 
     return mapbox.MapWidget(
       resourceOptions: mapbox.ResourceOptions(accessToken: accessToken),
       onMapCreated: _onMapCreated,
-      //styleUri: mapbox.MapboxStyles.MAPBOX_STREETS,
+      styleUri: "https://api.maptiler.com/maps/8a0d25a8-3989-4508-9a15-eb9b6366b3fb/style.json?key=JAC0nmE7iwuArAWW6eTi",
       cameraOptions: mapbox.CameraOptions(
-        center: mapbox.Point(coordinates: mapbox.Position(10.860545, 48.355344))
-            .toJson(),
+        center: centerOfTerritory(selectedTerritory)?.toJson(),
         zoom: 17.0,
       ),
     );
