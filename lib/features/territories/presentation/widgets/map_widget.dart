@@ -4,13 +4,9 @@ import 'package:field_companion/features/core/infrastructure/models/color_palett
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:turf/center.dart';
-import 'package:turf/helpers.dart';
 import 'package:turf/turf.dart';
 
 String accessToken = const String.fromEnvironment("PUBLIC_ACCESS_TOKEN");
@@ -111,9 +107,11 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
     _map.flyTo(
       mapbox.CameraOptions(
         center: mapbox.Point(
-                coordinates: mapbox.Position(point.geometry!.coordinates.lng,
-                    point.geometry!.coordinates.lat))
-            .toJson(),
+          coordinates: mapbox.Position(
+            point.geometry!.coordinates.lng,
+            point.geometry!.coordinates.lat,
+          ),
+        ).toJson(),
         zoom: 17.0,
       ),
       mapbox.MapAnimationOptions(duration: 1000),
@@ -125,7 +123,6 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
       return null;
     }
     final point = center(mapbox.GeoJSONObject.fromJson(territory!.geoJson));
-    
 
     if (point.geometry?.coordinates == null) {
       return null;
@@ -152,7 +149,8 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
     return mapbox.MapWidget(
       resourceOptions: mapbox.ResourceOptions(accessToken: accessToken),
       onMapCreated: _onMapCreated,
-      styleUri: "https://api.maptiler.com/maps/8a0d25a8-3989-4508-9a15-eb9b6366b3fb/style.json?key=JAC0nmE7iwuArAWW6eTi",
+      styleUri:
+          "https://api.maptiler.com/maps/8a0d25a8-3989-4508-9a15-eb9b6366b3fb/style.json?key=JAC0nmE7iwuArAWW6eTi",
       cameraOptions: mapbox.CameraOptions(
         center: centerOfTerritory(selectedTerritory)?.toJson(),
         zoom: 17.0,

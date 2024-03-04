@@ -31,14 +31,14 @@ List<String> getInputFiles() {
 }
 
 void convert(String path) {
-  print("convert: " + path);
+  print("convert: $path");
   final data = extractData(path);
   final territoryV1 = parseTerritoryV1(data);
   final territoryV2 = toTerritoryV2(territoryV1);
   final zippedData = gzipData(territoryV2);
   final outputPath = getOutputPath(path);
   writeConvertedFile(outputPath, zippedData);
-  print("-> converted: " + path);
+  print("-> converted: $path");
 }
 
 String extractData(String path) {
@@ -89,7 +89,7 @@ List<int>? gzipData(Territory territoryV2) {
 
 String getOutputPath(String inputPath) {
   return join(
-      dirname(Platform.script.toFilePath()), 'output', basename(inputPath));
+      dirname(Platform.script.toFilePath()), 'output', basename(inputPath),);
 }
 
 void writeConvertedFile(String path, List<int>? bytes) {

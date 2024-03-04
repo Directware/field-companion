@@ -40,7 +40,7 @@ void main() async {
   final appDir = await getApplicationDocumentsDirectory();
   final database = await Isar.open(
       [ReportSchema, StudiesSchema, TerritorySchema],
-      directory: appDir.path);
+      directory: appDir.path,);
 
   runApp(
     ProviderScope(

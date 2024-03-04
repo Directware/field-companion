@@ -9,4 +9,4 @@ pre-commit:
   commands:
     pretty:
       glob: '*.dart'
-      run: flutter format {staged_files} && git add {staged_files}
+      run: dart format {staged_files} && git add {staged_files}

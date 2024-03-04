@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:flutter/material.dart';
