@@ -89,7 +89,10 @@ List<int>? gzipData(Territory territoryV2) {
 
 String getOutputPath(String inputPath) {
   return join(
-      dirname(Platform.script.toFilePath()), 'output', basename(inputPath),);
+    dirname(Platform.script.toFilePath()),
+    'output',
+    basename(inputPath),
+  );
 }
 
 void writeConvertedFile(String path, List<int>? bytes) {

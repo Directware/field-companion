@@ -62,7 +62,11 @@ class AboutTheApp extends StatelessWidget {
                   ),
                   Contributor(
                     role: 'settings.appIdea'.tr(),
-                    names: const ['Mateusz Klimentowicz', 'Fabien Kanzler', 'Tom Ludwig'],
+                    names: const [
+                      'Mateusz Klimentowicz',
+                      'Fabien Kanzler',
+                      'Tom Ludwig'
+                    ],
                   ),
                   const SizedBox(
                     height: 40,
