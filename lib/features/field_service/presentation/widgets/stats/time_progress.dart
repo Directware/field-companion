@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/animated_number.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/progress_indicator.dart';

@@ -7,5 +7,5 @@ part 'is_router_link_active_provider.g.dart';
 @riverpod
 bool isRouterLinkActive(IsRouterLinkActiveRef ref, AppLocations appLocation) {
   final activeRouteNotifier = ref.watch(activeRouteProvider);
-  return activeRouteNotifier.value.location == appLocation.href;
+  return activeRouteNotifier.value.uri.toString() == appLocation.href;
 }

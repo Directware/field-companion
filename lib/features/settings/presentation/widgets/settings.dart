@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:field_companion/features/core/infrastructure/models/app_locations.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/section.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/section_item.dart';
@@ -22,6 +23,7 @@ import 'package:flutter/cupertino.dart' show CupertinoSwitch;
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class Settings extends ConsumerWidget {
   const Settings({super.key});
@@ -226,7 +228,9 @@ class Settings extends ConsumerWidget {
                       ],
                     ),
                     SectionItem(
-                      onTap: () {},
+                      onTap: () {
+                        context.go(AppLocations.settingsAboutApp.href);
+                      },
                       children: [
                         Text(
                           'settings.actions.about',

@@ -101,7 +101,7 @@ class WheelPicker extends StatefulWidget {
       child: Text(
         value.toString(),
         textAlign: textAlign ?? TextAlign.center,
-        textScaleFactor: 1.5,
+        textScaler: const TextScaler.linear(1.5),
         style: selected ? selectTextStyle : unSelectTextStyle,
       ),
     );
@@ -121,7 +121,7 @@ class WheelPicker extends StatefulWidget {
       child: Text(
         items[index].text,
         textAlign: textAlign ?? TextAlign.center,
-        textScaleFactor: 1.5,
+        textScaler: const TextScaler.linear(1.5),
         style: selected ? selectTextStyle : unSelectTextStyle,
       ),
     );
