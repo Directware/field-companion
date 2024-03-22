@@ -65,7 +65,7 @@ class AboutTheApp extends StatelessWidget {
                     names: const [
                       'Mateusz Klimentowicz',
                       'Fabien Kanzler',
-                      'Tom Ludwig'
+                      'Tom Ludwig',
                     ],
                   ),
                   const SizedBox(

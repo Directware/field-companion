@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
@@ -96,7 +97,9 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
   }
 
   void focusOnTerritory(Territory? territory) {
-    print("focusOnTerritory");
+    if (kDebugMode) {
+      print("focusOnTerritory");
+    }
 
     if (territory == null) {
       return;
