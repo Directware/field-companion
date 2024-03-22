@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/domain/models/visit_ban.dart';
+import 'package:flutter/foundation.dart';
 import 'package:nanoid/nanoid.dart';
 import "package:path/path.dart";
 
@@ -31,14 +32,18 @@ List<String> getInputFiles() {
 }
 
 void convert(String path) {
-  print("convert: $path");
+  if (kDebugMode) {
+    print("convert: $path");
+  }
   final data = extractData(path);
   final territoryV1 = parseTerritoryV1(data);
   final territoryV2 = toTerritoryV2(territoryV1);
   final zippedData = gzipData(territoryV2);
   final outputPath = getOutputPath(path);
   writeConvertedFile(outputPath, zippedData);
-  print("-> converted: $path");
+  if (kDebugMode) {
+    print("-> converted: $path");
+  }
 }
 
 String extractData(String path) {
