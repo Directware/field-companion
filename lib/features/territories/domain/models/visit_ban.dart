@@ -13,12 +13,14 @@ class VisitBan {
   late final String city;
 
   VisitBan.fromJson(Map<String, dynamic> json)
-      : name = json['name'] as String,
+      : id = json['id'] as String,
+        name = json['name'] as String,
         street = json['street'] as String,
         streetSuffix = json['streetSuffix'] as String,
         city = json['city'] as String;
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'name': name,
         'street': street,
         'streetSuffix': streetSuffix,
