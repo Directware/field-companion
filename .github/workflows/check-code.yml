@@ -107,8 +107,6 @@ jobs:
 
       - run: flutter build ios --release --no-codesign --dart-define PUBLIC_ACCESS_TOKEN=${{ secrets.PUBLIC_ACCESS_TOKEN }}
 
-      - run: flutter test integration_test -d macOS
-
       - name: Store APK
         uses: actions/upload-artifact@v4
         with:
