@@ -46,6 +46,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Write Mapbox SDK secret
+        run: echo "SDK_REGISTRY_TOKEN=${{ secrets.MAPBOX_SDK_KEY }}" >> ~/.gradle/gradle.properties
+
       - name: Extract branch name
         id: extract_branch
         shell: bash
@@ -66,10 +69,11 @@ jobs:
 
       - run: flutter build apk --dart-define PUBLIC_ACCESS_TOKEN=${{ secrets.PUBLIC_ACCESS_TOKEN }}
 
-    # - uses: actions/upload-artifact@v1
-    #   with:
-    #     name: ${{ steps.extract_branch.outputs.branch }}-release-apk
-    #     path: build/app/outputs/apk/release/app-release.apk
+      - name: Store APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: field-companion.apk
+          path: build/app/outputs/apk/release/app-release.apk
 
   ios-build:
     needs: [check-code, sonarcloud]
@@ -78,6 +82,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Write Mapbox SDK secret
+        run: | 
+          echo "machine api.mapbox.com" >> ~/.netrc
+          echo "login mapbox" >> ~/.netrc
+          echo "password ${{ secrets.MAPBOX_SDK_KEY }}" >> ~/.netrc
 
       - name: Extract branch name
         id: extract_branch
@@ -96,7 +106,8 @@ jobs:
 
       - run: flutter test integration_test -d macOS
 
-    # - uses: actions/upload-artifact@v1
-    #   with:
-    #     name: ${{ steps.extract_branch.outputs.branch }}-release-ios
-    #     path: build/ios/iphoneos/Runner.app
+      - name: Store APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: field-companion.app
+          path: build/ios/iphoneos/Runner.app
