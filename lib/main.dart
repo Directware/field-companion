@@ -39,8 +39,9 @@ void main() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   final appDir = await getApplicationDocumentsDirectory();
   final database = await Isar.open(
-      [ReportSchema, StudiesSchema, TerritorySchema],
-      directory: appDir.path);
+    [ReportSchema, StudiesSchema, TerritorySchema],
+    directory: appDir.path,
+  );
 
   runApp(
     ProviderScope(

@@ -7,6 +7,10 @@ part 'selected_territory_provider.g.dart';
 class SelectedTerritory extends _$SelectedTerritory {
   SelectedTerritory() : super();
 
+// set territory(Territory territory) {
+//     state = territory;
+// }
+  // ignore: use_setters_to_change_properties
   void set(Territory territory) {
     state = territory;
   }
