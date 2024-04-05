@@ -4,8 +4,8 @@ import 'package:field_companion/features/core/infrastructure/models/color_palett
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 import 'package:permission_handler/permission_handler.dart';
@@ -85,7 +85,7 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
     Future.wait([
       rootBundle.load('assets/images/location-marker.png'),
       rootBundle.load('assets/images/location-bearing.png'),
-      rootBundle.load('assets/images/location-shadow.png')
+      rootBundle.load('assets/images/location-shadow.png'),
     ]).then(
       (imagesData) => _map.location.updateSettings(
         mapbox.LocationComponentSettings(
@@ -171,29 +171,27 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
   }
 
   Future<void> _onTapListener(mapbox.ScreenCoordinate coord) async {
-    final territoryKeys =
-        ref.read(territoriesProvider).map((t) => t.key).toList();
-    final mapbox.ScreenCoordinate conv = await _map.pixelForCoordinate(
-      Point(
-        coordinates: Position(
-          coord.y,
-          coord.x,
-        ),
-      ).toJson(),
-    );
+    // final territoryKeys =
+    //     ref.read(territoriesProvider).map((t) => t.key).toList();
+    // final mapbox.ScreenCoordinate conv = await _map.pixelForCoordinate(
+    //   Point(
+    //     coordinates: Position(
+    //       coord.y,
+    //       coord.x,
+    //     ),
+    //   ).toJson(),
+    // );
 
-    final List<mapbox.QueriedFeature?> features =
-        await _map.queryRenderedFeatures(
-      mapbox.RenderedQueryGeometry(
-        value: jsonEncode(conv.encode()),
-        type: mapbox.Type.SCREEN_COORDINATE,
-      ),
-      mapbox.RenderedQueryOptions(
-        layerIds: territoryKeys,
-      ),
-    );
-
-    print(features);
+    // final List<mapbox.QueriedFeature?> features =
+    //     await _map.queryRenderedFeatures(
+    //   mapbox.RenderedQueryGeometry(
+    //     value: jsonEncode(conv.encode()),
+    //     type: mapbox.Type.SCREEN_COORDINATE,
+    //   ),
+    //   mapbox.RenderedQueryOptions(
+    //     layerIds: territoryKeys,
+    //   ),
+    // );
   }
 
   @override
