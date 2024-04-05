@@ -64,7 +64,7 @@ jobs:
 
       - run: flutter pub get
 
-      - run: flutter build apk
+      - run: flutter build apk --dart-define PUBLIC_ACCESS_TOKEN=${{ secrets.PUBLIC_ACCESS_TOKEN }}
 
     # - uses: actions/upload-artifact@v1
     #   with:
@@ -92,7 +92,7 @@ jobs:
 
       - run: flutter pub get
 
-      - run: flutter build ios --release --no-codesign
+      - run: flutter build ios --release --no-codesign --dart-define PUBLIC_ACCESS_TOKEN=${{ secrets.PUBLIC_ACCESS_TOKEN }}
 
       - run: flutter test integration_test -d macOS
 
