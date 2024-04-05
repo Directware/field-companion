@@ -90,6 +90,7 @@ jobs:
           echo "machine api.mapbox.com" >> ~/.netrc
           echo "  login mapbox" >> ~/.netrc
           echo "  password ${{ secrets.MAPBOX_SDK_KEY }}" >> ~/.netrc
+          chmod 600 ~/.netrc
 
       - name: Extract branch name
         id: extract_branch
