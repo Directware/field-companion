@@ -137,6 +137,11 @@
     "yourLanguage": "Twój język",
     "changeLanguage": "Zmień język",
     "language": "Język",
+    "languages": {
+      "de": "Niemiecki (Deutsch)",
+      "en": "Angielski (English)",
+      "pl": "Polski (Polski)"
+    },
     "share1": "Podoba ci się ta aplikacja?",
     "share2": "Podziel się nią z innymi!",
     "aboutApp": "O aplikacji",

@@ -22,26 +22,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  final Widget easyLocalization = EasyLocalization(
-    supportedLocales: const [
-      Locale('en', 'US'),
-      Locale('de', 'DE'),
-      Locale('pl', 'PL'),
-    ],
-    path: 'assets/i18n',
-    saveLocale: false,
-    useFallbackTranslations: true,
-    useOnlyLangCode: true,
-    fallbackLocale: const Locale('en', 'US'),
-    child: const FieldCompanion(),
-  );
-
   final sharedPreferences = await SharedPreferences.getInstance();
   final appDir = await getApplicationDocumentsDirectory();
   final database = await Isar.open(
     [ReportSchema, StudiesSchema, TerritorySchema],
     directory: appDir.path,
   );
+
+  final userLanguage = sharedPreferences.getString('UserLanguage');
 
   runApp(
     ProviderScope(
@@ -50,7 +38,20 @@ void main() async {
         databaseProvider.overrideWith((ref) => database),
       ],
       observers: const [],
-      child: easyLocalization,
+      child: EasyLocalization(
+        supportedLocales: const [
+          Locale('en'),
+          Locale('de'),
+          Locale('pl'),
+        ],
+        path: 'assets/i18n',
+        saveLocale: false,
+        useFallbackTranslations: true,
+        startLocale: userLanguage != null ? Locale(userLanguage) : null,
+        useOnlyLangCode: true,
+        fallbackLocale: const Locale('en', 'US'),
+        child: const FieldCompanion(),
+      ),
     ),
   );
 }

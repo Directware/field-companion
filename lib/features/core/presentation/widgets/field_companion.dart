@@ -18,6 +18,7 @@ class FieldCompanion extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
+      locale: context.locale,
       routerConfig: ref.watch(routerProvider),
     );
   }

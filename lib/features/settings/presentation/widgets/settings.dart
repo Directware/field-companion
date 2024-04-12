@@ -19,6 +19,7 @@ import 'package:field_companion/features/settings/presentation/providers/device_
 import 'package:field_companion/features/settings/presentation/providers/duration_step_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/monthly_reminder_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/user_language_provider.dart';
+import 'package:field_companion/features/settings/presentation/widgets/picker_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart' show CupertinoSwitch;
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -28,12 +29,11 @@ import 'package:go_router/go_router.dart';
 class Settings extends ConsumerWidget {
   const Settings({super.key});
 
-  void _resetApp(WidgetRef ref) {
+  void _resetApp(WidgetRef ref, BuildContext context) {
     ref.read(appInitialisationProvider.notifier).reset();
     ref.read(confirmedFeaturesProvider.notifier).reset();
     ref.read(durationStepProvider.notifier).reset();
     ref.read(monthlyReminderProvider.notifier).reset();
-    ref.read(userLanguageProvider.notifier).reset();
     ref.read(monthlyGoalProvider.notifier).reset();
     ref.read(yearlyGoalProvider.notifier).reset();
     ref.read(reportsProvider.notifier).reset();
@@ -42,10 +42,13 @@ class Settings extends ConsumerWidget {
     ref.read(acknowledgedTipsProvider.notifier).reset();
     ref.read(currentTipProvider.notifier).reset();
     ref.read(selectedMonthProvider.notifier).set(DateTime.now());
+
+    context.resetLocale();
+    ref.read(userLanguageProvider.notifier).set(context.locale.languageCode);
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext mainContext, WidgetRef ref) {
     final monthlyReminderValue = ref.watch(monthlyReminderProvider);
     final deviceId = ref.watch(deviceIdProvider);
     final userLanguage = ref.watch(userLanguageProvider);
@@ -69,14 +72,45 @@ class Settings extends ConsumerWidget {
                   dividerColor: ColorPalette.grey2Opacity20,
                   children: [
                     SectionItem(
-                      onTap: () {},
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: mainContext,
+                          backgroundColor: Colors.transparent,
+                          builder: (ctx) {
+                            return PickerBottomSheet<String>(
+                              selectValue: userLanguage,
+                              items: [
+                                SelectItem(
+                                  label: 'settings.languages.de'.tr(),
+                                  value: "de",
+                                ),
+                                SelectItem(
+                                  label: 'settings.languages.en'.tr(),
+                                  value: "en",
+                                ),
+                                SelectItem(
+                                  label: 'settings.languages.pl'.tr(),
+                                  value: "pl",
+                                ),
+                              ],
+                              onSelected: (String language) {
+                                ref
+                                    .read(userLanguageProvider.notifier)
+                                    .set(language);
+
+                                mainContext.setLocale(Locale(language));
+                              },
+                            );
+                          },
+                        );
+                      },
                       children: [
                         Text(
                           'settings.language',
                           style: SectionItemStyles.whiteKey,
                         ).tr(),
                         Text(
-                          userLanguage,
+                          "settings.languages.$userLanguage".tr(),
                           style: SectionItemStyles.value,
                         ),
                       ],
@@ -178,7 +212,7 @@ class Settings extends ConsumerWidget {
                       ],
                     ),
                     SectionItem(
-                      onTap: () => _resetApp(ref),
+                      onTap: () => _resetApp(ref, mainContext),
                       children: [
                         Text(
                           'settings.actions.resetApp',
@@ -229,7 +263,7 @@ class Settings extends ConsumerWidget {
                     ),
                     SectionItem(
                       onTap: () {
-                        context.go(AppLocations.settingsAboutApp.href);
+                        mainContext.go(AppLocations.settingsAboutApp.href);
                       },
                       children: [
                         Text(

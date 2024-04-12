@@ -137,6 +137,11 @@
     "yourLanguage": "Deine Sprache",
     "changeLanguage": "Sprache ändern",
     "language": "Sprache",
+    "languages": {
+      "de": "Deutsch (Deutsch)",
+      "pl": "Polnisch (Polski)",
+      "en": "Englisch (English)"
+    },
     "share1": "Dir gefällt unsere App?",
     "share2": "Teile es mit andern!",
     "aboutApp": "Über die App",

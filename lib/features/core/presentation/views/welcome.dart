@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/settings/presentation/providers/app_initialisation_provider.dart';
+import 'package:field_companion/features/settings/presentation/providers/user_language_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -144,7 +145,12 @@ class Welcome extends ConsumerWidget {
                     const Size.fromWidth(310),
                   ),
                 ),
-                onPressed: ref.read(appInitialisationProvider.notifier).set,
+                onPressed: () {
+                  ref.read(appInitialisationProvider.notifier).set();
+                  ref
+                      .read(userLanguageProvider.notifier)
+                      .set(context.locale.languageCode);
+                },
                 child: const Text("actions.continue").tr(),
               ),
             ],
