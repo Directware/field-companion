@@ -95,7 +95,9 @@ class Settings extends ConsumerWidget {
                                 ),
                               ],
                               onSelected: (String language) {
-                                ref.read(userLanguageProvider.notifier).set(language);
+                                ref
+                                    .read(userLanguageProvider.notifier)
+                                    .set(language);
 
                                 mainContext.setLocale(Locale(language));
                               },
@@ -167,7 +169,9 @@ class Settings extends ConsumerWidget {
                         CupertinoSwitch(
                           value: monthlyReminderValue,
                           onChanged: (bool newValue) {
-                            ref.read(monthlyReminderProvider.notifier).set(value: newValue);
+                            ref
+                                .read(monthlyReminderProvider.notifier)
+                                .set(value: newValue);
                           },
                         ),
                       ],
@@ -236,8 +240,7 @@ class Settings extends ConsumerWidget {
                           scheme: 'mailto',
                           path: 'info@territory-offline.com',
                           queryParameters: {
-                            'subject': 'Bug Report Field Companion',
-                            'body': 'Hello, World!',
+                            'subject': 'Bug Report - Field Companion',
                           },
                         );
                         try {
@@ -263,7 +266,6 @@ class Settings extends ConsumerWidget {
                         final webSiteURI = Uri(
                           scheme: 'https',
                           host: 'territory-offline.com',
-                          path: '',
                         );
                         _launchURL(webSiteURI);
                       },
