@@ -25,7 +25,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends ConsumerWidget {
   const Settings({super.key});
@@ -249,6 +248,7 @@ class Settings extends ConsumerWidget {
                           // maybe show error alert
                         }
                       },
+
                       children: [
                         Text(
                           'settings.actions.bugReport',
@@ -269,6 +269,7 @@ class Settings extends ConsumerWidget {
                         );
                         _launchURL(webSiteURI);
                       },
+
                       children: [
                         Text(
                           'settings.actions.territoryOffline',
@@ -306,13 +307,5 @@ class Settings extends ConsumerWidget {
         ),
       ],
     );
-  }
-
-  Future<void> _launchURL(Uri uri) async {
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $uri';
-    }
   }
 }
