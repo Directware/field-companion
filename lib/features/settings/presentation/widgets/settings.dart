@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends ConsumerWidget {
   const Settings({super.key});
@@ -94,9 +95,7 @@ class Settings extends ConsumerWidget {
                                 ),
                               ],
                               onSelected: (String language) {
-                                ref
-                                    .read(userLanguageProvider.notifier)
-                                    .set(language);
+                                ref.read(userLanguageProvider.notifier).set(language);
 
                                 mainContext.setLocale(Locale(language));
                               },
@@ -168,9 +167,7 @@ class Settings extends ConsumerWidget {
                         CupertinoSwitch(
                           value: monthlyReminderValue,
                           onChanged: (bool newValue) {
-                            ref
-                                .read(monthlyReminderProvider.notifier)
-                                .set(value: newValue);
+                            ref.read(monthlyReminderProvider.notifier).set(value: newValue);
                           },
                         ),
                       ],
@@ -234,7 +231,21 @@ class Settings extends ConsumerWidget {
                   dividerColor: ColorPalette.grey2Opacity20,
                   children: [
                     SectionItem(
-                      onTap: () {},
+                      onTap: () {
+                        final mailtoURI = Uri(
+                          scheme: 'mailto',
+                          path: 'info@territory-offline.com',
+                          queryParameters: {
+                            'subject': 'Bug Report Field Companion',
+                            'body': 'Hello, World!',
+                          },
+                        );
+                        try {
+                          _launchURL(mailtoURI);
+                        } catch (e) {
+                          // maybe show error alert
+                        }
+                      },
                       children: [
                         Text(
                           'settings.actions.bugReport',
@@ -248,7 +259,14 @@ class Settings extends ConsumerWidget {
                       ],
                     ),
                     SectionItem(
-                      onTap: () {},
+                      onTap: () async {
+                        final webSiteURI = Uri(
+                          scheme: 'https',
+                          host: 'territory-offline.com',
+                          path: '',
+                        );
+                        _launchURL(webSiteURI);
+                      },
                       children: [
                         Text(
                           'settings.actions.territoryOffline',
@@ -286,5 +304,13 @@ class Settings extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _launchURL(Uri uri) async {
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $uri';
+    }
   }
 }
