@@ -243,11 +243,7 @@ class Settings extends ConsumerWidget {
                             'subject': 'Bug-Report',
                           },
                         );
-                        try {
-                          _launchURL(mailtoURI);
-                        } catch (e) {
-                          // maybe show error alert
-                        }
+                        _launchURL(mailtoURI);
                       },
                       children: [
                         Text(
