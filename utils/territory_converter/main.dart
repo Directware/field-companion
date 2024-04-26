@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/domain/models/visit_ban.dart';
-import 'package:flutter/foundation.dart';
 import 'package:nanoid/nanoid.dart';
 import "package:path/path.dart";
 
@@ -22,28 +21,21 @@ void main() {
 List<String> getInputFiles() {
   final path = join(dirname(Platform.script.toFilePath()), 'input');
   final directory = Directory(path);
-  final files = directory
-      .listSync()
-      .whereType<File>()
-      .map((file) => file.path)
-      .where((file) => basename(file) != ".gitkeep")
-      .toList();
+  final files = directory.listSync().whereType<File>().map((file) => file.path).where((file) => basename(file) != ".gitkeep").toList();
   return files;
 }
 
 void convert(String path) {
-  if (kDebugMode) {
-    print("convert: $path");
-  }
+  // ignore: avoid_print
+  print("convert: $path");
   final data = extractData(path);
   final territoryV1 = parseTerritoryV1(data);
   final territoryV2 = toTerritoryV2(territoryV1);
   final zippedData = gzipData(territoryV2);
   final outputPath = getOutputPath(path);
   writeConvertedFile(outputPath, zippedData);
-  if (kDebugMode) {
-    print("-> converted: $path");
-  }
+  // ignore: avoid_print
+  print("-> converted: $path");
 }
 
 String extractData(String path) {
@@ -67,9 +59,7 @@ Territory toTerritoryV2(TerritoryCardV1 territoryV1) {
     geoJson: territoryV1.drawing.featureCollection,
     startTime: territoryV1.assignment.startTime,
     estimationInMonths: territoryV1.estimationInMonths,
-    visitBans: territoryV1.visitBans
-        .map((visitBan) => toVisitBanV2(visitBan))
-        .toList(),
+    visitBans: territoryV1.visitBans.map((visitBan) => toVisitBanV2(visitBan)).toList(),
     boundaryNames: territoryV1.territory.boundaryNames,
     type: "com.directware.fieldcompanion.territory",
     version: 1,
