@@ -5,13 +5,10 @@ import 'package:field_companion/features/territories/domain/models/territory.dar
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:turf/turf.dart';
-
-String accessToken = const String.fromEnvironment("PUBLIC_ACCESS_TOKEN");
 
 class MapWidget extends ConsumerStatefulWidget {
   const MapWidget({super.key});
@@ -66,9 +63,7 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
         mapbox.GeoJsonSource(id: territory.key, data: geoJson),
       );
 
-      final fillColor = territory == selectedTerritory
-          ? ColorPalette.blueProgressStartOpacity05
-          : ColorPalette.grey2;
+      final fillColor = territory == selectedTerritory ? ColorPalette.blueProgressStartOpacity05 : ColorPalette.grey2;
       final fillOpacity = territory == selectedTerritory ? 0.3 : 0.6;
 
       map.style.addLayer(
@@ -82,26 +77,11 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
       );
     }
 
-    Future.wait([
-      rootBundle.load('assets/images/location-marker.png'),
-      rootBundle.load('assets/images/location-bearing.png'),
-      rootBundle.load('assets/images/location-shadow.png'),
-    ]).then(
-      (imagesData) => _map.location.updateSettings(
-        mapbox.LocationComponentSettings(
-          enabled: true,
-          showAccuracyRing: true,
-          puckBearingEnabled: true,
-          accuracyRingColor: ColorPalette.redOpacity20.value,
-          locationPuck: mapbox.LocationPuck(
-            locationPuck2D: mapbox.LocationPuck2D(
-              topImage: imagesData[0].buffer.asUint8List(),
-              bearingImage: imagesData[1].buffer.asUint8List(),
-              shadowImage: imagesData[2].buffer.asUint8List(),
-              scaleExpression: '2',
-            ),
-          ),
-        ),
+    _map.location.updateSettings(
+      mapbox.LocationComponentSettings(
+        enabled: true,
+        showAccuracyRing: true,
+        puckBearingEnabled: true,
       ),
     );
   }
@@ -196,22 +176,15 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (accessToken.isEmpty) {
-      throw Exception("No access token for mapbox provided");
-    }
-
     ref.listen<Territory?>(
       selectedTerritoryProvider,
       _updateSelected,
     );
 
     final selectedTerritory = ref.read(selectedTerritoryProvider);
-
     return mapbox.MapWidget(
-      resourceOptions: mapbox.ResourceOptions(accessToken: accessToken),
       onMapCreated: _onMapCreated,
-      styleUri:
-          "https://api.maptiler.com/maps/8a0d25a8-3989-4508-9a15-eb9b6366b3fb/style.json?key=JAC0nmE7iwuArAWW6eTi",
+      styleUri: "https://api.maptiler.com/maps/8a0d25a8-3989-4508-9a15-eb9b6366b3fb/style.json?key=JAC0nmE7iwuArAWW6eTi",
       cameraOptions: mapbox.CameraOptions(
         center: _centerOfTerritory(selectedTerritory)?.toJson(),
         zoom: 17.0,
