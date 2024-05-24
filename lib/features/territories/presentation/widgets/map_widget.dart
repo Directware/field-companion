@@ -63,7 +63,9 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
         mapbox.GeoJsonSource(id: territory.key, data: geoJson),
       );
 
-      final fillColor = territory == selectedTerritory ? ColorPalette.blueProgressStartOpacity05 : ColorPalette.grey2;
+      final fillColor = territory == selectedTerritory
+          ? ColorPalette.blueProgressStartOpacity05
+          : ColorPalette.grey2;
       final fillOpacity = territory == selectedTerritory ? 0.3 : 0.6;
 
       map.style.addLayer(
@@ -184,9 +186,10 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
     final selectedTerritory = ref.read(selectedTerritoryProvider);
     return mapbox.MapWidget(
       onMapCreated: _onMapCreated,
-      styleUri: "https://api.maptiler.com/maps/8a0d25a8-3989-4508-9a15-eb9b6366b3fb/style.json?key=JAC0nmE7iwuArAWW6eTi",
+      styleUri:
+          "https://api.maptiler.com/maps/8a0d25a8-3989-4508-9a15-eb9b6366b3fb/style.json?key=JAC0nmE7iwuArAWW6eTi",
       cameraOptions: mapbox.CameraOptions(
-        center: _centerOfTerritory(selectedTerritory)?.toJson(),
+        center: _centerOfTerritory(selectedTerritory)!.toJson(),
         zoom: 17.0,
       ),
       onTapListener: _onTapListener,

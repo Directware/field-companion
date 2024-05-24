@@ -21,7 +21,12 @@ void main() {
 List<String> getInputFiles() {
   final path = join(dirname(Platform.script.toFilePath()), 'input');
   final directory = Directory(path);
-  final files = directory.listSync().whereType<File>().map((file) => file.path).where((file) => basename(file) != ".gitkeep").toList();
+  final files = directory
+      .listSync()
+      .whereType<File>()
+      .map((file) => file.path)
+      .where((file) => basename(file) != ".gitkeep")
+      .toList();
   return files;
 }
 
@@ -59,7 +64,9 @@ Territory toTerritoryV2(TerritoryCardV1 territoryV1) {
     geoJson: territoryV1.drawing.featureCollection,
     startTime: territoryV1.assignment.startTime,
     estimationInMonths: territoryV1.estimationInMonths,
-    visitBans: territoryV1.visitBans.map((visitBan) => toVisitBanV2(visitBan)).toList(),
+    visitBans: territoryV1.visitBans
+        .map((visitBan) => toVisitBanV2(visitBan))
+        .toList(),
     boundaryNames: territoryV1.territory.boundaryNames,
     type: "com.directware.fieldcompanion.territory",
     version: 1,

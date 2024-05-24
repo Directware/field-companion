@@ -133,7 +133,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_compass: cbbd285cea1584c7ac9c4e0c3e1f17cbea55e855
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
-  integration_test: 13825b8a9334a850581300559b8839134b124670
+  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
   isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
   mapbox_maps_flutter: 0425c56f1f51fe8c46069a9e03f1027e3ade35d7
   MapboxCommon: e6d0d15f1e34278e21bae28bdc548d378757b51e
