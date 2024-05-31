@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/app_locations.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
+import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
 import 'package:field_companion/features/territories/presentation/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class TerritoryMap extends ConsumerStatefulWidget {
 
 class _TerritoryMapState extends ConsumerState<TerritoryMap> {
   List<Territory> territories = [];
+  final sheetController = DraggableScrollableController();
 
   @override
   void initState() {
@@ -68,10 +70,12 @@ class _TerritoryMapState extends ConsumerState<TerritoryMap> {
               ),
             ),
             DraggableScrollableSheet(
-              initialChildSize: 0.15,
-              minChildSize: 0.15,
-              maxChildSize: 0.8,
+              initialChildSize: 0.2,
+              minChildSize: 0.1,
+              maxChildSize: 0.85,
               snap: true,
+              snapSizes: const [0.1, 0.2, 0.5, 0.85],
+              controller: sheetController,
               builder: (BuildContext context, scrollController) {
                 return Container(
                   clipBehavior: Clip.hardEdge,
@@ -117,8 +121,12 @@ class _TerritoryMapState extends ConsumerState<TerritoryMap> {
                                 subtitle: Text(territory.key),
                               ),
                               onTap: () {
-                                print(
-                                    'Should focus on territory: ${territory.name}');
+                                ref
+                                    .read(selectedTerritoryProvider.notifier)
+                                    .set(territory);
+                                sheetController.animateTo(0.25,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut);
                               },
                             );
                           },

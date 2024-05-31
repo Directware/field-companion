@@ -123,18 +123,20 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
       return;
     }
 
-    _map.flyTo(
-      mapbox.CameraOptions(
-        center: mapbox.Point(
-          coordinates: mapbox.Position(
-            point.coordinates.lng,
-            point.coordinates.lat,
-          ),
-        ).toJson(),
-        zoom: 17.0,
-      ),
-      mapbox.MapAnimationOptions(duration: 1000),
-    );
+    if (!point.coordinates.lng.isNaN || !point.coordinates.lat.isNaN) {
+      _map.flyTo(
+        mapbox.CameraOptions(
+          center: mapbox.Point(
+            coordinates: mapbox.Position(
+              point.coordinates.lng,
+              point.coordinates.lat,
+            ),
+          ).toJson(),
+          zoom: 17.0,
+        ),
+        mapbox.MapAnimationOptions(duration: 1000),
+      );
+    }
   }
 
   mapbox.Point? _centerOfTerritory(Territory? territory) {
