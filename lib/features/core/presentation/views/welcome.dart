@@ -141,15 +141,13 @@ class Welcome extends ConsumerWidget {
               const SizedBox(height: 86),
               ElevatedButton(
                 style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(
+                  fixedSize: WidgetStateProperty.all(
                     const Size.fromWidth(310),
                   ),
                 ),
                 onPressed: () {
                   ref.read(appInitialisationProvider.notifier).set();
-                  ref
-                      .read(userLanguageProvider.notifier)
-                      .set(context.locale.languageCode);
+                  ref.read(userLanguageProvider.notifier).set(context.locale.languageCode);
                 },
                 child: const Text("actions.continue").tr(),
               ),
