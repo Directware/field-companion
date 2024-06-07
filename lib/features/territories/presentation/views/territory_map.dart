@@ -1,9 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/app_locations.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
-import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
+import 'package:field_companion/features/territories/presentation/views/territories_sheet.dart';
 import 'package:field_companion/features/territories/presentation/widgets/map_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -69,74 +68,7 @@ class _TerritoryMapState extends ConsumerState<TerritoryMap> {
                 ),
               ),
             ),
-            DraggableScrollableSheet(
-              initialChildSize: 0.2,
-              minChildSize: 0.1,
-              maxChildSize: 0.85,
-              snap: true,
-              snapSizes: const [0.1, 0.2, 0.5, 0.85],
-              controller: sheetController,
-              builder: (BuildContext context, scrollController) {
-                return Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
-                    ),
-                  ),
-                  child: CustomScrollView(
-                    controller: scrollController,
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).hintColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
-                            ),
-                            height: 4,
-                            width: 40,
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                          ),
-                        ),
-                      ),
-                      SliverAppBar(
-                        title: Text('territories.title'.tr()),
-                        primary: false,
-                        pinned: true,
-                        centerTitle: false,
-                      ),
-                      // create a list of territories
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: territories.length,
-                          (BuildContext context, int index) {
-                            final territory = territories[index];
-                            return InkWell(
-                              child: ListTile(
-                                title: Text(territory.name),
-                                subtitle: Text(territory.key),
-                              ),
-                              onTap: () {
-                                ref
-                                    .read(selectedTerritoryProvider.notifier)
-                                    .set(territory);
-                                sheetController.animateTo(0.25,
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.easeInOut);
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            )
+            TerritoriesSheet(),
           ],
         ),
       ),

@@ -147,7 +147,9 @@ class Welcome extends ConsumerWidget {
                 ),
                 onPressed: () {
                   ref.read(appInitialisationProvider.notifier).set();
-                  ref.read(userLanguageProvider.notifier).set(context.locale.languageCode);
+                  ref
+                      .read(userLanguageProvider.notifier)
+                      .set(context.locale.languageCode);
                 },
                 child: const Text("actions.continue").tr(),
               ),
