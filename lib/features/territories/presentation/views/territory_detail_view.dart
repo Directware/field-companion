@@ -14,7 +14,8 @@ class TerritoryDetailView extends ConsumerStatefulWidget {
   final Territory territory;
 
   @override
-  ConsumerState<TerritoryDetailView> createState() => _TerritoryDetailViewState();
+  ConsumerState<TerritoryDetailView> createState() =>
+      _TerritoryDetailViewState();
 }
 
 class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
@@ -45,7 +46,8 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
             DateFormat('dd/MM/yy').format(
               DateTime(
                 widget.territory.startTime.year,
-                widget.territory.startTime.month + widget.territory.estimationInMonths,
+                widget.territory.startTime.month +
+                    widget.territory.estimationInMonths,
                 widget.territory.startTime.day,
               ),
             ),
@@ -102,7 +104,10 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
                                 if (int.tryParse(enteredNumber) != null) {
                                   final number = int.parse(enteredNumber);
 
-                                  ref.read(territoriesProvider.notifier).updatePopulationCount(widget.territory.id, number);
+                                  ref
+                                      .read(territoriesProvider.notifier)
+                                      .updatePopulationCount(
+                                          widget.territory.id, number);
                                   setState(() {
                                     populationCount = number;
                                   });

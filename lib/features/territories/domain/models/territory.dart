@@ -42,7 +42,8 @@ class Territory {
   Map<String, dynamic> geoJson;
 
   String get isarGeoJson => jsonEncode(geoJson);
-  set isarGeoJson(String value) => geoJson = jsonDecode(value) as Map<String, dynamic>;
+  set isarGeoJson(String value) =>
+      geoJson = jsonDecode(value) as Map<String, dynamic>;
 
   Territory clone({
     List<VisitBan>? visitBans,
@@ -79,7 +80,9 @@ class Territory {
             )
             .toList(),
         type = json['type'] as String,
-        boundaryNames = (json['boundaryNames'] as List<dynamic>).map((boundaryName) => boundaryName as String).toList(),
+        boundaryNames = (json['boundaryNames'] as List<dynamic>)
+            .map((boundaryName) => boundaryName as String)
+            .toList(),
         version = json['version'] as int;
 
   Map<String, dynamic> toJson() => {
