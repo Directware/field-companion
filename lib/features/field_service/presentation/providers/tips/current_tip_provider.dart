@@ -24,7 +24,9 @@ class CurrentTip extends _$CurrentTip {
   }
 
   void reset() {
-    state = _pickNewTip();
+    // Reset the state to null to force the provider to pick a new tip
+    // do not call "_pickNewTip()" directly as it is called automatically
+    state = null;
   }
 
   String? _pickNewTip() {

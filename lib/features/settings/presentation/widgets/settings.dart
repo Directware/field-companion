@@ -20,6 +20,7 @@ import 'package:field_companion/features/settings/presentation/providers/duratio
 import 'package:field_companion/features/settings/presentation/providers/monthly_reminder_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/user_language_provider.dart';
 import 'package:field_companion/features/settings/presentation/widgets/picker_bottom_sheet.dart';
+import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
 import 'package:flutter/cupertino.dart' show CupertinoSwitch;
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -31,17 +32,18 @@ class Settings extends ConsumerWidget {
   const Settings({super.key});
 
   void _resetApp(WidgetRef ref, BuildContext context) {
+    ref.read(reportsProvider.notifier).reset();
+    ref.read(currentTipProvider.notifier).reset();
+    ref.read(yearlyGoalProvider.notifier).reset();
+    ref.read(territoriesProvider.notifier).reset();
+    ref.read(yearStudiesProvider.notifier).reset();
+    ref.read(monthlyGoalProvider.notifier).reset();
+    ref.read(durationStepProvider.notifier).reset();
+    ref.read(selectedDateProvider.notifier).clear();
+    ref.read(monthlyReminderProvider.notifier).reset();
+    ref.read(acknowledgedTipsProvider.notifier).reset();
     ref.read(appInitialisationProvider.notifier).reset();
     ref.read(confirmedFeaturesProvider.notifier).reset();
-    ref.read(durationStepProvider.notifier).reset();
-    ref.read(monthlyReminderProvider.notifier).reset();
-    ref.read(monthlyGoalProvider.notifier).reset();
-    ref.read(yearlyGoalProvider.notifier).reset();
-    ref.read(reportsProvider.notifier).reset();
-    ref.read(yearStudiesProvider.notifier).reset();
-    ref.read(selectedDateProvider.notifier).clear();
-    ref.read(acknowledgedTipsProvider.notifier).reset();
-    ref.read(currentTipProvider.notifier).reset();
     ref.read(selectedMonthProvider.notifier).set(DateTime.now());
 
     context.resetLocale();
