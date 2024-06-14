@@ -128,7 +128,7 @@
     "expired": "Abgelaufene Gebiete",
     "wrongFileType": "Falscher Dateityp! Bitte importiere eine Datei mit der Endung '.territory'",
     "sendToServant": "An Gebietsdiener versenden",
-    "provideNewPopulationCount": "Trage bitte eine neue Zahl für Adressen ein."
+    "provideNewPopulationCount": "Neue Wohnungseinheiten Gesamtanzahl angeben"
   },
   "settings": {
     "title": "Einstellungen",
