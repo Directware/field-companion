@@ -143,15 +143,14 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
     if (territory?.geoJson == null) {
       return null;
     }
-    final point = center(mapbox.GeoJSONObject.fromJson(territory!.geoJson));
+
+    final point = center(GeoJSONObject.fromJson(territory!.geoJson));
 
     if (point.geometry?.coordinates == null) {
       return null;
     }
 
-    return mapbox.Point(
-      coordinates: point.geometry!.coordinates,
-    );
+    return mapbox.Point(coordinates: point.geometry!.coordinates);
   }
 
   Future<void> _onTapListener(mapbox.ScreenCoordinate coord) async {
