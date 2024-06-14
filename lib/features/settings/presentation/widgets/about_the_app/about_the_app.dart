@@ -45,7 +45,7 @@ class AboutTheApp extends StatelessWidget {
                           context.go(AppLocations.settings.href);
                         },
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
+                          backgroundColor: WidgetStateProperty.all<Color>(
                             ColorPalette.grey2Opacity30,
                           ),
                         ),

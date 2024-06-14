@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 class UiSpacing {
+  const UiSpacing._();
+
   // Border Radius Constants
   static BorderRadius radiusRounded = BorderRadius.circular(999.0);
   static BorderRadius radiusXl = BorderRadius.circular(20.0);
