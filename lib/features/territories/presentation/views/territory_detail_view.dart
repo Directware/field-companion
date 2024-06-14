@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/core/presentation/constants/ui_spacing.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
-import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -107,13 +106,15 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
                                   ref
                                       .read(territoriesProvider.notifier)
                                       .updatePopulationCount(
-                                          widget.territory.id, number);
+                                        widget.territory.id,
+                                        number,
+                                      );
                                   setState(() {
                                     populationCount = number;
                                   });
                                 } else {
                                   // Show an error message
-                                  print('Invalid number');
+                                  // TODO: print('Invalid number');
                                 }
                                 Navigator.of(context).pop();
                               },
@@ -156,7 +157,7 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                print("Return territory");
+                // TODO: print("Return territory");
               },
               child: Padding(
                 padding: const EdgeInsets.all(UiSpacing.spacingS),
