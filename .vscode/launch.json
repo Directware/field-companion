@@ -15,6 +15,16 @@
             ]
         },
         {
+            "name": "field_companion ([M] iPhone)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define-from-file=.env",
+                "-d",
+                "00008130-0019751001E2001C"
+            ]
+        },
+        {
             "name": "field-companion (profile mode)",
             "request": "launch",
             "type": "dart",

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
+import 'package:field_companion/features/territories/domain/models/territory_card_v1.dart';
 import 'package:field_companion/features/territories/domain/models/visit_ban.dart';
 import 'package:field_companion/features/territories/infrastructure/repositories/report_repository.dart';
 import 'package:field_companion/features/territories/presentation/providers/territory_repository_provider.dart';
@@ -21,9 +22,11 @@ class Territories extends _$Territories {
 
     if (territory == null) return;
 
-    final updatedTerritory = territory.clone(visitBans: [...territory.visitBans, visitBan]);
+    final updatedTerritory =
+        territory.clone(visitBans: [...territory.visitBans, visitBan]);
 
-    state = state.map((item) => item.id == id ? updatedTerritory : item).toList();
+    state =
+        state.map((item) => item.id == id ? updatedTerritory : item).toList();
 
     _repository.upsert(updatedTerritory);
   }
@@ -34,10 +37,12 @@ class Territories extends _$Territories {
     if (territory == null) return;
 
     final updatedTerritory = territory.clone(
-      visitBans: territory.visitBans.where((item) => item.id != visitBan.id).toList(),
+      visitBans:
+          territory.visitBans.where((item) => item.id != visitBan.id).toList(),
     );
 
-    state = state.map((item) => item.id == id ? updatedTerritory : item).toList();
+    state =
+        state.map((item) => item.id == id ? updatedTerritory : item).toList();
 
     _repository.upsert(updatedTerritory);
   }
@@ -51,7 +56,13 @@ class Territories extends _$Territories {
     final archive = GZipDecoder().decodeBytes(bytes, verify: true);
     final territoryData = utf8.decode(archive);
     final object = jsonDecode(territoryData) as Map<String, dynamic>;
-    final territory = Territory.fromJson(object);
+    Territory territory;
+
+    if (TerritoryCardV1().isDeprecatedFormat(object)) {
+      territory = TerritoryCardV1().toEntity(object);
+    } else {
+      territory = Territory.fromJson(object);
+    }
 
     state = [...state, territory];
 
@@ -65,7 +76,8 @@ class Territories extends _$Territories {
 
     final updatedTerritory = territory.clone(populationCount: populationCount);
 
-    state = state.map((item) => item.id == id ? updatedTerritory : item).toList();
+    state =
+        state.map((item) => item.id == id ? updatedTerritory : item).toList();
 
     _repository.upsert(updatedTerritory);
   }
