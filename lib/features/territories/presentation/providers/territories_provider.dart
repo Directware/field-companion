@@ -21,11 +21,9 @@ class Territories extends _$Territories {
 
     if (territory == null) return;
 
-    final updatedTerritory =
-        territory.clone(visitBans: [...territory.visitBans, visitBan]);
+    final updatedTerritory = territory.clone(visitBans: [...territory.visitBans, visitBan]);
 
-    state =
-        state.map((item) => item.id == id ? updatedTerritory : item).toList();
+    state = state.map((item) => item.id == id ? updatedTerritory : item).toList();
 
     _repository.upsert(updatedTerritory);
   }
@@ -36,12 +34,10 @@ class Territories extends _$Territories {
     if (territory == null) return;
 
     final updatedTerritory = territory.clone(
-      visitBans:
-          territory.visitBans.where((item) => item.id != visitBan.id).toList(),
+      visitBans: territory.visitBans.where((item) => item.id != visitBan.id).toList(),
     );
 
-    state =
-        state.map((item) => item.id == id ? updatedTerritory : item).toList();
+    state = state.map((item) => item.id == id ? updatedTerritory : item).toList();
 
     _repository.upsert(updatedTerritory);
   }
@@ -60,6 +56,18 @@ class Territories extends _$Territories {
     state = [...state, territory];
 
     _repository.upsert(territory);
+  }
+
+  void updatePopulationCount(String id, int populationCount) {
+    final territory = state.firstWhereOrNull((territory) => territory.id == id);
+
+    if (territory == null) return;
+
+    final updatedTerritory = territory.clone(populationCount: populationCount);
+
+    state = state.map((item) => item.id == id ? updatedTerritory : item).toList();
+
+    _repository.upsert(updatedTerritory);
   }
 
   Future<void> delete(Territory territory) async {

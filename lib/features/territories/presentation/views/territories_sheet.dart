@@ -8,6 +8,28 @@ import 'package:field_companion/features/territories/presentation/views/territor
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+class BlurredBackgroundImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.hardEdge,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('assets/images/background-map.jpeg'),
+        ),
+      ),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 10,
+          sigmaY: 10,
+        ),
+        child: const Center(),
+      ),
+    );
+  }
+}
+
 class TerritoriesSheet extends ConsumerStatefulWidget {
   @override
   _TerritoriesSheetState createState() => _TerritoriesSheetState();
@@ -16,6 +38,8 @@ class TerritoriesSheet extends ConsumerStatefulWidget {
 class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
   List<Territory> territories = [];
   final sheetController = DraggableScrollableController();
+  bool showTerritoryList = true;
+  Territory? selectedTerritory;
 
   @override
   void initState() {
@@ -32,6 +56,7 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
 
   @override
   Widget build(BuildContext context) {
+    territories = ref.watch(territoriesProvider);
     return DraggableScrollableSheet(
       initialChildSize: 0.2,
       minChildSize: 0.1,
@@ -42,74 +67,177 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
       builder: (BuildContext context, scrollController) {
         return Container(
           clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25),
               topRight: Radius.circular(25),
             ),
           ),
-          child: CustomScrollView(
-            controller: scrollController,
-            slivers: [
-              SliverToBoxAdapter(
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).hintColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    ),
-                    height: 4,
-                    width: 40,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                  ),
-                ),
-              ),
-              SliverAppBar(
-                title: Text('territories.title'.tr()),
-                primary: false,
-                pinned: true,
-                centerTitle: false,
-              ),
-              // create a list of territories
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: territories.length,
-                  (BuildContext context, int index) {
-                    final territory = territories[index];
-                    return InkWell(
-                      child: ListTile(
-                        title: Text(territory.name),
-                        subtitle: Text(territory.key),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                      ),
-                      onTap: () {
-                        ref
-                            .read(selectedTerritoryProvider.notifier)
-                            .set(territory);
-                        sheetController.animateTo(
-                          0.25,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                        );
-
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return TerritoryDetailView(
-                                territory: territory,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
+          child: Stack(
+            children: [
+              BlurredBackgroundImage(),
+              CustomScrollView(
+                controller: scrollController,
+                slivers: [
+                  _buildTopBar(context),
+                  _buildAppBar(),
+                  _buildTerritoryList(context),
+                ],
               ),
             ],
           ),
         );
+      },
+    );
+  }
+
+  Widget _buildTopBar(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.75),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          height: 4,
+          width: 40,
+          margin: const EdgeInsets.symmetric(vertical: 10),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAppBar() {
+    return SliverAppBar(
+      title: _buildAnimatedSwitcher(
+        (showTerritoryList && selectedTerritory == null)
+            ? Text(
+                'territories.title'.tr(),
+                style: const TextStyle(color: Colors.white),
+                key: const ValueKey<String>('territories.title'),
+              )
+            : Text(
+                selectedTerritory!.name,
+                style: const TextStyle(color: Colors.white),
+                key: ValueKey<String>(selectedTerritory!.name),
+              ),
+      ),
+      backgroundColor: Colors.transparent,
+      primary: false,
+      pinned: true,
+      centerTitle: true,
+      leading: _buildAnimatedSwitcher(
+        !showTerritoryList
+            ? IconButton(
+                key: const ValueKey<String>('backButton'),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_sharp,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  setState(() {
+                    showTerritoryList = true;
+                    selectedTerritory = null;
+                  });
+                },
+              )
+            : const SizedBox(key: ValueKey<String>('emptySpace')),
+      ),
+    );
+  }
+
+  Widget _buildAnimatedSwitcher(Widget child) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      child: child,
+    );
+  }
+
+  Widget _buildTerritoryList(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          const begin = Offset(-1.0, 0.0);
+          const end = Offset.zero;
+          final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: Curves.easeInOut));
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+        child: Stack(
+          children: [
+            Visibility(
+              visible: !showTerritoryList,
+              child: selectedTerritory != null
+                  ? TerritoryDetailView(
+                      territory: selectedTerritory!,
+                    )
+                  : const Text(
+                      "No territory selected",
+                      style: TextStyle(color: Colors.white),
+                    ),
+            ),
+            Visibility(
+              visible: showTerritoryList,
+              child: _buildTerritoryListView(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTerritoryListView(BuildContext context) {
+    return SizedBox(
+      key: const ValueKey<int>(1),
+      height: MediaQuery.of(context).size.height,
+      child: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                final territory = territories[index];
+                return _buildTerritoryListItem(context, territory);
+              },
+              childCount: territories.length,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTerritoryListItem(BuildContext context, Territory territory) {
+    return InkWell(
+      child: ListTile(
+        title: Text(
+          territory.name,
+          style: const TextStyle(color: Colors.white),
+        ),
+        subtitle: Text(
+          territory.key,
+          style: const TextStyle(color: Colors.white),
+        ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.white,
+        ),
+      ),
+      onTap: () {
+        ref.read(selectedTerritoryProvider.notifier).set(territory);
+        setState(() {
+          showTerritoryList = false;
+          selectedTerritory = territory;
+        });
       },
     );
   }

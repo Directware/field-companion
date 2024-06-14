@@ -45,6 +45,23 @@ class _TerritoryMapState extends ConsumerState<TerritoryMap> {
           children: [
             // floating button
             const MapWidget(),
+            IgnorePointer(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.white,
+                      Colors.white.withOpacity(0.10),
+                      Colors.white.withOpacity(0.00),
+                    ],
+                    stops: const [0.0, 0.10, 1.0],
+                  ),
+                ),
+              ),
+            ),
+
             Positioned(
               top: 15,
               left: 15,
