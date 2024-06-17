@@ -1,10 +1,10 @@
 name: Check code and build
 
 on:
-  push:
+  pull_request:
     branches:
-      - "**"
-
+      - 'main'
+  workflow_dispatch:
 jobs:
   check-code:
     runs-on: ubuntu-latest
