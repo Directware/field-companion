@@ -235,6 +235,8 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
       ),
       onTap: () {
         ref.read(selectedTerritoryProvider.notifier).set(territory);
+        sheetController.animateTo(0.5,
+            duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
         setState(() {
           showTerritoryList = false;
           selectedTerritory = territory;
