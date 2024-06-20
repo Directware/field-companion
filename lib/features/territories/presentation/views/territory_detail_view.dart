@@ -13,13 +13,13 @@ class TerritoryDetailView extends ConsumerStatefulWidget {
   final Territory territory;
 
   @override
-  ConsumerState<TerritoryDetailView> createState() =>
-      _TerritoryDetailViewState();
+  ConsumerState<TerritoryDetailView> createState() => _TerritoryDetailViewState();
 }
 
 class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
   int populationCount = 0;
 
+  final textFieldController = TextEditingController();
   @override
   void initState() {
     populationCount = widget.territory.populationCount;
@@ -45,8 +45,7 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
             DateFormat('dd/MM/yy').format(
               DateTime(
                 widget.territory.startTime.year,
-                widget.territory.startTime.month +
-                    widget.territory.estimationInMonths,
+                widget.territory.startTime.month + widget.territory.estimationInMonths,
                 widget.territory.startTime.day,
               ),
             ),
@@ -103,9 +102,7 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
                                 if (int.tryParse(enteredNumber) != null) {
                                   final number = int.parse(enteredNumber);
 
-                                  ref
-                                      .read(territoriesProvider.notifier)
-                                      .updatePopulationCount(
+                                  ref.read(territoriesProvider.notifier).updatePopulationCount(
                                         widget.territory.id,
                                         number,
                                       );
@@ -177,6 +174,87 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
                       Icons.logout,
                       color: ColorPalette.red,
                       size: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(UiSpacing.spacingXs),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.white.withOpacity(0.1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(UiSpacing.spacingS),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: UiSpacing.spacingS),
+                      child: Text(
+                        'territories.visitBans'.tr(),
+                        style: const TextStyle(
+                          fontFamily: 'Heebo',
+                          fontWeight: FontWeight.w800,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    if (widget.territory.visitBans.isEmpty)
+                      Text(
+                        'territories.noVisitBans'.tr(),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                        ),
+                      )
+                    else
+                      const Text("Show list with visit bans"),
+                    const Padding(
+                      padding: EdgeInsets.only(top: UiSpacing.spacingXs),
+                      child: Divider(
+                        thickness: 0.5,
+                      ),
+                    ),
+                    TextField(
+                      style: const TextStyle(color: Colors.white),
+                      controller: textFieldController,
+                      decoration: InputDecoration(
+                        hintText: 'territories.visitBanAddress'.tr(),
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          // update territory with new visit ban
+                          // ref.read(territoriesProvider.notifier).addVisitBan(
+                          //       widget.territory.id,
+                          //       VisitBan(),
+                          //     );
+                          textFieldController.clear();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: UiSpacing.spacingS, bottom: UiSpacing.spacingXs),
+                          child: Row(
+                            children: [
+                              Text(
+                                'territories.addVisitBans'.tr(),
+                                style: const TextStyle(
+                                  color: ColorPalette.blue,
+                                  fontFamily: 'Heebo',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
