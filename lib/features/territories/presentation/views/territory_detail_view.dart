@@ -8,18 +8,17 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TerritoryDetailView extends ConsumerStatefulWidget {
-  const TerritoryDetailView({super.key, required this.territory});
+  const TerritoryDetailView({super.key, required this.territory, required this.toggleReturnTerritoryView});
 
   final Territory territory;
+  final Function(bool) toggleReturnTerritoryView;
 
   @override
-  ConsumerState<TerritoryDetailView> createState() =>
-      _TerritoryDetailViewState();
+  ConsumerState<TerritoryDetailView> createState() => _TerritoryDetailViewState();
 }
 
 class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
   int populationCount = 0;
-  bool showSubmitTerritoryView = false;
 
   final textFieldController = TextEditingController();
   @override
@@ -32,18 +31,7 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(UiSpacing.spacingXs),
-      child: Stack(
-        children: [
-          Visibility(
-            visible: !showSubmitTerritoryView,
-            child: territoryDetail(context),
-          ),
-          Visibility(
-            visible: showSubmitTerritoryView,
-            child: getSubmitTerritoryView(context),
-          ),
-        ],
-      ),
+      child: territoryDetail(context),
     );
   }
 
@@ -63,8 +51,7 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
           DateFormat('dd/MM/yy').format(
             DateTime(
               widget.territory.startTime.year,
-              widget.territory.startTime.month +
-                  widget.territory.estimationInMonths,
+              widget.territory.startTime.month + widget.territory.estimationInMonths,
               widget.territory.startTime.day,
             ),
           ),
@@ -121,9 +108,7 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
                               if (int.tryParse(enteredNumber) != null) {
                                 final number = int.parse(enteredNumber);
 
-                                ref
-                                    .read(territoriesProvider.notifier)
-                                    .updatePopulationCount(
+                                ref.read(territoriesProvider.notifier).updatePopulationCount(
                                       widget.territory.id,
                                       number,
                                     );
@@ -176,7 +161,7 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
           child: InkWell(
             onTap: () {
               setState(() {
-                showSubmitTerritoryView = true;
+                widget.toggleReturnTerritoryView(true);
               });
             },
             child: Padding(
@@ -254,17 +239,11 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
-                        // update territory with new visit ban
-                        // ref.read(territoriesProvider.notifier).addVisitBan(
-                        //       widget.territory.id,
-                        //       VisitBan(),
-                        //     );
+                        // up
                         textFieldController.clear();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: UiSpacing.spacingS,
-                            bottom: UiSpacing.spacingXs),
+                        padding: const EdgeInsets.only(top: UiSpacing.spacingS, bottom: UiSpacing.spacingXs),
                         child: Row(
                           children: [
                             Text(
@@ -311,136 +290,6 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
             style: const TextStyle(
               color: Colors.white,
               fontFamily: 'Heebo',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget getSubmitTerritoryView(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: UiSpacing.spacingS),
-        getInstructionRow(1,
-            'Make sure this is really the right territory and you have completed it.'),
-        getInstructionRow(2,
-            'Send your territory servant the territory with the send button with the first button below.'),
-        getInstructionRow(
-          3,
-          'After you successfully send the territory back to your territory servant, delete it from your app, by marking it as done with the button below.',
-        ),
-        const SizedBox(height: UiSpacing.spacingM),
-        Padding(
-          padding: const EdgeInsets.all(UiSpacing.spacingS),
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              backgroundColor: Colors.blue,
-            ),
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                'territories.sendToServant'.tr(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  showSubmitTerritoryView = false;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                backgroundColor: Colors.transparent,
-                side: const BorderSide(
-                  color: Colors.grey,
-                ),
-              ),
-              child: Text(
-                'common.cancel'.tr(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Button action
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                backgroundColor: Colors.transparent,
-                side: const BorderSide(
-                  color: ColorPalette.red,
-                ),
-              ),
-              child: const Text(
-                'Mark Territory as Done',
-                style: TextStyle(
-                  color: ColorPalette.red,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget getInstructionRow(int index, String instruction) {
-    return Padding(
-      padding: const EdgeInsets.all(UiSpacing.spacingS),
-      child: Row(
-        children: [
-          Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: ColorPalette.blue,
-                width: 2,
-              ),
-            ),
-            child: Center(
-              child: Text(
-                index.toString(),
-                style: const TextStyle(
-                  color: Colors.blue,
-                  fontFamily: 'Heebo',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: UiSpacing.spacingS),
-          Expanded(
-            child: Text(
-              instruction,
-              style: const TextStyle(
-                color: Colors.white,
-                fontFamily: 'Heebo',
-              ),
             ),
           ),
         ],

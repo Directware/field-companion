@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
+import 'package:field_companion/features/territories/presentation/views/return_territory_view.dart';
 import 'package:field_companion/features/territories/presentation/views/territory_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,6 +40,7 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
   List<Territory> territories = [];
   final sheetController = DraggableScrollableController();
   bool showTerritoryList = true;
+  bool isShowingReturnTerritoryView = false;
   Territory? selectedTerritory;
 
   @override
@@ -136,8 +138,12 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
                 ),
                 onPressed: () {
                   setState(() {
-                    showTerritoryList = true;
-                    selectedTerritory = null;
+                    if (isShowingReturnTerritoryView) {
+                      isShowingReturnTerritoryView = false;
+                    } else {
+                      showTerritoryList = true;
+                      selectedTerritory = null;
+                    }
                   });
                 },
               )
@@ -166,8 +172,7 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
         transitionBuilder: (Widget child, Animation<double> animation) {
           const begin = Offset(-1.0, 0.0);
           const end = Offset.zero;
-          final tween = Tween(begin: begin, end: end)
-              .chain(CurveTween(curve: Curves.easeInOut));
+          final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: Curves.easeInOut));
 
           return SlideTransition(
             position: animation.drive(tween),
@@ -177,15 +182,26 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
         child: Stack(
           children: [
             Visibility(
-              visible: !showTerritoryList,
+              visible: !showTerritoryList && !isShowingReturnTerritoryView,
               child: selectedTerritory != null
                   ? TerritoryDetailView(
                       territory: selectedTerritory!,
+                      toggleReturnTerritoryView: (p0) => toggleReturnTerritoryView(p0),
                     )
                   : const Text(
                       "No territory selected",
                       style: TextStyle(color: Colors.white),
                     ),
+            ),
+            Visibility(
+              visible: isShowingReturnTerritoryView,
+              child: selectedTerritory != null
+                  ? ReturnTerritoryView(
+                      territory: selectedTerritory!,
+                      backToTerritoryList: backToTerritoryList,
+                      toggleReturnTerritoryView: (p0) => toggleReturnTerritoryView(p0),
+                    )
+                  : const Text("No territory selected"),
             ),
             Visibility(
               visible: showTerritoryList,
@@ -195,6 +211,20 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
         ),
       ),
     );
+  }
+
+  void backToTerritoryList() {
+    setState(() {
+      isShowingReturnTerritoryView = false;
+      showTerritoryList = true;
+      selectedTerritory = null;
+    });
+  }
+
+  void toggleReturnTerritoryView(bool show) {
+    setState(() {
+      isShowingReturnTerritoryView = show;
+    });
   }
 
   Widget _buildTerritoryListView(BuildContext context) {
@@ -235,8 +265,9 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
       ),
       onTap: () {
         ref.read(selectedTerritoryProvider.notifier).set(territory);
-        sheetController.animateTo(0.5,
-            duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+        if (sheetController.size < 0.5) {
+          sheetController.animateTo(0.5, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+        }
         setState(() {
           showTerritoryList = false;
           selectedTerritory = territory;
