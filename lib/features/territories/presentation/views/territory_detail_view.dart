@@ -8,13 +8,17 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TerritoryDetailView extends ConsumerStatefulWidget {
-  const TerritoryDetailView({super.key, required this.territory, required this.toggleReturnTerritoryView});
+  const TerritoryDetailView(
+      {super.key,
+      required this.territory,
+      required this.toggleReturnTerritoryView});
 
   final Territory territory;
   final Function(bool) toggleReturnTerritoryView;
 
   @override
-  ConsumerState<TerritoryDetailView> createState() => _TerritoryDetailViewState();
+  ConsumerState<TerritoryDetailView> createState() =>
+      _TerritoryDetailViewState();
 }
 
 class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
@@ -51,7 +55,8 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
           DateFormat('dd/MM/yy').format(
             DateTime(
               widget.territory.startTime.year,
-              widget.territory.startTime.month + widget.territory.estimationInMonths,
+              widget.territory.startTime.month +
+                  widget.territory.estimationInMonths,
               widget.territory.startTime.day,
             ),
           ),
@@ -108,7 +113,9 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
                               if (int.tryParse(enteredNumber) != null) {
                                 final number = int.parse(enteredNumber);
 
-                                ref.read(territoriesProvider.notifier).updatePopulationCount(
+                                ref
+                                    .read(territoriesProvider.notifier)
+                                    .updatePopulationCount(
                                       widget.territory.id,
                                       number,
                                     );
@@ -243,7 +250,9 @@ class _TerritoryDetailViewState extends ConsumerState<TerritoryDetailView> {
                         textFieldController.clear();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(top: UiSpacing.spacingS, bottom: UiSpacing.spacingXs),
+                        padding: const EdgeInsets.only(
+                            top: UiSpacing.spacingS,
+                            bottom: UiSpacing.spacingXs),
                         child: Row(
                           children: [
                             Text(

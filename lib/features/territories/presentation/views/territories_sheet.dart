@@ -172,7 +172,8 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
         transitionBuilder: (Widget child, Animation<double> animation) {
           const begin = Offset(-1.0, 0.0);
           const end = Offset.zero;
-          final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: Curves.easeInOut));
+          final tween = Tween(begin: begin, end: end)
+              .chain(CurveTween(curve: Curves.easeInOut));
 
           return SlideTransition(
             position: animation.drive(tween),
@@ -186,7 +187,8 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
               child: selectedTerritory != null
                   ? TerritoryDetailView(
                       territory: selectedTerritory!,
-                      toggleReturnTerritoryView: (p0) => toggleReturnTerritoryView(p0),
+                      toggleReturnTerritoryView: (p0) =>
+                          toggleReturnTerritoryView(p0),
                     )
                   : const Text(
                       "No territory selected",
@@ -199,7 +201,8 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
                   ? ReturnTerritoryView(
                       territory: selectedTerritory!,
                       backToTerritoryList: backToTerritoryList,
-                      toggleReturnTerritoryView: (p0) => toggleReturnTerritoryView(p0),
+                      toggleReturnTerritoryView: (p0) =>
+                          toggleReturnTerritoryView(p0),
                     )
                   : const Text("No territory selected"),
             ),
@@ -266,7 +269,9 @@ class _TerritoriesSheetState extends ConsumerState<TerritoriesSheet> {
       onTap: () {
         ref.read(selectedTerritoryProvider.notifier).set(territory);
         if (sheetController.size < 0.5) {
-          sheetController.animateTo(0.5, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+          sheetController.animateTo(0.5,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeIn);
         }
         setState(() {
           showTerritoryList = false;

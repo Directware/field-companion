@@ -24,7 +24,8 @@ class ReturnTerritoryView extends ConsumerStatefulWidget {
   final Function(bool) toggleReturnTerritoryView;
 
   @override
-  ConsumerState<ReturnTerritoryView> createState() => _ReturnTerritoryViewState();
+  ConsumerState<ReturnTerritoryView> createState() =>
+      _ReturnTerritoryViewState();
 }
 
 class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
@@ -51,7 +52,8 @@ class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
           child: ElevatedButton(
             onPressed: () async {
               final Directory directory = await getTemporaryDirectory();
-              final String filePath = '${directory.path}/${widget.territory.name}.territory';
+              final String filePath =
+                  '${directory.path}/${widget.territory.name}.territory';
               final File file = File(filePath);
 
               await file.writeAsString(widget.territory.toJson().toString());
@@ -64,7 +66,8 @@ class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
               try {
                 await FlutterEmailSender.send(email);
               } catch (e) {
-                final BuildContext dialogContext = context; // Store the context locally
+                final BuildContext dialogContext =
+                    context; // Store the context locally
                 if (dialogContext.mounted) {
                   showCupertinoDialog(
                     context: dialogContext,
@@ -142,7 +145,8 @@ class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
                     builder: (BuildContext context) {
                       return CupertinoAlertDialog(
                         title: Text('territories.remove'.tr()),
-                        content: const Text('Are you sure you want to delete this territory form your app?'),
+                        content: const Text(
+                            'Are you sure you want to delete this territory form your app?'),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -152,7 +156,9 @@ class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
                           ),
                           TextButton(
                             onPressed: () {
-                              ref.read(territoriesProvider.notifier).delete(widget.territory);
+                              ref
+                                  .read(territoriesProvider.notifier)
+                                  .delete(widget.territory);
                               widget.backToTerritoryList();
                               Navigator.of(context).pop();
                             },
@@ -173,7 +179,7 @@ class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
                   ),
                 ),
                 child: Text(
-                  'territories.markAsDone'.tr(),
+                  'territories.markTerritoryAsDone'.tr(),
                   style: const TextStyle(
                     color: ColorPalette.red,
                     fontSize: 18,
