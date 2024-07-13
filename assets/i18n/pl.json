@@ -128,7 +128,8 @@
     "expired": "Wygasłe tereny",
     "wrongFileType": "Zły typ pliku! Proszę zaimportować plik z rozszerzeniem '.territory'",
     "sendToServant": "Wyślij do sługi terenów",
-    "provideNewPopulationCount": "Proszę wpisać nową liczbę do ilości adresów."
+    "provideNewPopulationCount": "Proszę wpisać nową liczbę do ilości adresów.",
+    "markTerritoryAsDone": "Oznacz terytorium jako gotowe"
   },
   "settings": {
     "title": "Ustawienia",

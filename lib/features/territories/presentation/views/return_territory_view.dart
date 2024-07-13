@@ -58,7 +58,7 @@ class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
 
               final Email email = Email(
                 subject: 'territories.returnTerritory'.tr(),
-                attachmentPaths: ['path/to/your/attachment'],
+                attachmentPaths: [file.path],
               );
 
               try {
@@ -104,78 +104,84 @@ class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  widget.toggleReturnTerritoryView(false);
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: UiSpacing.spacingS,
+            right: UiSpacing.spacingS,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    widget.toggleReturnTerritoryView(false);
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  side: const BorderSide(
+                    color: Colors.grey,
+                  ),
                 ),
-                backgroundColor: Colors.transparent,
-                side: const BorderSide(
-                  color: Colors.grey,
-                ),
-              ),
-              child: Text(
-                'common.cancel'.tr(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CupertinoAlertDialog(
-                      title: const Text('Are you sure?'),
-                      content: const Text('Are you sure you want to delete this territory form your app?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            ref.read(territoriesProvider.notifier).delete(widget.territory);
-                            widget.backToTerritoryList();
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('Confirm'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                backgroundColor: Colors.transparent,
-                side: const BorderSide(
-                  color: ColorPalette.red,
+                child: Text(
+                  'common.cancel'.tr(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-              child: const Text(
-                'Mark Territory as Done',
-                style: TextStyle(
-                  color: ColorPalette.red,
-                  fontSize: 18,
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CupertinoAlertDialog(
+                        title: Text('territories.remove'.tr()),
+                        content: const Text('Are you sure you want to delete this territory form your app?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('common.cancel'.tr()),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              ref.read(territoriesProvider.notifier).delete(widget.territory);
+                              widget.backToTerritoryList();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('common.remove'.tr()),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  side: const BorderSide(
+                    color: ColorPalette.red,
+                  ),
+                ),
+                child: Text(
+                  'territories.markAsDone'.tr(),
+                  style: const TextStyle(
+                    color: ColorPalette.red,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
