@@ -47,13 +47,14 @@ class Territory {
 
   Territory clone({
     List<VisitBan>? visitBans,
+    int? populationCount,
   }) {
     return Territory(
       id: id,
       name: name,
       key: key,
       publisherId: publisherId,
-      populationCount: populationCount,
+      populationCount: populationCount ?? this.populationCount,
       geoJson: geoJson,
       startTime: startTime,
       estimationInMonths: estimationInMonths,

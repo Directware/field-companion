@@ -114,6 +114,7 @@ class Territories extends ConsumerWidget {
                         children: [
                           Text(
                             style: const TextStyle(
+                              color: Colors.white,
                               fontFamily: "Heebo",
                               fontSize: 16,
                               letterSpacing: 0.4,

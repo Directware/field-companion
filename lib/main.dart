@@ -8,9 +8,12 @@ import 'package:field_companion/features/territories/domain/models/territory.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
+
+const String accessToken = String.fromEnvironment("PUBLIC_ACCESS_TOKEN");
 
 void main() async {
   FlutterError.demangleStackTrace = (StackTrace stack) {
@@ -21,6 +24,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  MapboxOptions.setAccessToken(accessToken);
 
   final sharedPreferences = await SharedPreferences.getInstance();
   final appDir = await getApplicationDocumentsDirectory();

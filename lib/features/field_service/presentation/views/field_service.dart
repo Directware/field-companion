@@ -22,13 +22,10 @@ class FieldService extends ConsumerWidget {
     switch (key) {
       case 'service.chooseMonth':
         _showMonthPickerBottomSheet(context, ref);
-        break;
       case 'service.inputStudies':
         _showStudiesBottomSheet(context);
-        break;
       case 'service.durationGoals':
         _showGoalBottomSheet(context);
-        break;
       case 'service.sendReport':
         break;
     }

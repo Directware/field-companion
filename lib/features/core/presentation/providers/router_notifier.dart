@@ -97,7 +97,7 @@ class RouterNotifier extends _$RouterNotifier implements Listenable {
         ),
       ];
 
-  String get initialLocation => AppLocations.fieldService.href;
+  String get initialLocation => AppLocations.territories.href;
 
   String? redirect(BuildContext context, GoRouterState state) {
     if (this.state.isLoading || this.state.hasError) return null;

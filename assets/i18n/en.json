@@ -128,7 +128,8 @@
         "expired": "Expired territories",
         "wrongFileType": "Wrong file type! Please import a file with the extension '.territory'.",
         "sendToServant": "Send to territory servant",
-        "provideNewPopulationCount": "Please enter a new number for addresses."
+        "provideNewPopulationCount": "Specify the total number of new apartment units",
+        "markTerritoryAsDone": "Mark Territory as Done"
     },
     "settings": {
         "title": "Settings",
