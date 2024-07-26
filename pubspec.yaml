@@ -70,7 +70,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   isar_generator: ^3.1.0+1
-  json_serializable: ^6.7.1
+  json_serializable: ^6.8.0
   lint: ^2.1.2
   path: ^1.8.0
   riverpod_generator: ^2.3.2
