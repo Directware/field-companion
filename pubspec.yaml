@@ -57,7 +57,7 @@ dependencies:
   share_plus: ^7.2.2
   shared_preferences: ^2.2.1
   stack_trace: ^1.11.0
-  turf: ^0.0.9
+  turf: ^0.0.10
   url_launcher: ^6.1.14
   vector_map_tiles: ^5.0.0
 

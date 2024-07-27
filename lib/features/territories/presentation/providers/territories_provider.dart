@@ -13,7 +13,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'territories_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Territories extends _$Territories {
   late final TerritoryRepository _repository;
 

@@ -5,17 +5,12 @@ part 'selected_territory_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class SelectedTerritory extends _$SelectedTerritory {
-  SelectedTerritory() : super();
-
-// set territory(Territory territory) {
-//     state = territory;
-// }
   // ignore: use_setters_to_change_properties
-  void set(Territory territory) {
+  void set(Territory? territory) {
     state = territory;
   }
 
-  void reset(DateTime month) {
+  void reset() {
     state = null;
   }
 

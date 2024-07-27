@@ -7,7 +7,7 @@ part of 'is_router_link_active_provider.dart';
 // **************************************************************************
 
 String _$isRouterLinkActiveHash() =>
-    r'8ade344113b969f79a97e9de275ba4cd0b33ddc1';
+    r'beb690bca4260a61aeedd4b39ed26427f4dd888b';
 
 /// Copied from Dart SDK
 class _SystemHash {

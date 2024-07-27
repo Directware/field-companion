@@ -146,7 +146,8 @@ class _ReturnTerritoryViewState extends ConsumerState<ReturnTerritoryView> {
                       return CupertinoAlertDialog(
                         title: Text('territories.remove'.tr()),
                         content: const Text(
-                            'Are you sure you want to delete this territory form your app?'),
+                          'Are you sure you want to delete this territory form your app?',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {

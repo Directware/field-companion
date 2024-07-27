@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
@@ -8,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:turf/turf.dart';
+import 'package:turf/along.dart';
+import 'package:turf/helpers.dart';
+import 'package:turf/turf.dart' as turf;
 
 class MapWidget extends ConsumerStatefulWidget {
   const MapWidget({super.key});
@@ -30,51 +31,32 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
     final selectedTerritory = ref.read(selectedTerritoryProvider);
     final territories = ref.read(territoriesProvider);
 
-    if (selectedTerritory == null) {
-      throw Exception("No territory selected");
-    }
-
     _map = map;
 
-    _map.compass.updateSettings(
-      mapbox.CompassSettings(
-        enabled: false,
-      ),
-    );
+    _map.compass.updateSettings(mapbox.CompassSettings(enabled: false));
 
     _map.attribution.updateSettings(
-      mapbox.AttributionSettings(
-        marginBottom: 150,
-      ),
+      mapbox.AttributionSettings(marginBottom: 150),
     );
 
     _map.logo.updateSettings(
-      mapbox.LogoSettings(
-        marginBottom: 150,
-      ),
+      mapbox.LogoSettings(marginBottom: 150),
     );
 
     _map.scaleBar.updateSettings(mapbox.ScaleBarSettings(enabled: false));
 
     for (final territory in territories) {
-      final geoJson = json.encode(territory.geoJson);
+      final id = territory.key;
+      final data = json.encode(territory.geoJson);
 
-      await map.style.addSource(
-        mapbox.GeoJsonSource(id: territory.key, data: geoJson),
-      );
-
-      final fillColor = territory == selectedTerritory
-          ? ColorPalette.blueProgressStartOpacity05
-          : ColorPalette.grey2;
-      final fillOpacity = territory == selectedTerritory ? 0.3 : 0.6;
+      await map.style.addSource(mapbox.GeoJsonSource(id: id, data: data));
 
       map.style.addLayer(
         mapbox.FillLayer(
           id: territory.key,
           sourceId: territory.key,
-          fillColor: fillColor.value,
-          fillOpacity: fillOpacity,
-          fillOutlineColor: ColorPalette.red.value,
+          fillColor: Colors.pink.value,
+          fillOpacity: 0.3,
         ),
       );
     }
@@ -86,114 +68,95 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
         puckBearingEnabled: true,
       ),
     );
-  }
 
-  void _updateSelected(Territory? previous, Territory? current) {
-    if (previous != null) {
-      _map.style.updateLayer(
-        mapbox.FillLayer(
-          id: previous.key,
-          sourceId: previous.key,
-          fillColor: ColorPalette.grey2.value,
-          fillOpacity: 0.6,
-          fillOutlineColor: ColorPalette.red.value,
-        ),
-      );
-    }
+    // don´t remove this delay because if race condition
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+    );
 
-    if (current != null) {
-      _map.style.updateLayer(
-        mapbox.FillLayer(
-          id: current.key,
-          sourceId: current.key,
-          fillColor: ColorPalette.blueProgressStartOpacity05.value,
-          fillOpacity: 0.3,
-          fillOutlineColor: ColorPalette.red.value,
-        ),
-      );
-
-      _focusOnTerritory(current);
-    }
+    _focusOnTerritory(selectedTerritory);
   }
 
   void _focusOnTerritory(Territory? territory) {
-    final point = _centerOfTerritory(territory);
+    mapbox.CameraOptions options;
 
-    if (point == null) {
-      return;
+    if (territory != null) {
+      options = _centerOfTerritory(territory);
+      _map.flyTo(options, mapbox.MapAnimationOptions(duration: 1000));
     }
+  }
 
-    if (!point.coordinates.lng.isNaN || !point.coordinates.lat.isNaN) {
-      _map.flyTo(
-        mapbox.CameraOptions(
-          center: mapbox.Point(
-            coordinates: mapbox.Position(
-              point.coordinates.lng,
-              point.coordinates.lat,
-            ),
-          ),
-          zoom: 17.0,
+  mapbox.CameraOptions _centerOfTerritory(Territory? territory) {
+    final obj = GeoJSONObject.fromJson(territory!.geoJson);
+    final point = turf.center(obj).geometry;
+
+    return mapbox.CameraOptions(
+      center: mapbox.Point(
+        coordinates: mapbox.Position(
+          point?.coordinates.lng ?? 0,
+          point?.coordinates.lat ?? 0,
         ),
-        mapbox.MapAnimationOptions(duration: 1000),
+      ),
+      zoom: 16,
+    );
+  }
+
+  mapbox.CameraOptions _cameraOptionsForAllTerritories() {
+    final territories = ref.read(territoriesProvider);
+
+    final List<mapbox.Feature> mergedFeatures = [];
+
+    for (final territory in territories) {
+      final features = FeatureCollection.fromJson(territory.geoJson).features;
+      mergedFeatures.addAll(features);
+    }
+
+    final merged = mapbox.FeatureCollection(features: mergedFeatures);
+
+    final Point? point = turf.center(merged).geometry;
+
+    return mapbox.CameraOptions(
+      center: mapbox.Point(
+        coordinates: mapbox.Position(
+          point?.coordinates.lng ?? 0,
+          point?.coordinates.lat ?? 0,
+        ),
+      ),
+      zoom: 13,
+    );
+  }
+
+  Future<void> _onTapListener(mapbox.MapContentGestureContext context) async {
+    final territories = ref.read(territoriesProvider);
+
+    for (final territory in territories) {
+      final contains = turf.booleanPointInPolygon(
+        Position(context.point.coordinates.lng, context.point.coordinates.lat),
+        FeatureCollection.fromJson(territory.geoJson).features.first,
       );
+
+      if (contains) {
+        ref.read(selectedTerritoryProvider.notifier).set(territory);
+        break;
+      }
     }
-  }
-
-  mapbox.Point? _centerOfTerritory(Territory? territory) {
-    if (territory?.geoJson == null) {
-      return null;
-    }
-
-    final point = center(GeoJSONObject.fromJson(territory!.geoJson));
-
-    if (point.geometry?.coordinates == null) {
-      return null;
-    }
-
-    return mapbox.Point(coordinates: point.geometry!.coordinates);
-  }
-
-  Future<void> _onTapListener(mapbox.MapContentGestureContext coord) async {
-    // final territoryKeys =
-    //     ref.read(territoriesProvider).map((t) => t.key).toList();
-    // final mapbox.ScreenCoordinate conv = await _map.pixelForCoordinate(
-    //   Point(
-    //     coordinates: Position(
-    //       coord.y,
-    //       coord.x,
-    //     ),
-    //   ).toJson(),
-    // );
-
-    // final List<mapbox.QueriedFeature?> features =
-    //     await _map.queryRenderedFeatures(
-    //   mapbox.RenderedQueryGeometry(
-    //     value: jsonEncode(conv.encode()),
-    //     type: mapbox.Type.SCREEN_COORDINATE,
-    //   ),
-    //   mapbox.RenderedQueryOptions(
-    //     layerIds: territoryKeys,
-    //   ),
-    // );
   }
 
   @override
   Widget build(BuildContext context) {
+    const accKey = "8a0d25a8-3989-4508-9a15-eb9b6366b3fb";
+    const key = "JAC0nmE7iwuArAWW6eTi";
+
     ref.listen<Territory?>(
       selectedTerritoryProvider,
-      _updateSelected,
+      (prev, current) => _focusOnTerritory(current),
     );
 
-    final selectedTerritory = ref.read(selectedTerritoryProvider);
     return mapbox.MapWidget(
       onMapCreated: _onMapCreated,
-      styleUri:
-          "https://api.maptiler.com/maps/8a0d25a8-3989-4508-9a15-eb9b6366b3fb/style.json?key=JAC0nmE7iwuArAWW6eTi",
-      cameraOptions: mapbox.CameraOptions(
-        center: _centerOfTerritory(selectedTerritory),
-        zoom: 17.0,
-      ),
       onTapListener: _onTapListener,
+      cameraOptions: _cameraOptionsForAllTerritories(),
+      styleUri: "https://api.maptiler.com/maps/$accKey/style.json?key=$key",
     );
   }
 }
