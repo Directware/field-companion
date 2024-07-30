@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:field_companion/features/core/map_utils.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
@@ -30,6 +29,7 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
   Future<void> _onMapCreated(mapbox.MapboxMap map) async {
     final selectedTerritory = ref.read(selectedTerritoryProvider);
     final territories = ref.read(territoriesProvider);
+    final mergedTerritories = territoriesToGeoJSON(territories);
 
     _map = map;
 
@@ -45,21 +45,28 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
 
     _map.scaleBar.updateSettings(mapbox.ScaleBarSettings(enabled: false));
 
-    for (final territory in territories) {
-      final id = territory.key;
-      final data = json.encode(territory.geoJson);
+    await map.style.addSource(
+      mapbox.GeoJsonSource(id: "territories", data: mergedTerritories),
+    );
 
-      await map.style.addSource(mapbox.GeoJsonSource(id: id, data: data));
+    _map.style.addLayer(
+      mapbox.SymbolLayer(
+        id: "territory-labels",
+        sourceId: "territories",
+        textField: "{label}",
+        textSize: 14,
+        textColor: const Color.fromARGB(255, 0, 104, 189).value,
+      ),
+    );
 
-      map.style.addLayer(
-        mapbox.FillLayer(
-          id: territory.key,
-          sourceId: territory.key,
-          fillColor: Colors.pink.value,
-          fillOpacity: 0.3,
-        ),
-      );
-    }
+    map.style.addLayer(
+      mapbox.FillLayer(
+        id: "territories-draw-layer",
+        sourceId: "territories",
+        fillColor: const Color.fromARGB(255, 0, 104, 189).value,
+        fillOpacity: 0.3,
+      ),
+    );
 
     _map.location.updateSettings(
       mapbox.LocationComponentSettings(
@@ -69,7 +76,7 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
       ),
     );
 
-    // don´t remove this delay because if race condition
+    // don´t remove this delay because of race condition
     await Future.delayed(
       const Duration(milliseconds: 500),
     );
