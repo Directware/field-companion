@@ -66,7 +66,9 @@ class TerritoriesSheet extends ConsumerWidget {
                   ),
                   SliverToBoxAdapter(
                     child: selectedTerritory != null
-                        ? TerritorySheetTerritoryDetails(selectedTerritory)
+                        ? TerritorySheetTerritoryDetails(
+                            territory: selectedTerritory,
+                          )
                         : TerritorySheetTerritoryList(
                             sheetController: sheetController,
                           ),
