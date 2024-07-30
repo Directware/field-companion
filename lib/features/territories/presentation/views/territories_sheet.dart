@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:field_companion/features/core/presentation/widgets/blurred_background_image.dart';
 import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
 import 'package:field_companion/features/territories/presentation/widgets/territory_sheet_territory_details.dart';
 import 'package:field_companion/features/territories/presentation/widgets/territory_sheet_territory_list.dart';
@@ -7,28 +6,6 @@ import 'package:field_companion/features/territories/presentation/widgets/territ
 import 'package:field_companion/features/territories/presentation/widgets/territory_sheet_top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-class BlurredBackgroundImage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage('assets/images/background-map.jpeg'),
-        ),
-      ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: 10,
-          sigmaY: 10,
-        ),
-        child: const Center(),
-      ),
-    );
-  }
-}
 
 class TerritoriesSheet extends ConsumerWidget {
   final sheetController = DraggableScrollableController();
