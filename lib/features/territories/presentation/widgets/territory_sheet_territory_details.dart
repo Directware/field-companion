@@ -2,8 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/core/presentation/constants/ui_spacing.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
-import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
-import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
+import 'package:field_companion/features/territories/presentation/widgets/territory_sheet_change_population_count.dart';
 import 'package:field_companion/features/territories/presentation/widgets/territory_sheet_visit_bans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -17,57 +16,11 @@ class TerritorySheetTerritoryDetails extends ConsumerWidget {
   final textFieldController = TextEditingController();
 
   void populationCountDialog(BuildContext context, WidgetRef ref) {
-    final selectedTerritory = ref.watch(selectedTerritoryProvider);
-
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (BuildContext context) {
-        String enteredNumber = '';
-        return AlertDialog(
-          title: Text(
-            'territories.provideNewPopulationCount'.tr(),
-            style: const TextStyle(color: Colors.black),
-          ),
-          content: TextField(
-            keyboardType: TextInputType.number,
-            onChanged: (value) {
-              enteredNumber = value;
-            },
-            style: const TextStyle(color: Colors.black),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'common.cancel'.tr(),
-                style: const TextStyle(color: Colors.black),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                // Validate and process the entered number
-                if (int.tryParse(enteredNumber) != null) {
-                  final number = int.parse(enteredNumber);
-
-                  ref
-                      .read(territoriesProvider.notifier)
-                      .updatePopulationCount(selectedTerritory!.id, number);
-                } else {
-                  // Show an error message
-                  // TODO: print('Invalid number');
-                }
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'common.save'.tr(),
-                style: const TextStyle(color: Colors.black),
-              ),
-            ),
-          ],
-        );
-      },
+      backgroundColor: ColorPalette.dark,
+      barrierColor: ColorPalette.backdrop,
+      builder: (context) => TerritorySheetChangePopulationCount(),
     );
   }
 
