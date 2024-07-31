@@ -15,7 +15,6 @@ import 'package:field_companion/features/field_service/presentation/providers/ti
 import 'package:field_companion/features/field_service/presentation/providers/tips/current_tip_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/app_initialisation_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/confirmed_features_provider.dart';
-import 'package:field_companion/features/settings/presentation/providers/device_id_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/duration_step_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/monthly_reminder_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/user_language_provider.dart';
@@ -53,7 +52,6 @@ class Settings extends ConsumerWidget {
   @override
   Widget build(BuildContext mainContext, WidgetRef ref) {
     final monthlyReminderValue = ref.watch(monthlyReminderProvider);
-    final deviceId = ref.watch(deviceIdProvider);
     final userLanguage = ref.watch(userLanguageProvider);
     final durationStep = ref.watch(durationStepProvider);
 
@@ -115,24 +113,6 @@ class Settings extends ConsumerWidget {
                         Text(
                           "settings.languages.$userLanguage".tr(),
                           style: SectionItemStyles.value,
-                        ),
-                      ],
-                    ),
-                    SectionItem(
-                      onTap: () {},
-                      children: [
-                        Text(
-                          'settings.yourId',
-                          style: SectionItemStyles.whiteKey,
-                        ).tr(),
-                        SizedBox(
-                          width: 120,
-                          child: Text(
-                            deviceId,
-                            textAlign: TextAlign.end,
-                            overflow: TextOverflow.ellipsis,
-                            style: SectionItemStyles.value,
-                          ),
                         ),
                       ],
                     ),
