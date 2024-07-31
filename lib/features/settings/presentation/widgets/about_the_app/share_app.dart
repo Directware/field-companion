@@ -69,6 +69,7 @@ class ShareApp extends StatelessWidget {
   }
 
   void openShareSheet() {
+    // TODO: Use new AppStore URL
     const String url =
         'https://apps.apple.com/de/app/field-companion/id1513900519';
     Share.share(url);
