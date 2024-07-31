@@ -13,6 +13,13 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
+
+        def sdkRegistryToken = System.getenv('SDK_REGISTRY_TOKEN')
+
+        if (sdkRegistryToken == null || sdkRegistryToken.empty) {
+            throw new Exception("Mapbox SDK Registry token is not specified.")
+        }
+
         gradlePluginPortal()
     }
 }
