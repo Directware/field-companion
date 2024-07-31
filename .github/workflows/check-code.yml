@@ -5,6 +5,10 @@ on:
     branches:
       - 'main'
   workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: 3.22.2
+
 jobs:
   check-code:
     runs-on: ubuntu-latest
