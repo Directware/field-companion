@@ -29,7 +29,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  archive: ^3.3.9
+  archive: ^3.6.1
   collection: ^1.17.2
   easy_localization: ^3.0.5
   file_picker: ^8.0.6
