@@ -41,15 +41,13 @@ jobs:
   android-build:
     needs: [check-code, sonarcloud]
 
+    env:
+      SDK_REGISTRY_TOKEN: ${{ secrets.SDK_REGISTRY_TOKEN }}
+
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Write Mapbox SDK secret
-        run: |
-          mkdir ~/.gradle
-          echo "SDK_REGISTRY_TOKEN=${{ secrets.MAPBOX_SDK_KEY }}" >> ~/.gradle/gradle.properties
 
       - name: Extract branch name
         id: extract_branch
