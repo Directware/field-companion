@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
@@ -48,11 +49,18 @@ class Territories extends _$Territories {
   }
 
   Future<void> add() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    // Warum auch immer lässt es sich nicht auf ".territory" filtern
+    final result = await FilePicker.platform.pickFiles();
 
-    if (result == null && result?.paths[0] == null) return;
+    final file = result?.files.first;
 
-    final bytes = File(result!.paths[0]!).readAsBytesSync();
+    if (file == null ||
+        file.path == null ||
+        !file.path!.endsWith(".territory")) {
+      return;
+    }
+
+    final bytes = File(file.path!).readAsBytesSync();
     final archive = GZipDecoder().decodeBytes(bytes, verify: true);
     final territoryData = utf8.decode(archive);
     final object = jsonDecode(territoryData) as Map<String, dynamic>;
