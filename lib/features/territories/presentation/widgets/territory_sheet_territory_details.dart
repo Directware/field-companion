@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
+import 'package:field_companion/features/core/infrastructure/models/app_locations.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
 import 'package:field_companion/features/core/presentation/constants/ui_spacing.dart';
 import 'package:field_companion/features/territories/domain/models/territory.dart';
+import 'package:field_companion/features/territories/presentation/providers/selected_territory_provider.dart';
+import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
 import 'package:field_companion/features/territories/presentation/widgets/territory_sheet_change_population_count.dart';
 import 'package:field_companion/features/territories/presentation/widgets/territory_sheet_visit_bans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TerritorySheetTerritoryDetails extends ConsumerWidget {
   TerritorySheetTerritoryDetails({super.key, required this.territory});
@@ -22,6 +29,41 @@ class TerritorySheetTerritoryDetails extends ConsumerWidget {
       barrierColor: ColorPalette.backdrop,
       builder: (context) => TerritorySheetChangePopulationCount(),
     );
+  }
+
+  Future<void> returnTerritory(BuildContext context, WidgetRef ref) async {
+    final selectedTerritory = ref.read(selectedTerritoryProvider);
+
+    if (selectedTerritory == null) {
+      return;
+    }
+
+    final fileName = "${selectedTerritory.name} ${selectedTerritory.key}";
+    final fileNameWithExt = "$fileName.json";
+
+    final result = await Share.shareXFiles(
+      subject: fileName,
+      [
+        XFile.fromData(
+          utf8.encode(selectedTerritory.toJson().toString()),
+          mimeType: 'text/plain',
+          name: fileNameWithExt,
+        ),
+      ],
+      fileNameOverrides: [fileNameWithExt],
+    );
+
+    if (result.status == ShareResultStatus.unavailable) {
+      // TODO: Show error message
+    }
+
+    if (result.status == ShareResultStatus.success) {
+      ref.read(territoriesProvider.notifier).delete(selectedTerritory);
+
+      if (context.mounted) {
+        context.go(AppLocations.territories.href);
+      }
+    }
   }
 
   @override
@@ -84,11 +126,7 @@ class TerritorySheetTerritoryDetails extends ConsumerWidget {
           Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {
-                // setState(() {
-                //   widget.toggleReturnTerritoryView(true);
-                // });
-              },
+              onTap: () => returnTerritory(context, ref),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: UiSpacing.spacingS,

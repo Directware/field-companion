@@ -23,10 +23,10 @@ class SelectedTerritory extends _$SelectedTerritory {
   Territory? build() {
     final territories = ref.watch(territoriesProvider);
 
-    if (id == null) {
+    if (id == null || territories.isEmpty) {
       return null;
     }
 
-    return territories.firstWhere((element) => element.id == id);
+    return territories.where((element) => element.id == id).firstOrNull;
   }
 }
