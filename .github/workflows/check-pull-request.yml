@@ -1,10 +1,9 @@
-name: Check code and build
+name: check pull request
 
 on:
   pull_request:
     branches:
       - 'main'
-  workflow_dispatch:
 
 env:
   FLUTTER_VERSION: 3.22.2
