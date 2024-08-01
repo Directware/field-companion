@@ -11,6 +11,7 @@ import 'package:field_companion/features/core/presentation/widgets/common/sectio
 import 'package:field_companion/features/core/presentation/widgets/common/section_item.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/section_item_styles.dart';
 import 'package:field_companion/features/core/presentation/widgets/title_bar.dart';
+import 'package:field_companion/features/field_service/domain/models/report.dart';
 import 'package:field_companion/features/field_service/presentation/providers/goals/monthly_goal_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/goals/yearly_goal_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports/reports_provider.dart';
@@ -95,7 +96,7 @@ class Settings extends ConsumerWidget {
     );
   }
 
-  Future<void> _importBackup() async {
+  Future<void> _importBackup(WidgetRef ref) async {
     final result = await FilePicker.platform.pickFiles();
 
     final file = result?.files.first;
@@ -109,6 +110,24 @@ class Settings extends ConsumerWidget {
     final territoryData = utf8.decode(archive);
     final object = jsonDecode(territoryData) as Map<String, dynamic>;
     // TODO: Implement import logic
+
+    ref.read(territoriesProvider.notifier).reset();
+    ref.read(reportsProvider.notifier).reset();
+    ref.read(yearlyGoalProvider.notifier).reset();
+    ref.read(monthlyGoalProvider.notifier).reset();
+
+    final territories = object["territories"] as List<Territory>;
+    final reports = object["reports"] as List<Report>;
+    final yearlyGoal = object["yearlyGoal"];
+    final monthlyGoal = object["monthlyGoal"];
+
+    // territories.forEach((territory) {
+    //   ref.read(territoriesProvider.notifier).add(territory);
+    // });
+
+    // reports.forEach((report) {
+    //   ref.read(reportsProvider.notifier).add(report);
+    // });
   }
 
   @override
@@ -243,7 +262,7 @@ class Settings extends ConsumerWidget {
                       ],
                     ),
                     SectionItem(
-                      onTap: () => _importBackup(),
+                      onTap: () => _importBackup(ref),
                       children: [
                         Text(
                           'settings.actions.importBackup',
