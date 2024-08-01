@@ -101,6 +101,16 @@ class Reports extends _$Reports {
     }
   }
 
+  List<Report> reportsByMonth(int month, int year) {
+    return state
+        .where(
+          (report) =>
+              report.reportDate.month == month &&
+              report.reportDate.year == year,
+        )
+        .toList();
+  }
+
   void reset() {
     state = [];
     _loaded = {};
