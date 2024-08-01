@@ -1,3 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:archive/archive.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/app_locations.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
@@ -19,12 +25,15 @@ import 'package:field_companion/features/settings/presentation/providers/duratio
 import 'package:field_companion/features/settings/presentation/providers/monthly_reminder_provider.dart';
 import 'package:field_companion/features/settings/presentation/providers/user_language_provider.dart';
 import 'package:field_companion/features/settings/presentation/widgets/picker_bottom_sheet.dart';
+import 'package:field_companion/features/territories/domain/models/territory.dart';
 import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart' show CupertinoSwitch;
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends ConsumerWidget {
@@ -47,6 +56,59 @@ class Settings extends ConsumerWidget {
 
     context.resetLocale();
     ref.read(userLanguageProvider.notifier).set(context.locale.languageCode);
+    ref.read(yearStudiesProvider.notifier).reset();
+    ref.read(monthlyGoalProvider.notifier).reset();
+  }
+
+  Future<void> _createBackup(WidgetRef ref) async {
+    final territories = ref.read(territoriesProvider);
+    final reports = ref.read(reportsProvider);
+    final yearlyGoal = ref.read(yearlyGoalProvider);
+    final monthlyGoal = ref.read(monthlyGoalProvider);
+
+    final fileContent = Map.of({
+      "territories":
+          territories.map((territory) => territory.toJson()).toList(),
+      "reports": reports.map((report) => report.toJson()).toList(),
+      "yearlyGoal": yearlyGoal,
+      "monthlyGoal": monthlyGoal,
+    });
+
+    const backupFileName = "territory_offline_backup_.backup";
+
+    final encodedJson = utf8.encode(json.encode(fileContent));
+    final gzipBytes = GZipEncoder().encode(encodedJson);
+
+    if (gzipBytes == null) {
+      return;
+    }
+
+    await Share.shareXFiles(
+      [
+        XFile.fromData(
+          Uint8List.fromList(gzipBytes),
+          mimeType: 'text/plain',
+          name: backupFileName,
+        ),
+      ],
+      fileNameOverrides: [backupFileName],
+    );
+  }
+
+  Future<void> _importBackup() async {
+    final result = await FilePicker.platform.pickFiles();
+
+    final file = result?.files.first;
+
+    if (file == null || file.path == null || !file.path!.endsWith(".backup")) {
+      return;
+    }
+
+    final bytes = File(file.path!).readAsBytesSync();
+    final archive = GZipDecoder().decodeBytes(bytes, verify: true);
+    final territoryData = utf8.decode(archive);
+    final object = jsonDecode(territoryData) as Map<String, dynamic>;
+    // TODO: Implement import logic
   }
 
   @override
@@ -167,7 +229,7 @@ class Settings extends ConsumerWidget {
                   dividerColor: ColorPalette.grey2Opacity20,
                   children: [
                     SectionItem(
-                      onTap: () {},
+                      onTap: () => _createBackup(ref),
                       children: [
                         Text(
                           'settings.actions.exportBackup',
@@ -181,7 +243,7 @@ class Settings extends ConsumerWidget {
                       ],
                     ),
                     SectionItem(
-                      onTap: () {},
+                      onTap: () => _importBackup(),
                       children: [
                         Text(
                           'settings.actions.importBackup',

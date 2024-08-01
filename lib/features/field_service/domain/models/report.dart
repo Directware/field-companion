@@ -41,4 +41,13 @@ class Report {
   bool isEmpty() {
     return videos == 0 && returnVisits == 0 && duration == 0 && deliveries == 0;
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'videos': videos,
+        'returnVisits': returnVisits,
+        'deliveries': deliveries,
+        'duration': duration,
+        'reportDate': reportDate.toIso8601String(),
+      };
 }

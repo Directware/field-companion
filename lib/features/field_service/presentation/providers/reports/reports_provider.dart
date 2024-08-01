@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reports_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Reports extends _$Reports {
   late final ReportRepository _repository;
   late Set<DateTime> _loaded = {};
