@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reports_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Reports extends _$Reports {
   late final ReportRepository _repository;
   late Set<DateTime> _loaded = {};
@@ -55,6 +55,14 @@ class Reports extends _$Reports {
     return false;
   }
 
+  void import(List<Report> reports) {
+    state = [...state, ...reports];
+
+    for (final report in reports) {
+      _repository.upsert(report);
+    }
+  }
+
   void update(
     DateTime date, {
     int? videos,
@@ -91,6 +99,16 @@ class Reports extends _$Reports {
       }
       _repository.upsert(report);
     }
+  }
+
+  List<Report> reportsByMonth(int month, int year) {
+    return state
+        .where(
+          (report) =>
+              report.reportDate.month == month &&
+              report.reportDate.year == year,
+        )
+        .toList();
   }
 
   void reset() {

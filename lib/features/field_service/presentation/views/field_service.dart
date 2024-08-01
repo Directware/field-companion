@@ -5,6 +5,7 @@ import 'package:field_companion/features/field_service/presentation/providers/re
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_date_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/reports/selected_month_provider.dart';
 import 'package:field_companion/features/field_service/presentation/providers/tips/current_tip_provider.dart';
+import 'package:field_companion/features/field_service/presentation/views/send_report.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/goals/goal_bottom_sheet.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/report/field_service_menu_button.dart';
 import 'package:field_companion/features/field_service/presentation/widgets/report/month_picker_bottom_sheet.dart';
@@ -27,7 +28,7 @@ class FieldService extends ConsumerWidget {
       case 'service.durationGoals':
         _showGoalBottomSheet(context);
       case 'service.sendReport':
-        break;
+        _showSendReportBottomSheet(context);
     }
   }
 
@@ -56,6 +57,15 @@ class FieldService extends ConsumerWidget {
       barrierColor: Colors.black26,
       context: context,
       builder: (context) => const MonthPickerBottomSheet(),
+    );
+  }
+
+  void _showSendReportBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) => const SendReport(),
     );
   }
 

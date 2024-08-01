@@ -301,10 +301,10 @@ packages:
     dependency: transitive
     description:
       name: ffi
-      sha256: "7bf0adc28a23d395f19f3f1eb21dd7cfd1dd9f8e1c50051c069122e6853bc878"
+      sha256: "493f37e7df1804778ff3a53bd691d8692ddf69702cf4c1c1096a2e41b4779e21"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.2"
   file:
     dependency: transitive
     description:
@@ -317,10 +317,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: be325344c1f3070354a1d84a231a1ba75ea85d413774ec4bdf444c023342e030
+      sha256: "824f5b9f389bfc4dddac3dea76cd70c51092d9dff0b2ece7ef4f53db8547d258"
       url: "https://pub.dev"
     source: hosted
-    version: "5.5.0"
+    version: "8.0.6"
   fixnum:
     dependency: transitive
     description:
@@ -388,10 +388,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: f185ac890306b5779ecbd611f52502d8d4d63d27703ef73161ca0407e815f02c
+      sha256: "9d98bd47ef9d34e803d438f17fd32b116d31009f534a6fa5ce3a1167f189a6de"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.16"
+    version: "2.0.21"
   flutter_riverpod:
     dependency: "direct main"
     description:
@@ -904,10 +904,10 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: da3fdfeccc4d4ff2da8f8c556704c08f912542c5fb3cf2233ed75372384a034d
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.6"
+    version: "2.1.8"
   pointycastle:
     dependency: transitive
     description:
@@ -1461,10 +1461,10 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: "1d9158c616048c38f712a6646e317a3426da10e884447626167240d45209cbad"
+      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   web_socket_channel:
     dependency: transitive
     description:
@@ -1493,10 +1493,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "9e82a402b7f3d518fb9c02d0e9ae45952df31b9bf34d77baf19da2de03fc2aaa"
+      sha256: a79dbe579cb51ecd6d30b17e0cae4e0ea15e2c0e66f69ad4198f22a6789e94f4
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.7"
+    version: "5.5.1"
   wkt_parser:
     dependency: transitive
     description:
@@ -1538,5 +1538,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  dart: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"

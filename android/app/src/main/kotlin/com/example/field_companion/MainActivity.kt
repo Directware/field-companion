@@ -1,4 +1,4 @@
-package com.example.field_companion
+package com.directware.fieldcompanion
 
 import io.flutter.embedding.android.FlutterActivity
 

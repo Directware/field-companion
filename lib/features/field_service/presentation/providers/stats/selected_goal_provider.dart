@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'selected_goal_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SelectedGoal extends _$SelectedGoal {
   void toggle() {
     if (state == Goal.yearly) {

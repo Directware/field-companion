@@ -1,0 +1,83 @@
+name: Build & upload artifacts
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  FLUTTER_VERSION: 3.22.2
+
+jobs:
+  playstore:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+
+      - name: Update Bundler
+        run: gem update bundler
+
+      - name: Bundle install for gemfile
+        timeout-minutes: 5
+        run: cd ./android && bundle install
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "zulu"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Service Account and Keystore
+        env:
+          SERVICE_ACCOUNT_CONTENT: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_CONTENT }}
+          KEYSTORE_JKS_CONTENT: ${{ secrets.KEYSTORE_JKS_CONTENT }}
+        run: |
+          echo ${{ env.SERVICE_ACCOUNT_CONTENT}} | base64 --decode > ~/play-store-service-account.json
+          echo ${{ env.KEYSTORE_JKS_CONTENT}} | base64 --decode > ~/upload-keystore.jks
+
+      - name: Build artifact
+        env:
+          KEY_ALIAS: ${{ vars.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          SDK_REGISTRY_TOKEN: ${{ secrets.SDK_REGISTRY_TOKEN }}
+        run: flutter build appbundle --release --build-name="Main build ${{ github.run_number }}" --build-number=${{ github.run_number }} --dart-define=PUBLIC_ACCESS_TOKEN=${{ secrets.PUBLIC_ACCESS_TOKEN }}
+
+      - name: Upload to Play Store
+        run: |
+          cd ./android 
+          bundle exec fastlane android beta
+
+  # TODO: Implement appstore distribution
+  # appstore:
+  #   runs-on: macos-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - name: Write Mapbox SDK secret
+  #       run: | 
+  #         echo "machine api.mapbox.com" >> ~/.netrc
+  #         echo "  login mapbox" >> ~/.netrc
+  #         echo "  password ${{ secrets.MAPBOX_SDK_KEY }}" >> ~/.netrc
+  #         chmod 600 ~/.netrc
+
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: ${{ env.FLUTTER_VERSION }}
+  #         channel: "stable"
+  #         cache: true
+
+  #     - run: flutter pub get
+
+  #     - run: flutter build ios --release --no-codesign --dart-define PUBLIC_ACCESS_TOKEN=${{ secrets.PUBLIC_ACCESS_TOKEN }}
