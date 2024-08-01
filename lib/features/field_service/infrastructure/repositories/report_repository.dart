@@ -1,5 +1,3 @@
-import 'dart:math' hide log;
-
 import 'package:field_companion/features/field_service/domain/models/report.dart';
 import 'package:field_companion/features/field_service/domain/repositories/report_repository_interface.dart';
 import 'package:isar/isar.dart';

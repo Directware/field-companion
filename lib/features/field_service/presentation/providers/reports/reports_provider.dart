@@ -55,6 +55,14 @@ class Reports extends _$Reports {
     return false;
   }
 
+  void import(List<Report> reports) {
+    state = [...state, ...reports];
+
+    for (final report in reports) {
+      _repository.upsert(report);
+    }
+  }
+
   void update(
     DateTime date, {
     int? videos,

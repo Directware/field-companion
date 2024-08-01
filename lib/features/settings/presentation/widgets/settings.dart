@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -109,25 +108,31 @@ class Settings extends ConsumerWidget {
     final archive = GZipDecoder().decodeBytes(bytes, verify: true);
     final territoryData = utf8.decode(archive);
     final object = jsonDecode(territoryData) as Map<String, dynamic>;
-    // TODO: Implement import logic
 
     ref.read(territoriesProvider.notifier).reset();
     ref.read(reportsProvider.notifier).reset();
     ref.read(yearlyGoalProvider.notifier).reset();
     ref.read(monthlyGoalProvider.notifier).reset();
 
-    final territories = object["territories"] as List<Territory>;
-    final reports = object["reports"] as List<Report>;
-    final yearlyGoal = object["yearlyGoal"];
-    final monthlyGoal = object["monthlyGoal"];
+    final territories = object["territories"] as List<dynamic>;
+    final reports = object["reports"] as List<dynamic>;
+    final yearlyGoal = object["yearlyGoal"] as int;
+    final monthlyGoal = object["monthlyGoal"] as int;
 
-    // territories.forEach((territory) {
-    //   ref.read(territoriesProvider.notifier).add(territory);
-    // });
+    ref.read(territoriesProvider.notifier).import(
+          territories
+              .map((e) => Territory.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
 
-    // reports.forEach((report) {
-    //   ref.read(reportsProvider.notifier).add(report);
-    // });
+    ref.read(reportsProvider.notifier).import(
+          reports
+              .map((e) => Report.fromJson(e as Map<String, dynamic>))
+              .toList(),
+        );
+
+    ref.read(yearlyGoalProvider.notifier).set(yearlyGoal);
+    ref.read(monthlyGoalProvider.notifier).set(monthlyGoal);
   }
 
   @override

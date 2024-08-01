@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:archive/archive.dart';
@@ -75,6 +74,14 @@ class Territories extends _$Territories {
     state = [...state, territory];
 
     _repository.upsert(territory);
+  }
+
+  void import(List<Territory> territories) {
+    state = [...state, ...territories];
+
+    for (final territory in territories) {
+      _repository.upsert(territory);
+    }
   }
 
   void updatePopulationCount(String id, int populationCount) {
