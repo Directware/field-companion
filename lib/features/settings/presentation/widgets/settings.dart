@@ -75,7 +75,7 @@ class Settings extends ConsumerWidget {
       "monthlyGoal": monthlyGoal,
     });
 
-    const backupFileName = "territory_offline_backup_.backup";
+    const backupFileName = "backup-fieldcompanion.gzfc";
 
     final encodedJson = utf8.encode(json.encode(fileContent));
     final gzipBytes = GZipEncoder().encode(encodedJson);
@@ -101,7 +101,7 @@ class Settings extends ConsumerWidget {
 
     final file = result?.files.first;
 
-    if (file == null || file.path == null || !file.path!.endsWith(".backup")) {
+    if (file == null || file.path == null || !file.path!.endsWith(".gzfc")) {
       return;
     }
 
