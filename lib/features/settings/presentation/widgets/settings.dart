@@ -6,6 +6,7 @@ import 'package:archive/archive.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:field_companion/features/core/infrastructure/models/app_locations.dart';
 import 'package:field_companion/features/core/infrastructure/models/color_palette.dart';
+import 'package:field_companion/features/core/presentation/constants/ui_spacing.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/section.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/section_item.dart';
 import 'package:field_companion/features/core/presentation/widgets/common/section_item_styles.dart';
@@ -281,7 +282,44 @@ class Settings extends ConsumerWidget {
                       ],
                     ),
                     SectionItem(
-                      onTap: () => _resetApp(ref, mainContext),
+                      onTap: () {
+                        showModalBottomSheet(
+                          backgroundColor: ColorPalette.red,
+                          context: mainContext,
+                          builder: (context) {
+                            return Padding(
+                              padding: const EdgeInsets.all(UiSpacing.spacingM),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      _resetApp(ref, mainContext);
+                                    },
+                                    child: Text(
+                                      tr('settings.actions.resetApp'),
+                                      style: const TextStyle(
+                                        color: ColorPalette.red,
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    child: Text(
+                                      tr('common.cancel'),
+                                      style: const TextStyle(
+                                        color: ColorPalette.dark,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
                       children: [
                         Text(
                           'settings.actions.resetApp',
