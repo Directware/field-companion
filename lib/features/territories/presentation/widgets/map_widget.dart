@@ -33,16 +33,18 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
 
     _map = map;
 
-    _map.logo.updateSettings(mapbox.LogoSettings(enabled: false));
-    _map.compass.updateSettings(mapbox.CompassSettings(enabled: false));
-    _map.scaleBar.updateSettings(mapbox.ScaleBarSettings(enabled: false));
-    _map.attribution.updateSettings(mapbox.AttributionSettings(enabled: false));
+    await _map.logo.updateSettings(mapbox.LogoSettings(enabled: false));
+    await _map.compass.updateSettings(mapbox.CompassSettings(enabled: false));
+    await _map.scaleBar.updateSettings(mapbox.ScaleBarSettings(enabled: false));
+    await _map.attribution.updateSettings(
+      mapbox.AttributionSettings(enabled: false),
+    );
 
     await map.style.addSource(
       mapbox.GeoJsonSource(id: "territories", data: mergedTerritories),
     );
 
-    _map.style.addLayer(
+    await _map.style.addLayer(
       mapbox.SymbolLayer(
         id: "territory-labels",
         sourceId: "territories",
@@ -52,7 +54,7 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
       ),
     );
 
-    map.style.addLayer(
+    await map.style.addLayer(
       mapbox.FillLayer(
         id: "territories-draw-layer",
         sourceId: "territories",
@@ -61,7 +63,7 @@ class _MapWidgetState extends ConsumerState<MapWidget> {
       ),
     );
 
-    _map.location.updateSettings(
+    await _map.location.updateSettings(
       mapbox.LocationComponentSettings(
         enabled: true,
         showAccuracyRing: true,
