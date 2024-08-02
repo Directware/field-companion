@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
@@ -60,6 +61,19 @@ class Territories extends _$Territories {
     }
 
     final bytes = File(file.path!).readAsBytesSync();
+    _importFromBytes(bytes);
+  }
+
+  Future<void> addFromFile(String? path) async {
+    if (path == null || !path.endsWith(".territory")) {
+      return;
+    }
+
+    final bytes = File(path).readAsBytesSync();
+    _importFromBytes(bytes);
+  }
+
+  void _importFromBytes(Uint8List bytes) {
     final archive = GZipDecoder().decodeBytes(bytes, verify: true);
     final territoryData = utf8.decode(archive);
     final object = jsonDecode(territoryData) as Map<String, dynamic>;

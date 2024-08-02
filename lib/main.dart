@@ -34,7 +34,6 @@ void main() async {
     return stack;
   };
 
-  WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   MapboxOptions.setAccessToken(accessToken);
 
