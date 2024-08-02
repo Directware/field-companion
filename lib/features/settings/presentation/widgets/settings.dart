@@ -237,11 +237,12 @@ class Settings extends ConsumerWidget {
                         ).tr(),
                         CupertinoSwitch(
                           value: monthlyReminderValue,
-                          onChanged: (bool newValue) {
-                            ref
-                                .read(monthlyReminderProvider.notifier)
-                                .set(value: newValue);
-                          },
+                          onChanged: null,
+                          // onChanged: (bool newValue) {
+                          //   ref
+                          //       .read(monthlyReminderProvider.notifier)
+                          //       .set(value: newValue);
+                          // },
                         ),
                       ],
                     ),
