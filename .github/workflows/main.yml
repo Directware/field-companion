@@ -48,10 +48,12 @@ jobs:
 
       - name: Build artifact
         env:
+          TD_PROD: ${{ vars.TD_PROD }}
           KEY_ALIAS: ${{ vars.KEY_ALIAS }}
+          TD_APP_ID: ${{ secrets.TD_APP_ID }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           SDK_REGISTRY_TOKEN: ${{ secrets.SDK_REGISTRY_TOKEN }}
-        run: flutter build appbundle --release --build-name="Main build ${{ github.run_number }}" --build-number=${{ github.run_number }} --dart-define=PUBLIC_ACCESS_TOKEN=${{ secrets.PUBLIC_ACCESS_TOKEN }}
+        run: flutter build appbundle --release --build-name="Main build ${{ github.run_number }}" --build-number=${{ github.run_number }} --dart-define=PUBLIC_ACCESS_TOKEN=${{ secrets.PUBLIC_ACCESS_TOKEN }} --dart-define=TD_APP_ID=$TD_APP_ID --dart-define=TD_PROD=$TD_PROD
 
       - name: Upload to Play Store
         run: |
