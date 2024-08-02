@@ -25,9 +25,15 @@ class TerritorySheetTerritoryDetails extends ConsumerWidget {
   void populationCountDialog(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       backgroundColor: ColorPalette.dark,
       barrierColor: ColorPalette.backdrop,
-      builder: (context) => TerritorySheetChangePopulationCount(),
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: TerritorySheetChangePopulationCount(),
+      ),
     );
   }
 

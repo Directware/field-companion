@@ -36,6 +36,7 @@ class TerritorySheetAddVisitBan extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(UiSpacing.spacingM),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
