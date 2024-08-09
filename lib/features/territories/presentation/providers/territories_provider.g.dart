@@ -6,12 +6,12 @@ part of 'territories_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$territoriesHash() => r'0b87e203302c0d9bd7232cff2653089baa9b5108';
+String _$territoriesHash() => r'0a1aec0146b0006680eb0a5a651a2d167517049d';
 
 /// See also [Territories].
 @ProviderFor(Territories)
 final territoriesProvider =
-    AutoDisposeNotifierProvider<Territories, List<Territory>>.internal(
+    NotifierProvider<Territories, List<Territory>>.internal(
   Territories.new,
   name: r'territoriesProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final territoriesProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Territories = AutoDisposeNotifier<List<Territory>>;
+typedef _$Territories = Notifier<List<Territory>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

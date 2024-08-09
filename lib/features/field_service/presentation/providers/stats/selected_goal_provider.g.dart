@@ -6,12 +6,11 @@ part of 'selected_goal_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedGoalHash() => r'bbfc9186b35c09dbd5e9fea25e41a72348eebce1';
+String _$selectedGoalHash() => r'6017ffb1cf067fd3339d17f66db5f47b15fd7925';
 
 /// See also [SelectedGoal].
 @ProviderFor(SelectedGoal)
-final selectedGoalProvider =
-    AutoDisposeNotifierProvider<SelectedGoal, Goal>.internal(
+final selectedGoalProvider = NotifierProvider<SelectedGoal, Goal>.internal(
   SelectedGoal.new,
   name: r'selectedGoalProvider',
   debugGetCreateSourceHash:
@@ -20,6 +19,6 @@ final selectedGoalProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SelectedGoal = AutoDisposeNotifier<Goal>;
+typedef _$SelectedGoal = Notifier<Goal>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -60,6 +60,7 @@
     "year": "Jahr",
     "yearly": "Jährlich",
     "goals": "Stundenziele",
+    "serviceDoneCheck": "Ich war im Dienst",
     "goalsDesc": "Du kannst ein monatliches und jährliches Stundenziel festlegen. Die App zeigt dir deinen Fortschritt an.",
     "goalsInfo": "Tippe auf die Stundenzahl in der Bericht Übersicht, um zwischen der Anzeige des monatlichen / jährlichen Ziels zu wechseln.",
     "studiesDesc": "Trage die Anzahl der unterschiedlichen Personen, mit denen du die Bibel studierst ein, damit sie in deinem Bericht erscheint.",
@@ -112,7 +113,9 @@
     "newVisitBan": "Neue Adresse",
     "editVisitBan": "Adresse",
     "visitBanName": "Name (nur bei Mehrfamilienhaus)",
-    "visitBanAddress": "Adresse",
+    "visitBanStreet": "Straße",
+    "visitBanStreetSuffix": "Hausnummer",
+    "visitBanCity": "Stadt",
     "populationCount": "Wohnungseinheiten",
     "leaveMap": "Karte verlassen",
     "setManuallyPosition": "Punkt auswählen",
@@ -181,10 +184,10 @@
     "inputShouldBeNumber": "Fehler! Die Eingabe muss eine Zahl sein."
   },
   "tips": {
-    "0": "You can change the language in the settings.",
-    "1": "Tap on the number of hours in the report overview to switch between the display of the monthly / annual target.",
-    "2": "In the Overview report, tap the study icon (Person) to change the number of studies.",
-    "3": "You can set a monthly and annual hourly target. The app shows you your progress.",
-    "4": "Your reported hours are rounded off and the remaining time is carried over to the next month."
+    "0": "Sie können die Sprache in den Einstellungen ändern.",
+    "1": "Tippen Sie auf die Anzahl der Stunden in der Berichtsübersicht, um zwischen der Anzeige des monatlichen / jährlichen Ziels zu wechseln.",
+    "2": "In der Berichtsübersicht tippen Sie auf das Studien-Symbol (Person), um die Anzahl der Studien zu ändern.",
+    "3": "Sie können ein monatliches und jährliches Stundenziel festlegen. Die App zeigt Ihnen Ihren Fortschritt an.",
+    "4": "Ihre gemeldeten Stunden werden abgerundet und die verbleibende Zeit wird auf den nächsten Monat übertragen."
   }
 }

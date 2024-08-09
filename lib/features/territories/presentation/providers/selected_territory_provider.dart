@@ -1,26 +1,32 @@
 import 'package:field_companion/features/territories/domain/models/territory.dart';
+import 'package:field_companion/features/territories/presentation/providers/territories_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'selected_territory_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class SelectedTerritory extends _$SelectedTerritory {
-  SelectedTerritory() : super();
+  String? id;
 
-// set territory(Territory territory) {
-//     state = territory;
-// }
   // ignore: use_setters_to_change_properties
-  void set(Territory territory) {
+  void set(Territory? territory) {
+    id = territory?.id;
     state = territory;
   }
 
-  void reset(DateTime month) {
+  void reset() {
+    id = null;
     state = null;
   }
 
   @override
   Territory? build() {
-    return null;
+    final territories = ref.watch(territoriesProvider);
+
+    if (id == null || territories.isEmpty) {
+      return null;
+    }
+
+    return territories.where((element) => element.id == id).firstOrNull;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
@@ -13,7 +14,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'territories_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Territories extends _$Territories {
   late final TerritoryRepository _repository;
 
@@ -48,11 +49,31 @@ class Territories extends _$Territories {
   }
 
   Future<void> add() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    // Warum auch immer lässt es sich nicht auf ".territory" filtern
+    final result = await FilePicker.platform.pickFiles();
 
-    if (result == null && result?.paths[0] == null) return;
+    final file = result?.files.first;
 
-    final bytes = File(result!.paths[0]!).readAsBytesSync();
+    if (file == null ||
+        file.path == null ||
+        !file.path!.endsWith(".territory")) {
+      return;
+    }
+
+    final bytes = File(file.path!).readAsBytesSync();
+    _importFromBytes(bytes);
+  }
+
+  Future<void> addFromFile(String? path) async {
+    if (path == null || !path.endsWith(".territory")) {
+      return;
+    }
+
+    final bytes = File(path).readAsBytesSync();
+    _importFromBytes(bytes);
+  }
+
+  void _importFromBytes(Uint8List bytes) {
     final archive = GZipDecoder().decodeBytes(bytes, verify: true);
     final territoryData = utf8.decode(archive);
     final object = jsonDecode(territoryData) as Map<String, dynamic>;
@@ -67,6 +88,14 @@ class Territories extends _$Territories {
     state = [...state, territory];
 
     _repository.upsert(territory);
+  }
+
+  void import(List<Territory> territories) {
+    state = [...state, ...territories];
+
+    for (final territory in territories) {
+      _repository.upsert(territory);
+    }
   }
 
   void updatePopulationCount(String id, int populationCount) {

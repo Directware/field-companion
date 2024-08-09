@@ -12,17 +12,28 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
+import 'package:telemetrydecksdk/telemetrydecksdk.dart';
 
 const String accessToken = String.fromEnvironment("PUBLIC_ACCESS_TOKEN");
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Telemetrydecksdk.start(
+    const TelemetryManagerConfiguration(
+      appID: String.fromEnvironment('TD_APP_ID'),
+      testMode: String.fromEnvironment('TD_PROD') != "true",
+    ),
+  );
+
+  Telemetrydecksdk.send("appStarted");
+
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) return stack.vmTrace;
     if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
     return stack;
   };
 
-  WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   MapboxOptions.setAccessToken(accessToken);
 

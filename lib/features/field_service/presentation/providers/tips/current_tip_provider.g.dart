@@ -6,7 +6,7 @@ part of 'current_tip_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentTipHash() => r'663c417232cc42aeed82203753381769e1cf2488';
+String _$currentTipHash() => r'8ce4db5e0d9f4261828cd0e1c6b8b825e9c138b7';
 
 /// See also [CurrentTip].
 @ProviderFor(CurrentTip)

@@ -41,4 +41,21 @@ class Report {
   bool isEmpty() {
     return videos == 0 && returnVisits == 0 && duration == 0 && deliveries == 0;
   }
+
+  Report.fromJson(Map<String, dynamic> json)
+      : id = json['id'] as int,
+        videos = json['videos'] as int,
+        returnVisits = json['returnVisits'] as int,
+        deliveries = json['deliveries'] as int,
+        duration = json['duration'] as int,
+        reportDate = DateTime.parse(json['reportDate'] as String);
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'videos': videos,
+        'returnVisits': returnVisits,
+        'deliveries': deliveries,
+        'duration': duration,
+        'reportDate': reportDate.toIso8601String(),
+      };
 }

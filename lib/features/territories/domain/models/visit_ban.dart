@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:nanoid/nanoid.dart';
 
 part 'visit_ban.g.dart';
 
@@ -11,6 +12,15 @@ class VisitBan {
   late final String street;
   late final String streetSuffix;
   late final String city;
+
+  VisitBan.create(
+    this.name,
+    this.street,
+    this.streetSuffix,
+    this.city,
+  ) {
+    id = nanoid();
+  }
 
   VisitBan.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String,

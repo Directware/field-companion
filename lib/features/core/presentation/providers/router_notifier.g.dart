@@ -6,7 +6,7 @@ part of 'router_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerNotifierHash() => r'bc9ae9d42e0e83e1b9cf829aea469fd986709143';
+String _$routerNotifierHash() => r'9c22bc843675bc296325573dcbab7220c843ee34';
 
 /// See also [RouterNotifier].
 @ProviderFor(RouterNotifier)
