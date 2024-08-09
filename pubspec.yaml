@@ -47,7 +47,7 @@ dependencies:
   jiffy: ^6.2.1
   json_annotation: ^4.8.1
   latlong2: ^0.9.0
-  logger: ^2.0.2
+  logger: ^2.4.0
   mapbox_maps_flutter: ^2.1.0
   nanoid: ^1.0.0
   package_info_plus: ^4.2.0
