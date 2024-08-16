@@ -60,7 +60,7 @@ dependencies:
   stack_trace: ^1.11.0
   telemetrydecksdk: ^0.5.1
   turf: ^0.0.10
-  url_launcher: ^6.1.14
+  url_launcher: ^6.3.0
   vector_map_tiles: ^6.0.2
 
 dev_dependencies:
