@@ -920,10 +920,10 @@ packages:
     dependency: transitive
     description:
       name: protobuf
-      sha256: "01dd9bd0fa02548bf2ceee13545d4a0ec6046459d847b6b061d8a27237108a08"
+      sha256: "68645b24e0716782e58948f8467fd42a880f255096a821f9e7d0ec625b00c84d"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "3.1.0"
   pub_semver:
     dependency: transitive
     description:
@@ -1413,10 +1413,10 @@ packages:
     dependency: "direct main"
     description:
       name: vector_map_tiles
-      sha256: fbc94dc080d7431d8c2c782cb8937a3bc48079c624f996322e36ade6935761e1
+      sha256: a57095b7b0c81e1c8a58cc148566cd2631b90bbe3a92cd066796552e3f6a12b6
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.2"
   vector_math:
     dependency: transitive
     description:
@@ -1429,18 +1429,18 @@ packages:
     dependency: transitive
     description:
       name: vector_tile
-      sha256: "2ac77f6bbd7ddd97efe059207d67bb7eaf807ab98ad58d99fe41a22c230f44e1"
+      sha256: "3adb04426f3aebefce56f3fdf8ab2e23cc9f7d5b06ff8ca33ae87e3a1e441874"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "2.0.0"
   vector_tile_renderer:
     dependency: transitive
     description:
       name: vector_tile_renderer
-      sha256: de212da0f5e48107d3b763a940a428eb1f49d8a4664d41ac0b654f77209a2d0b
+      sha256: b58fa02b472ced87de00de2b4d5837576239bddb21b562481f25bde39bd117ae
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "5.2.0"
   vm_service:
     dependency: transitive
     description:
