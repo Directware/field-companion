@@ -61,7 +61,7 @@ dependencies:
   telemetrydecksdk: ^0.5.1
   turf: ^0.0.10
   url_launcher: ^6.1.14
-  vector_map_tiles: ^5.0.0
+  vector_map_tiles: ^6.0.2
 
 dev_dependencies:
   build_runner: ^2.4.11
