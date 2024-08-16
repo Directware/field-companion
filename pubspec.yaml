@@ -32,7 +32,7 @@ dependencies:
   archive: ^3.6.1
   collection: ^1.17.2
   easy_localization: ^3.0.5
-  file_picker: ^8.0.6
+  file_picker: ^8.1.2
   flutter:
     sdk: flutter
   flutter_email_sender: ^6.0.3
